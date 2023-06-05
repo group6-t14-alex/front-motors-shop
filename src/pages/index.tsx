@@ -19,7 +19,9 @@ export default function Home() {
       </Head>
       <main>
         <h1>hello</h1>
-        <Button fontSize={"heading1"}>oi</Button>
+        <Button bg={"brand2"} fontSize={"heading1"}>
+          oi
+        </Button>
       </main>
     </>
   );
