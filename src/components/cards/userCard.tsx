@@ -1,28 +1,33 @@
-import { Card, CardHeader, CardBody, CardFooter, Text } from '@chakra-ui/react'
-import cardImageTeste from '/public/imagem pra teste.png'
+import { Card, CardHeader, CardBody, CardFooter, Text, Box } from '@chakra-ui/react'
+import image from '/public/imagem.png'
 import Image from "next/image"
 
-const CardUser = () => {
+const CardUser = ({carName, description, advertiser, tags, price}: any) => {
     return (
-        <Card>
-            <CardHeader>
-                <Image src={cardImageTeste} alt="Car A"> </Image>
+        <Card maxW='312px' maxH='356px' display='flex' flexDirection='column' border='none' boxShadow='none' marginBottom='80px' >
+
+            <CardHeader bgColor='grey.7' mb={1}>
+                <Image src={image} alt="Car A"/>  {/*maxW='262px' maxH='150px' objectFit='cover'*/}
             </CardHeader>
-            <CardBody>
-                {/* <Text fontSize='lg' as='b'>Maserati - Ghibli</Text> */}
-                <p>Maserati - Ghibli</p>
-                <Text fontSize='md'>View a summary of all your customers over the last month.</Text>
+
+            <CardBody bgColor='white' pl={1} pr={1} display={'flex'} flexDir={'column'} >
+                <Text fontSize='body.1' fontWeight='600' color='grey.1'>{carName}</Text>
+                <Text fontSize='body.2' fontWeight='400' color='grey.2'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem...</Text>
             </CardBody>
-            <CardFooter>
-                <div>
-                    <Text>SL</Text> {/*mudar para imagem de perfil caso exista*/}
-                    <Text fontSize='md'>Samuel Leão</Text>
-                </div>
-                <div>
-                    <Text fontSize='md'>0 KM</Text>
-                    <Text fontSize='md'>2019</Text>
-                    <Text fontSize='md' as='b'>R$ 00.000,00</Text>
-                </div>
+
+            <CardFooter bgColor='white' pl={1} pr={1} display='flex' flexDirection='column' gap='20px'>
+                <Box display='flex' alignItems='center'>
+                    <Text bgColor='brand.1' color='white' width='32px' h='32px' borderRadius='full' fontSize='body.2' display='flex' justifyContent='center' alignItems='center' marginRight='8px'>SL</Text> {/*mudar para imagem de perfil caso exista*/}
+                    <Text fontSize='body.2' fontWeight='500'>Samuel Leão</Text>
+                </Box>
+
+                <Box display='flex' justifyContent='space-between' alignItems='center'>
+                    <Box display='flex' gap='0.75rem'>
+                        <Text fontSize='body.2' bgColor='brand.4' color='brand.1' p={['8px', '4px']} fontWeight='500'>0 KM</Text>
+                        <Text fontSize='body.2' bgColor='brand.4' color='brand.1' p={['8px', '4px']} fontWeight='500'>2019</Text>
+                    </Box>
+                    <Text fontSize='body.1' fontWeight='500' color='grey.1'>R$ 00.000,00</Text>
+                </Box>
             </CardFooter>
         </Card>
     )
