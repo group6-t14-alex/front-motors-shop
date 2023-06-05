@@ -48,26 +48,24 @@ const colors = {
 };
 
 const fonts = {
-  font: {
-    heading: "Lexend, sans-serif",
-    body: "Inter, sans-serif",
-  },
+  heading: "Lexend, sans-serif",
+  body: "Inter, sans-serif",
 };
 
 const fontSizes = {
-  heading: {
-    1: "2.75rem",
-    2: "2.25rem",
-    3: "2rem",
-    4: "1.75rem",
-    5: "1.5rem",
-    6: "1.25rem",
-    7: "1rem",
-  },
-  body: {
-    1: "1rem",
-    2: "0.875rem",
-  },
+  heading1: "2.75rem",
+  heading2: "2.25rem",
+  heading3: "2rem",
+  heading4: "1.75rem",
+  heading5: "1.5rem",
+  heading6: "1.25rem",
+  heading7: "1rem",
+  body1: "1rem",
+  body2: "0.875rem",
+  buttonMedium: "0.875rem",
+  button: "1rem",
+  inputPlaceholder: "1rem",
+  inputLabel: "0.875rem",
 };
 
 export const theme = extendTheme({ colors, fonts, fontSizes });
