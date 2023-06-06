@@ -1,7 +1,6 @@
 import { Card, CardHeader, CardBody, CardFooter, Text, Box } from '@chakra-ui/react'
 import image from '/public/imagem.png'
 import Image from "next/image"
-import { relative } from 'path'
 
 const CardUser = ({carName, description, advertiser, tags, price, fipePrice}: any) => {
     
@@ -11,6 +10,7 @@ const CardUser = ({carName, description, advertiser, tags, price, fipePrice}: an
         } 
         
     }
+    // funcão para renderizar o icone de desconto
 
     return (
         <Card maxW='312px' maxH='356px' display='flex' flexDirection='column' border='none' boxShadow='none' marginBottom='80px' >

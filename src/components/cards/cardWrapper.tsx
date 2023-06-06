@@ -13,6 +13,7 @@ const CardWrapper = () => {
             <CardUser carName={'Opala'} price={4000} fipePrice={8000}/>
             <CardUser carName={'Kadet'} price={5000} fipePrice={2000}/>
             <CardUser carName={'Passat'} price={6000} fipePrice={7000}/>
+            {/* Componente com valores pra testar a função do icone desconto*/}
         </UnorderedList>
     )
 }
