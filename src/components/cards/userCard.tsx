@@ -2,12 +2,22 @@ import { Card, CardHeader, CardBody, CardFooter, Text, Box } from '@chakra-ui/re
 import image from '/public/imagem.png'
 import Image from "next/image"
 
-const CardUser = ({carName, description, advertiser, tags, price}: any) => {
+const CardUser = ({carName, description, advertiser, tags, price, fipePrice}: any) => {
+    
+    const bigDeal = (price: number, fipePrice: number) => {
+        if (price < fipePrice) {
+            return <Text pos='absolute' right='0' top='0' fontWeight='500' color='white' bg='random.7' p='5px' borderRadius='2px' borderColor='random.7'>$</Text>
+        } 
+        
+    }
+    // funcão para renderizar o icone de desconto
+
     return (
         <Card maxW='312px' maxH='356px' display='flex' flexDirection='column' border='none' boxShadow='none' marginBottom='80px' >
 
             <CardHeader bgColor='grey.7' mb={1}>
-                <Image src={image} alt="Car A"/>  {/*maxW='262px' maxH='150px' objectFit='cover'*/}
+                <Image src={image} alt="Car A"/>                
+                {bigDeal(price, fipePrice)}
             </CardHeader>
 
             <CardBody bgColor='white' pl={1} pr={1} display={'flex'} flexDir={'column'} >
