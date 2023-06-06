@@ -16,9 +16,8 @@ const CardUser = ({carName, description, advertiser, tags, price, fipePrice}: an
         <Card maxW='312px' maxH='356px' display='flex' flexDirection='column' border='none' boxShadow='none' marginBottom='80px' >
 
             <CardHeader bgColor='grey.7' mb={1}>
-                <Image src={image} alt="Car A"/>
+                <Image src={image} alt="Car A"/>                
                 {bigDeal(price, fipePrice)}
-                {/* <Text pos='absolute' right='0' top='0' fontWeight='500' color='white' bg='random.7' p='5px' borderRadius='2px' borderColor='random.7'>$</Text> */}
             </CardHeader>
 
             <CardBody bgColor='white' pl={1} pr={1} display={'flex'} flexDir={'column'} >
