@@ -62,4 +62,9 @@ const fontSizes = {
   inputLabel: "0.875rem",
 };
 
-export const theme = extendTheme({ colors, fonts, fontSizes });
+const breakpoints = {
+  cel: "0",
+  desk: "24em",
+};
+
+export const theme = extendTheme({ colors, fonts, fontSizes, breakpoints });
