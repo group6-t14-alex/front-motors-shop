@@ -5,6 +5,7 @@ import CardWrapper from "@/components/cards/cardWrapper";
 
 import { Footer } from "@/components/footer/footer";
 import { Header } from "@/components/header/header";
+import { HeaderLogged } from "@/components/header/headerLogged";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,10 +18,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        {/* <Footer /> */}
-        <Header />
-      </main>
+      <main></main>
     </>
   );
 }
