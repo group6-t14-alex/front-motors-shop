@@ -14,11 +14,13 @@ import {
   MenuList,
   MenuOptionGroup,
   Text,
+  useDisclosure,
 } from "@chakra-ui/react";
 
 import { Link as LinkDom } from "react-router-dom";
 
 export const Header = () => {
+  const { isOpen } = useDisclosure();
   return (
     <>
       <Flex flexDirection={"row"} borderBottom={"2px solid #dee2e6"}>
@@ -52,33 +54,31 @@ export const Header = () => {
               marginTop={"3"}
               alignSelf={"center"}
               display={{ cel: "flex", desk: "none" }}
+              flexDirection={"column"}
+              gap={"1.5rem"}
             >
-              <Box
-                paddingLeft={"1"}
-                display={"flex"}
-                flexDirection={"row"}
-                alignItems={"center"}
-                justifyContent={"space-between"}
-                marginBottom={"1"}
+              <MenuItemOption
+                fontFamily={"body"}
+                fontSize={"body1"}
+                fontWeight={"600"}
+                color={"grey2"}
+                height={"3rem"}
+                isChecked={false}
               >
-                <Text
-                  fontFamily={"heading"}
-                  fontSize={"heading7"}
-                  fontWeight={"700"}
-                  color={"grey1"}
-                >
-                  Filtro
-                </Text>
+                Fazer Login
+              </MenuItemOption>
+              <MenuItemOption>
                 <Button
-                  size={"sm"}
-                  color={"grey4"}
-                  variant={"ghost"}
-                  as={IconButton}
-                  icon={<CloseIcon />}
-                  bg={"transparent"}
-                  _hover={{ bg: "transparent" }}
-                />
-              </Box>
+                  color={"grey0"}
+                  fontFamily={"body"}
+                  fontSize={"body1"}
+                  variant={"outline"}
+                  fontWeight={"600"}
+                  width={"100%"}
+                >
+                  Cadastrar
+                </Button>
+              </MenuItemOption>
             </MenuList>
           </Menu>
           <Box display={{ cel: "none", desk: "flex" }} gap={"2.75"}>
