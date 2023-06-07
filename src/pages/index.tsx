@@ -2,6 +2,9 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import CardWrapper from "@/components/cards/cardWrapper";
+import ButtonSeeFilters from "@/components/buttons/buttonsFilter";
+import Filter from "@/components/filter/filter";
+import FilterDesk from "@/components/filter/filterDesk";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -15,6 +18,10 @@ export default function Home() {
       </Head>
       <main>
         <CardWrapper />
+
+        <ButtonSeeFilters />
+        <FilterDesk />
+
       </main>
     </>
   );
