@@ -25,7 +25,10 @@ const ButtonSeeFilters = () => {
         bg="brand2"
         cursor="pointer"
         fontWeight="normal"
-        display={{ cel: "flex", desk: "none" }}
+        display={{ cel: "flex", grd: "none" }}
+        margin={'0 auto'}
+        mt={'80px'}
+        mb={'50px'}
       >
         Filtros
       </Button>

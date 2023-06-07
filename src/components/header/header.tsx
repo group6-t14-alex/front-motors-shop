@@ -17,7 +17,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 
-import { Link as LinkDom } from "react-router-dom";
+// import { Link as LinkDom } from "react-router-dom";
 
 export const Header = () => {
   const { isOpen } = useDisclosure();
