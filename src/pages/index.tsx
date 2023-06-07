@@ -1,7 +1,7 @@
-"use client";
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import CardWrapper from "@/components/cards/cardWrapper";
+import { Header } from "@/components/header/header";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -14,7 +14,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <CardWrapper />
+        <Header />
+        {/* <CardWrapper /> */}
       </main>
     </>
   );
