@@ -1,3 +1,4 @@
+
 import { Box, Image, Text } from "@chakra-ui/react";
 import photoHero from "../../assets/photoHero.png";
 
