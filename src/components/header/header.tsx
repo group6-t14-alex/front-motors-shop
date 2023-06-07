@@ -25,7 +25,7 @@ export const Header = () => {
     <>
       <Flex flexDirection={"row"} borderBottom={"2px solid #dee2e6"}>
         <Container
-          minWidth={"80vw"}
+          minWidth={"90vw"}
           display={"flex"}
           justifyContent={"space-between"}
           height={"5rem"}
@@ -81,7 +81,14 @@ export const Header = () => {
               </MenuItemOption>
             </MenuList>
           </Menu>
-          <Box display={{ cel: "none", desk: "flex" }} gap={"2.75"}>
+          <Box
+            display={{ cel: "none", desk: "flex" }}
+            gap={"2.75"}
+            borderLeftColor={"grey6"}
+            borderLeftWidth={"2px"}
+            height={"100%"}
+            alignItems={"center"}
+          >
             <Button
               fontFamily={"body"}
               fontSize={"body1"}
