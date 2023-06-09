@@ -56,6 +56,7 @@ const fontSizes = {
   heading7: "1rem",
   body1: "1rem",
   body2: "0.875rem",
+  body3:"0.75rem",
   buttonMedium: "0.875rem",
   button: "1rem",
   inputPlaceholder: "1rem",
