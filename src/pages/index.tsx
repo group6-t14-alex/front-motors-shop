@@ -6,11 +6,10 @@ import ButtonSeeFilters from "@/components/buttons/buttonsFilter";
 import Filter from "@/components/filter/filter";
 import FilterDesk from "@/components/filter/filterDesk";
 import { Header } from "@/components/header/header";
-import { Box, Button, Text } from '@chakra-ui/react'
+import { Box, Button, Text } from "@chakra-ui/react";
 import { Hero } from "@/components/hero/hero";
 
 import { Footer } from "@/components/footer/footer";
-import { Header } from "@/components/header/header";
 import { HeaderLogged } from "@/components/header/headerLogged";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -25,25 +24,41 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {/* <Box display={'flex'} flexDir={'column'} justifyContent={'center'} alignItems={'center'} width={'100%'} margin={'0 auto'}>         */}
-        
-        <Box display={'flex'} flexDir={'column'} justifyContent={'center'}>
-          <Header/>
-          {/* <Hero/> */}
-        </Box>
-        
-        <Box bgColor={'white'} display={'flex'} flexDir={'row-reverse'} justifyContent={'space-between'} margin={'0 auto'} width={'100%'} maxW={'1570px'} gap={{desk: '1rem'}} >
-                    
-            <CardWrapper />          
-          
-            <FilterDesk />
-        </Box>
-          <ButtonSeeFilters />
-          
 
-        <Box display={'flex'} flexDir={'row'} justifyContent={'center'} alignItems={'center'} gap={'60px'} margin={'0 auto'} width={'100%'} maxW={'1570px'}>
-              <Text>1 de 2</Text>
-              <Button>{'Seguinte >'} </Button>
-        </Box>
+      <Box display={"flex"} flexDir={"column"} justifyContent={"center"}>
+        <Header />
+        {/* <Hero/> */}
+      </Box>
+
+      <Box
+        bgColor={"white"}
+        display={"flex"}
+        flexDir={"row-reverse"}
+        justifyContent={"space-between"}
+        margin={"0 auto"}
+        width={"100%"}
+        maxW={"1570px"}
+        gap={{ desk: "1rem" }}
+      >
+        <CardWrapper />
+
+        <FilterDesk />
+      </Box>
+      <ButtonSeeFilters />
+
+      <Box
+        display={"flex"}
+        flexDir={"row"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        gap={"60px"}
+        margin={"0 auto"}
+        width={"100%"}
+        maxW={"1570px"}
+      >
+        <Text>1 de 2</Text>
+        <Button>{"Seguinte >"} </Button>
+      </Box>
 
       {/* </Box> */}
     </>
