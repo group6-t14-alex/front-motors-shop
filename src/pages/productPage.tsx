@@ -7,7 +7,6 @@ import {
     ButtonGroup,
     Heading,
     Grid,
-    GridItem,
     Avatar,
     ListItem,
     List,
@@ -17,7 +16,7 @@ import {
 } from '@chakra-ui/react'
 
 import carro from "../assets/cars/imgExample.png"
-import carros from "../assets/cars/fotosExample.png"
+import PhotosCar from '@/components/cards/photosCard'
 
 const ProductPage = () => {
 
@@ -28,16 +27,17 @@ const ProductPage = () => {
 
             </Box>
             <Box h='100%' w='100%' bg='brand.4' display='flex' alignItems='center' flexDirection='column'>
-                <Box w='100%' bg='brand.1' display='flex' alignItems='center' flexDirection='column' bgGradient=' linear(to-b, brand.1 0%, brand.1 13.5%,brand.4 13.5%, brand.4 100%)'>
-                    <Box h='355px' w='90%' minW='351px' maxWidth='1032px' bg="grey.10" marginTop='45px' borderRadius='4px' display='flex' alignItems='center' justifyContent='center'>
+                <Box w='99%' bg='brand.1' display={{ cel: "flex", desk: "grid" }} alignItems='center' flexDirection='column' bgGradient=' linear(to-b, brand.1 0%, brand.1 13.5%,brand.4 13.5%, brand.4 100%)' margin='0 auto'>
+                    <Box display='flex' flexDirection='column' w={{cel:"100%", desk:'50%'}}>
+                    <Box h='355px'  w='100%'  maxWidth='1032px' bg="grey.10" marginTop='45px' borderRadius='4px' display='flex' alignItems='center' justifyContent='center'>
                         <Image src={carro} alt='Mercedes benz A'/>
                     </Box>
 
-                    <Box w='90%' minW='351px' maxWidth='1032px' h='326px' borderRadius='4px' display='flex' marginTop='17px' bg='grey.10' alignItems='flex-start' flexDirection='column' p='28px'>
+                    <Box  w='100%'  maxWidth='1032px' h='326px' borderRadius='4px' display='flex' marginTop='17px' bg='grey.10' alignItems='flex-start' flexDirection='column' justifyContent='space-between' p='28px 48px'>
                         <Box padding='16px 0' h='224px' display='flex' flexDirection='column' justifyContent='space-between'>
                             <Text fontFamily='font.heading' fontWeight='600' fontSize='20px' color='grey.1'>Mercedes Benz A 200 CGI ADVANCE SEDAN mercedes benz A 200</Text>
 
-                            <Box gap='32px' w='113px' display='flex' flexDirection='column' justifyContent='space-between' alignItems='flex-start'>
+                            <Box gap='32px' w={{ cel: "113px", desk: "100%" }} display='flex' flexDirection={{ cel: "column", desk: "row" }} justifyContent={{ cel: "space-between", desk: "space-between" }} alignItems='flex-start'>
                                 <ButtonGroup h='30px' w='113px' display='flex' flexDirection='row' spacing='10px'>
                                     <Button size='sm' borderRadius='4px' bg='brand.4' color='brand.1'>2013</Button>
                                     <Button size='sm' bg='brand.4' color='brand.1'>0 km</Button>
@@ -49,31 +49,19 @@ const ProductPage = () => {
                         <Button size='md' bg='brand.1' color='grey.10' fontWeight='600' fontSize='14px' fontFamily='font.body'>Comprar</Button>
                     </Box>
 
-                    <Box w='90%' minW='351px' maxWidth='1032px' h='320px' borderRadius='4px' p='36px 28px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-around' bg='grey.10' marginTop='24px'>
+                    <Box  w='100%'  maxWidth='1032px' h='320px' borderRadius='4px' p='36px 28px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-around' bg='grey.10' marginTop='24px'>
                         <Heading fontFamily='font.heading' fontWeight='600' fontSize='20px' color='grey.1' size='md'>Descrição</Heading>
 
                         <Text fontFamily='font.body' fontWeight='400' fontSize='16px' color='grey.2' h='150px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
                     </Box>
+                    </Box>
 
-                    <Box marginTop='15px' display= 'flex' flexDirection='column' alignItems='center' w= '90%' minW= '351px' maxW='1032px'>
+
+                    <Box marginTop='45px' display= 'flex' flexDirection='column' alignItems='center' w={{ cel: "100%", desk: "40%" }} pos={{cel:'relative', desk:'absolute'}} top={{cel:'0', desk:'80px'}} right={{cel:'0px', desk:'50px'}}>
                         <Box w='100%' h='359px' borderRadius='4px' p='36px 44px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-around' bg='grey.10' gap='32px'>
                             <Heading size='md' fontFamily='font.heading' fontWeight='600' fontSize='20px' color='grey.1'>Fotos</Heading>
 
-                            <Grid templateColumns='repeat(3, 2fr)' gap='30px 5px' w='95%' h='230px' alignSelf='center' justifyItems='center'>
-
-                                <GridItem w='90px' h='90px' borderRadius='4px' bg='grey.7' display='flex' alignItems='center'><Image src={carros} alt='fotos Mercedes benz A'/></GridItem>
-
-                                <GridItem w='90px' h='90px' borderRadius='4px' bg='grey.7' display='flex' alignItems='center'><Image src={carros} alt='fotos Mercedes benz A'/></GridItem>
-
-                                <GridItem bg='grey.7' w='90px' h='90px' borderRadius='4px' display='flex' alignItems='center'><Image src={carros} alt='fotos Mercedes benz A'/></GridItem>
-
-                                <GridItem w='90px' h='90px' borderRadius='4px' bg='grey.7' display='flex' alignItems='center'><Image src={carros} alt='fotos Mercedes benz A'/></GridItem>
-
-                                <GridItem w='90px' h='90px' borderRadius='4px' bg='grey.7' display='flex' alignItems='center'><Image src={carros} alt='fotos Mercedes benz A'/></GridItem>
-
-                                <GridItem w='90px' h='90px' borderRadius='4px' bg='grey.7' display='flex' alignItems='center'><Image src={carros} alt='fotos Mercedes benz A'/></GridItem>
-
-                        </Grid>
+                            <PhotosCar /> 
                         </Box>
 
                         <Box w='100%' h='398px' borderRadius='4px' p='40px 28pxpx' display='flex' flexDirection='column' alignItems='center' justifyContent='space-evenly' bg='grey.10' marginTop='52px'>
@@ -90,7 +78,8 @@ const ProductPage = () => {
                         </Box>
                     </Box>
 
-                    <Box h='845px' w='90%' minW='351px' maxWidth='1032px' borderRadius='4px' p='36px 28px' bg='grey.10' marginTop='18px' display='flex' flexDirection='column' gap='13px'>
+                    <Box display='flex' flexDirection='column' w={{cel:"100%", desk:'50%'}}>
+                    <Box h='845px'  w='100%'  maxWidth='1032px' borderRadius='4px' p='36px 28px' bg='grey.10' marginTop='18px' display='flex' flexDirection='column' gap='13px'>
                         <Heading fontFamily='font.heading' fontWeight='600' fontSize='20px' color='grey.1'>Comentários</Heading>
 
                         <List h='724px' maxH='724px' display='flex' flexDirection='column' alignItems='flex-start' gap='44px' overflowY='auto'>
@@ -163,7 +152,7 @@ const ProductPage = () => {
                         </List>
                     </Box>
 
-                    <Box h='414px' w='90%' minW='351px' maxWidth='1032px' borderRadius='4px' bg='grey.10' p='36px 26px' marginTop='42px' display='flex' flexDirection='column' gap='24px' marginBottom='45px'>
+                    <Box h='414px' w='100%' maxWidth='1032px' borderRadius='4px' bg='grey.10' p='36px 26px' marginTop='42px' display='flex' flexDirection='column' gap='24px' marginBottom='45px'>
                         <Box w='130px' h='32px' display='flex' flexDirection='row' alignItems='center' justifyContent='space-between'>
                             <Avatar h='32px' w='32px' name='Sammuel Leão'/>
                             <Text>Samuel Leão</Text>
@@ -172,7 +161,7 @@ const ProductPage = () => {
                         <FormControl h='275px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-between'>
                             <Textarea bg='grey.10' outline='1px solid grey.7' borderRadius='4px' h='100px' placeholder='Carro muito confortável, foi uma ótima experiência de compra...'/>
 
-                            <Button size='sm' bg='brand.1' color='white' fontSize='14px' fontWeight='600' fontFamily='font.body'>Comentar</Button>
+                            <Button size='sm' bg='brand.1' color='white' fontSize='14px' fontWeight='600' fontFamily='font.body' pos={{ cel: 'relative', desk: "absolute" }} right={{desk: '11px'}} bottom={{desk: '183px'}}>Comentar</Button>
                         
                         
                             <Grid templateColumns='repeat(2, 1fr)'  alignItems='flex-start' justifyItems='start' h='76px' gap='8px'>
@@ -183,6 +172,8 @@ const ProductPage = () => {
                         
                         </FormControl>
                     </Box>
+                    </Box>
+
                 </Box>
             </Box>
             <Box h='310px' w='100%' bg="grey.0">
