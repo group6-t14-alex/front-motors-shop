@@ -11,7 +11,7 @@ export const Hero = () => {
           height={"30rem"}
           objectFit={"cover"}
           position={"absolute"}
-          top={"0"}
+          top={"5rem"}
           left={"0"}
           src={photoHero.src}
           alt="carro azul"

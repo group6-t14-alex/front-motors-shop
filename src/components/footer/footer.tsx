@@ -8,7 +8,7 @@ export const Footer = () => {
       <Box
         bg={"grey0"}
         height={{ cel: "20rem", desk: "8.75rem" }}
-        width={"100vw"}
+        width={"100%"}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"center"}

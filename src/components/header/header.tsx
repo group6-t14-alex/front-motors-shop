@@ -77,17 +77,13 @@ export const Header = () => {
                   >
                     Fazer Login
                   </MenuItemOption>
-                  <MenuItemOption>
-                    <Button
-                      color={"grey0"}
+                  <MenuItemOption color={"grey0"}
                       fontFamily={"body"}
-                      fontSize={"body1"}
-                      variant={"outline"}
+                      fontSize={"body1"}                      
                       fontWeight={"600"}
                       width={"100%"}
-                    >
-                      Cadastrar
-                    </Button>
+                  >                    
+                      Cadastrar                    
                   </MenuItemOption>
                 </MenuList>
               </>
