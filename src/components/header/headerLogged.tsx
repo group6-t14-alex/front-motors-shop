@@ -39,48 +39,74 @@ export const HeaderLogged = () => {
             alt="Logo motors shop"
           />
           <Menu>
-            <MenuButton
-              size={"lg"}
-              as={IconButton}
-              aria-label="Options"
-              icon={<HamburgerIcon />}
-              variant={"ghost"}
-              bg={"transparent"}
-              display={{ cel: "flex", desk: "none" }}
-            />
-            <MenuList
-              width={"100vw"}
-              borderRadius={"none"}
-              borderColor={"transparent"}
-              marginTop={"3"}
-              alignSelf={"center"}
-              display={{ cel: "flex", desk: "none" }}
-              flexDirection={"column"}
-              gap={"1.5rem"}
-            >
-              <MenuItemOption
-                fontFamily={"body"}
-                fontSize={"body1"}
-                fontWeight={"600"}
-                color={"grey2"}
-                height={"3rem"}
-                isChecked={false}
-              >
-                Fazer Login
-              </MenuItemOption>
-              <MenuItemOption>
-                <Button
-                  color={"grey0"}
-                  fontFamily={"body"}
-                  fontSize={"body1"}
-                  variant={"outline"}
-                  fontWeight={"600"}
-                  width={"100%"}
+            {({ isOpen }) => (
+              <>
+                <MenuButton
+                  size={"lg"}
+                  as={IconButton}
+                  aria-label="Options"
+                  variant={"ghost"}
+                  bg={"transparent"}
+                  display={{ cel: "flex", desk: "none" }}
+                  isActive={isOpen}
+                  _hover={{ bg: "transpatent" }}
+                  _after={{ bg: "transpatent" }}
+                  // as={Button}
                 >
-                  Cadastrar
-                </Button>
-              </MenuItemOption>
-            </MenuList>
+                  {isOpen ? <CloseIcon /> : <HamburgerIcon />}
+                </MenuButton>
+                <MenuList
+                  width={"100vw"}
+                  borderRadius={"none"}
+                  borderColor={"transparent"}
+                  marginTop={"3"}
+                  alignSelf={"center"}
+                  display={{ cel: "flex", desk: "none" }}
+                  flexDirection={"column"}
+                  gap={"1.5rem"}
+                >
+                  <MenuItemOption
+                    fontFamily={"body"}
+                    fontSize={"body1"}
+                    fontWeight={"600"}
+                    color={"grey2"}
+                    height={"3rem"}
+                    isChecked={false}
+                    _hover={{ bg: "transparent" }}
+                    _after={{ bg: "transparent" }}
+                    _before={{ bg: "transparent" }}
+                  >
+                    Meus anúncios
+                  </MenuItemOption>
+                  <MenuItemOption
+                    fontFamily={"body"}
+                    fontSize={"body1"}
+                    fontWeight={"600"}
+                    color={"grey2"}
+                    height={"3rem"}
+                    isChecked={false}
+                    _hover={{ bg: "transparent" }}
+                    _after={{ bg: "transparent" }}
+                    _before={{ bg: "transparent" }}
+                  >
+                    Editar perfil
+                  </MenuItemOption>
+                  <MenuItemOption
+                    fontFamily={"body"}
+                    fontSize={"body1"}
+                    fontWeight={"600"}
+                    color={"grey2"}
+                    height={"3rem"}
+                    isChecked={false}
+                    _hover={{ bg: "transparent" }}
+                    _after={{ bg: "transparent" }}
+                    _before={{ bg: "transparent" }}
+                  >
+                    Logout
+                  </MenuItemOption>
+                </MenuList>
+              </>
+            )}
           </Menu>
           <Box
             display={{ cel: "none", desk: "flex" }}
