@@ -8,6 +8,11 @@ import FilterDesk from "@/components/filter/filterDesk";
 import { Header } from "@/components/header/header";
 import { Box, Button, Text } from '@chakra-ui/react'
 import { Hero } from "@/components/hero/hero";
+
+import { Footer } from "@/components/footer/footer";
+import { Header } from "@/components/header/header";
+import { HeaderLogged } from "@/components/header/headerLogged";
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {

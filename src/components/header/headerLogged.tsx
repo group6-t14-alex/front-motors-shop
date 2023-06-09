@@ -15,11 +15,12 @@ import {
   MenuOptionGroup,
   Text,
   useDisclosure,
+  Avatar,
 } from "@chakra-ui/react";
 
-// import { Link as LinkDom } from "react-router-dom";
+import { Link as LinkDom } from "react-router-dom";
 
-export const Header = () => {
+export const HeaderLogged = () => {
   const { isOpen } = useDisclosure();
   return (
     <>
@@ -83,30 +84,22 @@ export const Header = () => {
           </Menu>
           <Box
             display={{ cel: "none", desk: "flex" }}
-            gap={"2.75"}
+            gap={"0.5rem"}
             borderLeftColor={"grey6"}
             borderLeftWidth={"2px"}
             height={"100%"}
             alignItems={"center"}
+            paddingLeft={"2.75rem"}
           >
-            <Button
-              fontFamily={"body"}
-              fontSize={"body1"}
-              fontWeight={"600"}
+            <Avatar name="Samuel Leão" />
+            <Text
               color={"grey2"}
-              variant={"ghost"}
-            >
-              Fazer Login
-            </Button>
-            <Button
-              color={"grey0"}
               fontFamily={"body"}
+              fontWeight={"400"}
               fontSize={"body1"}
-              variant={"outline"}
-              fontWeight={"600"}
             >
-              Cadastrar
-            </Button>
+              Samuel Leão
+            </Text>
           </Box>
         </Container>
       </Flex>
