@@ -1,16 +1,14 @@
-import { Card, CardHeader, CardBody, CardFooter, Text, Box, Image } from '@chakra-ui/react'
+import { Card, CardHeader, CardBody, CardFooter, Text, Box, Image, Avatar } from '@chakra-ui/react'
 import image from '/public/imagem.png'
 
 
-const CardUser = ({carName, description, advertiser, tags, price, fipePrice}: any) => {
+const CardUser = ({carName, description, advertiser, tags, price, fipePrice, userName}: any) => {
     
     const bigDeal = (price: number, fipePrice: number) => {
         if (price < fipePrice) {
             return <Text pos={'absolute'} right={'0'} top={'0'} fontWeight={'500'} color={'white'} bg={'random7'} p={'5px'} borderRadius={'2px'} borderColor={'random7'}>$</Text>
-        } 
-        
-    }
-    // funcão para renderizar o icone de desconto
+        }
+    }    
 
     return (
         <Card maxW={'312px'} maxH={'356px'} minW={'312px'} display={'flex'} flexDirection={'column'} border={'none'} boxShadow={'none'} marginBottom={'80px'} >
@@ -26,9 +24,9 @@ const CardUser = ({carName, description, advertiser, tags, price, fipePrice}: an
             </CardBody>
 
             <CardFooter bgColor={'white'} pl={1} pr={1} display={'flex'} flexDirection={'column'} gap={'20px'}>
-                <Box display={'flex'} alignItems={'center'}>
-                    <Text bgColor={'brand1'} color={'white'} width={'32px'} h={'32px'} borderRadius={'full'} fontSize={'body2'} display={'flex'} justifyContent={'center'} alignItems={'center'} marginRight={'8px'}>SL</Text> {/*mudar para imagem de perfil caso exista*/}
-                    <Text fontSize={'body2'} fontWeight={'500'} >Samuel Leão</Text>
+                <Box display={'flex'} alignItems={'center'} gap={'20px'}>                    
+                    <Avatar name={userName} size={'sm'}/>
+                    <Text fontSize={'body2'} fontWeight={'500'} >{userName}</Text>
                 </Box>
 
                 <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'}>

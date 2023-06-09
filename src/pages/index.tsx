@@ -39,7 +39,7 @@ export default function Home() {
         width={"100%"}
         maxW={"1570px"}
         gap={{ desk: "1rem" }}
-        // mt={'0.5rem'}
+        mt={'3.75rem'}
         p={'0.5'}
       >
         <CardWrapper />
