@@ -2,7 +2,7 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import CardWrapper from "@/components/cards/cardWrapper";
-import ButtonSeeFilters from "@/components/buttons/buttonsFilter";
+import ButtonSeeFilters from "@/components/modals/buttonsFilter";
 import Filter from "@/components/filter/filter";
 import FilterDesk from "@/components/filter/filterDesk";
 import { Header } from "@/components/header/header";

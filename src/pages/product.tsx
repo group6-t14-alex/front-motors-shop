@@ -12,13 +12,13 @@ import {
     List,
     UnorderedList,
     Textarea,
-    FormControl,
+    FormControl
 } from '@chakra-ui/react'
 
-import carro from "../assets/cars/imgExample.png"
 import PhotosCar from '@/components/cards/photosCarCard'
 import { Footer } from '@/components/footer/footer';
 import { HeaderLogged } from '@/components/header/headerLogged';
+import ExpandPhotoModal from '@/components/modals/expandPhoto';
 
 
 const ProductPage = () => {
@@ -30,9 +30,7 @@ const ProductPage = () => {
             <Box h='100%' w='100%' display='flex' alignItems='center' flexDirection='column' bgGradient={{cel: 'linear(to-b, brand1 0%, brand1 13.5%,brand4 13.5%, brand4 100%)', desk:'linear(to-b, brand1 0%, brand1 25%,brand4 25%, brand4 100%)'}}>
                 <Box w='95%' display={{ cel: "flex", desk: "grid" }} alignItems='center' flexDirection='column'>
                     <Box display='flex' flexDirection='column' w={{cel:"95%", desk:'50%'}}>
-                        <Box h='355px'  w='100%'  maxWidth='1032px' bg="grey10" marginTop='45px' borderRadius='4px' display='flex' alignItems='center' justifyContent='center'>
-                            <Image src={carro} alt='Mercedes benz A'/>
-                        </Box>
+                        <ExpandPhotoModal />
                     
                         <Box  w='100%'  maxWidth='1032px' h='326px' borderRadius='4px' display='flex' marginTop='17px' bg='grey10' alignItems='flex-start' flexDirection='column' justifyContent='space-between' p='28px 48px'>
                             <Box padding='16px 0' h='224px' display='flex' flexDirection='column' justifyContent='space-between'>
@@ -56,7 +54,6 @@ const ProductPage = () => {
                             <Text fontFamily='body' fontWeight='400' fontSize='16px' color='grey2' h='150px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
                         </Box>
                     </Box>
-
 
                     <Box marginTop='45px' display= 'flex' flexDirection='column' alignItems='center' w={{ cel: "95%", desk: "40%" }} pos={{cel:'relative', desk:'absolute'}} top={{cel:'0', desk:'80px'}} right={{cel:'0px', desk:'50px'}}>
                         <Box w='100%' h='359px' borderRadius='4px' p='36px 44px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-around' bg='grey10' gap='32px'>
