@@ -18,8 +18,7 @@ export const Hero = () => {
         />
         <Box
           position={"relative"}
-          padding={"0 1rem 0 1rem"}
-          //   height={"30rem"}
+          padding={"0 1rem 0 1rem"}          
           top={"50%"}
           display={"flex"}
           flexDirection={"column"}

@@ -16,11 +16,9 @@ const CardWrapper = () => {
             <CardUser carName={'Fusca'} price={5000} fipePrice={4000} userName={'Lilian Dias'}/>
             <CardUser carName={'Opala'} price={4000} fipePrice={8000} userName={'Fernanda Bolinger'}/>
             <CardUser carName={'Kadet'} price={5000} fipePrice={2000} userName={'Samir Dourado'}/>
-            <CardUser carName={'Passat'} price={6000} fipePrice={7000} userName={'Alex'}/>
-            {/* Componente com valores pra testar a função do icone desconto*/}
+            <CardUser carName={'Passat'} price={6000} fipePrice={7000} userName={'Alex'}/>            
         </Box>
     )
 }
-// flexWrap={{desk: 'wrap', med: 'wrap', cel: 'nowrap'}}
 
 export default CardWrapper

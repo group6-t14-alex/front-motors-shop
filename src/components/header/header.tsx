@@ -11,9 +11,7 @@ import {
   Menu,
   MenuButton,
   MenuItemOption,
-  MenuList,
-  MenuOptionGroup,
-  Text,
+  MenuList, 
   useDisclosure,
 } from "@chakra-ui/react";
 
@@ -50,7 +48,6 @@ export const Header = () => {
                   isActive={isOpen}
                   _hover={{ bg: "transpatent" }}
                   _after={{ bg: "transpatent" }}
-                  // as={Button}
                 >
                   {isOpen ? <CloseIcon /> : <HamburgerIcon />}
                 </MenuButton>
