@@ -64,6 +64,9 @@ const fontSizes = {
 
 const breakpoints = {
   cel: "0",
+  // grd: "1106px",
+  
+  grd: "700px",
   desk: "24em",
 };
 

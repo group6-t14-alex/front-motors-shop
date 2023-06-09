@@ -55,19 +55,19 @@ const Filter = () => {
       </Text>
       <Box
         display="flex"
-        justifyContent="space-between"
+        gap={'26px'}
         alignItems="center"
         width="100%"
       >
         <Input
           type="number"
-          width="45%"
+          width="7.8rem"
           borderRadius="none"
           bg="grey5"
           placeholder="Mínima"
         />
         <Input
-          width="45%"
+          width="7.8rem"
           borderRadius="none"
           bg="grey5"
           placeholder="Máxima"
@@ -78,20 +78,20 @@ const Filter = () => {
         Preço
       </Text>
       <Box
-        display="flex"
-        justifyContent="space-between"
+        display="flex"        
+        gap={'26px'}
         alignItems="center"
         width="100%"
       >
         <Input
           type="number"
-          width="45%"
+          width="7.8rem"
           borderRadius="none"
           bg="grey5"
           placeholder="Mínima"
         />
         <Input
-          width="45%"
+          width="7.8rem"
           borderRadius="none"
           bg="grey5"
           placeholder="Máxima"

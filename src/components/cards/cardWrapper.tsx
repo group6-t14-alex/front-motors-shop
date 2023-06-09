@@ -1,12 +1,16 @@
-import { UnorderedList, Box } from '@chakra-ui/react'
+import { Box } from '@chakra-ui/react'
 import CardUser from './userCard'
-import { wrap } from 'module'
 
 
 const CardWrapper = () => {
 
     return (
-        <UnorderedList maxWidth='1032px' display='flex' flexWrap='wrap' justifyContent='space-between' margin='0 auto'>
+        <Box maxWidth='1032px' display='flex'  
+        flexWrap={{grd:'wrap', cel: 'nowrap'}}
+        justifyContent='space-between' bgColor={'white'} 
+            width={'100%'} maxW={{desk: '1032px', cel: '375px'}} 
+            minW={'302px'} minH={'388px'} 
+            overflowX={{cel: 'auto'}} gap={{cel: '12px'}}>
             <CardUser carName={'Maserati - Ghibli'} price={10000} fipePrice={6000}/>
             <CardUser carName={'Brasília'} price={2000} fipePrice={5000}/>
             <CardUser carName={'Fusca'} price={5000} fipePrice={4000}/>
@@ -14,8 +18,9 @@ const CardWrapper = () => {
             <CardUser carName={'Kadet'} price={5000} fipePrice={2000}/>
             <CardUser carName={'Passat'} price={6000} fipePrice={7000}/>
             {/* Componente com valores pra testar a função do icone desconto*/}
-        </UnorderedList>
+        </Box>
     )
 }
+// flexWrap={{desk: 'wrap', med: 'wrap', cel: 'nowrap'}}
 
 export default CardWrapper
