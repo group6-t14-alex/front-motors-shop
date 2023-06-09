@@ -64,7 +64,7 @@ const fontSizes = {
 
 const breakpoints = {
   cel: "0",
-  desk: "24em",
+  desk: "48em",
 };
 
 export const theme = extendTheme({ colors, fonts, fontSizes, breakpoints });
