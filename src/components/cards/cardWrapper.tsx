@@ -6,9 +6,9 @@ const CardWrapper = () => {
 
     return (
         <Box maxWidth='1032px' display='flex'  
-        flexWrap={{grd:'wrap', cel: 'nowrap'}}
+        flexWrap={{desk:'wrap', cel: 'nowrap'}}
         justifyContent='space-between' bgColor={'white'} 
-            width={'100%'} maxW={{desk: '1032px', cel: '375px'}} 
+            width={'100%'} maxW={{desk: '1032px', cel: '100%'}} 
             minW={'302px'} minH={'388px'} 
             overflowX={{cel: 'auto'}} gap={{cel: '12px'}}>
             <CardUser carName={'Maserati - Ghibli'} price={10000} fipePrice={6000}/>

@@ -27,7 +27,7 @@ export default function Home() {
 
       <Box display={"flex"} flexDir={"column"} justifyContent={"center"}>
         <Header />
-        {/* <Hero/> */}
+        <Hero/>
       </Box>
 
       <Box
@@ -39,6 +39,8 @@ export default function Home() {
         width={"100%"}
         maxW={"1570px"}
         gap={{ desk: "1rem" }}
+        // mt={'0.5rem'}
+        p={'0.5'}
       >
         <CardWrapper />
 
@@ -59,6 +61,8 @@ export default function Home() {
         <Text>1 de 2</Text>
         <Button>{"Seguinte >"} </Button>
       </Box>
+
+      <Footer/>
 
       {/* </Box> */}
     </>

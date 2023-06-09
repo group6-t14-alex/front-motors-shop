@@ -7,7 +7,7 @@ const FilterDesk = () => {
       height="auto"
       // padding="1rem"
       width="100%"
-      display={{ cel: "none", grd: "flex" }}
+      display={{ cel: "none", desk: "flex" }}
       bgColor={'white'}
       minW={'320px'}
       maxW={'454px'}
