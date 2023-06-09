@@ -1,6 +1,7 @@
 import { Box, Image, Text, Button } from "@chakra-ui/react";
 import logoBranca from "../../assets/logoBranca.png";
 import { ChevronUpIcon } from "@chakra-ui/icons";
+
 export const Footer = () => {
   return (
     <>
@@ -44,7 +45,6 @@ export const Footer = () => {
           </Button>
         </Box>
       </Box>
-      ;
     </>
   );
 };
