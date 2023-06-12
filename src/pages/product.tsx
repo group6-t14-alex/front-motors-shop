@@ -34,7 +34,7 @@ const ProductPage = () => {
                     
                         <Box  w='100%'  maxWidth='1032px' h='326px' borderRadius='4px' display='flex' marginTop='17px' bg='grey10' alignItems='flex-start' flexDirection='column' justifyContent='space-between' p='28px 48px'>
                             <Box padding='16px 0' h='224px' display='flex' flexDirection='column' justifyContent='space-between'>
-                                <Text fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1'>Mercedes Benz A 200 CGI ADVANCE SEDAN mercedes benz A 200</Text>
+                                <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1'>Mercedes Benz A 200 CGI ADVANCE SEDAN mercedes benz A 200</Heading>
 
                                 <Box gap='32px' w={{ cel: "113px", desk: "100%" }} display='flex' flexDirection={{ cel: "column", desk: "row" }} justifyContent={{ cel: "space-between", desk: "space-between" }} alignItems='flex-start'>
                                     <ButtonGroup h='30px' w='113px' display='flex' flexDirection='row' spacing='10px'>
