@@ -11,9 +11,11 @@ import {
   Menu,
   MenuButton,
   MenuItemOption,
-  MenuList, 
+  MenuList,
   useDisclosure,
+  Link,
 } from "@chakra-ui/react";
+import NextLink from "next/link"
 
 // import { Link as LinkDom } from "react-router-dom";
 
@@ -75,12 +77,13 @@ export const Header = () => {
                     Fazer Login
                   </MenuItemOption>
                   <MenuItemOption color={"grey0"}
-                      fontFamily={"body"}
-                      fontSize={"body1"}                      
-                      fontWeight={"600"}
-                      width={"100%"}
-                  >                    
-                      Cadastrar                    
+                                  fontFamily={"body"}
+                                  fontSize={"body1"}
+                                  fontWeight={"600"}
+                                  width={"100%"}
+                                  as={NextLink} href={"/signup"}
+                  >
+                    Cadastrar
                   </MenuItemOption>
                 </MenuList>
               </>
