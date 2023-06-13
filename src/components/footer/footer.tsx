@@ -9,6 +9,7 @@ export const Footer = () => {
         bg={"grey0"}
         height={{ cel: "20rem", desk: "8.75rem" }}
         width={"100%"}
+        minW={"20rem"}
         display={"flex"}
         alignItems={"center"}
         justifyContent={"center"}
