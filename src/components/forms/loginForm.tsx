@@ -86,7 +86,8 @@ const LoginForm: NextPage = () => {
                 </InputGroup>            
             </FormControl>
 
-            <Link
+            <Link as={NextLink} href='recovery' 
+            // Criar página para recuperar senha
               fontFamily={"inter"}
               fontWeight={"500"}
               fontSize={"body2"}
@@ -103,7 +104,8 @@ const LoginForm: NextPage = () => {
                 width={"100%"}
                 height={"3rem"}
                 color={"white"}
-                _hover={{ bg: "brand1"}}
+                _hover={{ bg: "brand2"}}
+                _focus={{ bg: "brand1", color: "white"}}
                 mb={"1.5rem"}
             >
                 Entrar
@@ -113,7 +115,7 @@ const LoginForm: NextPage = () => {
         
         <Box display={"flex"} flexDirection={"column"} gap={"1.6rem"} width={"100%"} alignItems={"center"} justifyContent={"center"}>
             <Text>Ainda não possui conta ?</Text>
-            <Link as={NextLink} href='/'                
+            <Link as={NextLink} href='signup'                
                 border={"solid 1.5px #adb5bd"}
                 borderRadius={"4px"}            
                 p={"12px 28px"}
@@ -124,7 +126,9 @@ const LoginForm: NextPage = () => {
                 fontSize={"heading7"}
                 fontFamily={"body"}
                 fontStyle={"normal"}
-                _hover={{ fontStyle: "none" }}
+                bgColor={"white"}
+                _hover={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
+                _focus={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
             >
                 Cadastrar
             </Link>

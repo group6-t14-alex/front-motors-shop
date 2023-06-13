@@ -1,8 +1,22 @@
-import { Box, Image, Text, Button } from "@chakra-ui/react";
+import { Box, Image, Text, Button, Link } from "@chakra-ui/react";
 import logoBranca from "../../assets/logoBranca.png";
 import { ChevronUpIcon } from "@chakra-ui/icons";
+import NextLink from "next/link";
+
 
 export const Footer = () => {
+
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+    e.preventDefault();
+    
+    const href = e.currentTarget.href;
+    const targetId = href.replace(/.*\#/, '');
+    const elem = document.getElementById(targetId);
+    elem?.scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
       <Box
@@ -36,14 +50,19 @@ export const Footer = () => {
           >
             © 2022 - Todos os direitos reservados.
           </Text>
-          <Button
+          
+          <Link as={NextLink} href='#topo'
             width={"3.313rem"}
             height={"3.125rem"}
             bg={"grey1"}
-            borderRadius={"4px"}
+            borderRadius={"4px"}            
+            onClick={handleScroll}
+            display={"flex"}
+            justifyContent={"center"}            
+            alignItems={"center"}
           >
             <ChevronUpIcon fontWeight={"semibold"} color={"white"} />
-          </Button>
+          </Link>          
         </Box>
       </Box>
     </>

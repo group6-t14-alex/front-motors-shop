@@ -23,7 +23,7 @@ export const Header = () => {
   const { isOpen } = useDisclosure();
   return (
     <>
-      <Flex flexDirection={"row"} borderBottom={"2px solid #dee2e6"}>
+      <Flex flexDirection={"row"} borderBottom={"2px solid #dee2e6"} id="topo">
         <Container
           minWidth={"90vw"}
           display={"flex"}
@@ -36,6 +36,7 @@ export const Header = () => {
             width={"153px"}
             src={logoMotors.src}
             alt="Logo motors shop"
+            
           />
           <Menu>
             {({ isOpen }) => (
@@ -64,10 +65,11 @@ export const Header = () => {
                   gap={"1.5rem"}
                 >
                   <MenuItemOption
+                    as={NextLink} href='login'
                     fontFamily={"body"}
                     fontSize={"body1"}
                     fontWeight={"600"}
-                    color={"grey2"}
+                    color={"brand1"}
                     height={"3rem"}
                     isChecked={false}
                     _hover={{ bg: "transparent" }}
@@ -75,13 +77,16 @@ export const Header = () => {
                     _before={{ bg: "transparent" }}
                   >
                     Fazer Login
-                  </MenuItemOption>
-                  <MenuItemOption color={"grey0"}
-                                  fontFamily={"body"}
-                                  fontSize={"body1"}
-                                  fontWeight={"600"}
-                                  width={"100%"}
-                                  as={NextLink} href={"/signup"}
+                  </MenuItemOption>                  
+                  <MenuItemOption 
+                    color={"grey0"}
+                    fontFamily={"body"}
+                    fontSize={"body1"}
+                    fontWeight={"600"}
+                    width={"100%"}
+                    as={NextLink} href={"/signup"}
+                    _hover={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
+                    _focus={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
                   >
                     Cadastrar
                   </MenuItemOption>
@@ -97,21 +102,25 @@ export const Header = () => {
             height={"100%"}
             alignItems={"center"}
           >
-            <Button
+            <Button 
+              as={NextLink} href='login'
               fontFamily={"body"}
               fontSize={"body1"}
               fontWeight={"600"}
-              color={"grey2"}
+              color={"brand1"}
               variant={"ghost"}
             >
               Fazer Login
             </Button>
             <Button
+              as={NextLink} href='signup'
               color={"grey0"}
               fontFamily={"body"}
               fontSize={"body1"}
               variant={"outline"}
               fontWeight={"600"}
+              _hover={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
+              _focus={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
             >
               Cadastrar
             </Button>
