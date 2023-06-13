@@ -113,8 +113,10 @@ export default function SignupCard() {
               <Stack direction='row' spacing={4}>
                 <Button
                   bg={typeUser == 'buyer' ? 'brand1' : 'white'}
-                  color={typeUser == 'buyer' ? 'white' : 'black'}
+                  color={typeUser == 'buyer' ? 'white' : 'grey0'}
                   variant={typeUser == 'buyer' ? 'solid' : 'outline'}
+                  _hover={typeUser == 'buyer' ? { bg: "brand1" } : { bg: "grey0", color: "grey10" }}
+                  _focus={typeUser == 'buyer' ? { bg: "brand1" } : { bg: "brand2", color: "grey10" }}
                   onClick={() =>
                     setTypeUser('buyer')
                   }
@@ -123,8 +125,10 @@ export default function SignupCard() {
                 </Button>
                 <Button
                   bg={typeUser == 'seller' ? 'brand1' : 'white'}
-                  color={typeUser == 'seller' ? 'white' : 'black'}
+                  color={typeUser == 'seller' ? 'white' : 'grey0'}
                   variant={typeUser == 'seller' ? 'solid' : 'outline'}
+                  _hover={typeUser == 'seller' ? { bg: "brand1" } : { bg: "grey0", color: "grey10" }}
+                  _focus={typeUser == 'seller' ? { bg: "brand1" } : { bg: "brand2", color: "grey10" }}
                   onClick={() =>
                     setTypeUser('seller')
                   }
@@ -168,9 +172,9 @@ export default function SignupCard() {
                   size="lg"
                   bg={'brand1'}
                   color={'white'}
-                  _hover={{
-                    bg: 'brand3',
-                  }}>
+                  _hover={{ bg: "brand2"}}
+                  _focus={{ bg: "brand1", color: "white"}}
+                >
                   Finalizar cadastro
                 </Button>
               </Stack>

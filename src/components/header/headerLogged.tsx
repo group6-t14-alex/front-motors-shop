@@ -24,7 +24,7 @@ export const HeaderLogged = () => {
   const { isOpen } = useDisclosure();
   return (
     <>
-      <Flex flexDirection={"row"} borderBottom={"2px solid #dee2e6"}>
+      <Flex flexDirection={"row"} borderBottom={"2px solid #dee2e6"} id="topo">
         <Container
           minWidth={"90vw"}
           display={"flex"}

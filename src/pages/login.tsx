@@ -1,6 +1,5 @@
 import { Footer } from "@/components/footer/footer";
 import { Header } from "@/components/header/header";
-import { Box, Button, Input, Text } from "@chakra-ui/react";
 import { NextPage } from "next";
 import Head from "next/head";
 import LoginForm from "@/components/forms/loginForm";
@@ -14,10 +13,7 @@ const LoginPage: NextPage = () => {
             <meta name="viewport" content="width=device-width, initial-scale=1" />
             <link rel="icon" href="/favicon.ico" />
         </Head>
-
-        {/* <Box display={"flex"} flexDir={"column"} justifyContent={"center"} minW={"20rem"}> */}
-            <Header />
-        {/* </Box> */}
+        <Header />        
         <LoginForm/>
         <Footer />
         </>
