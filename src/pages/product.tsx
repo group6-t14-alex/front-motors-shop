@@ -26,7 +26,7 @@ const ProductPage = () => {
 
     return (
         <>
-            <HeaderLogged/>
+            <HeaderLogged />
             <Box h='100%' w='100%' display='flex' alignItems='center' flexDirection='column' bgGradient={{cel: 'linear(to-b, brand1 0%, brand1 13.5%,brand4 13.5%, brand4 100%)', desk:'linear(to-b, brand1 0%, brand1 25%,brand4 25%, brand4 100%)'}}>
                 <Box w='95%' display={{ cel: "flex", desk: "grid" }} alignItems='center' flexDirection='column'>
                     <Box display='flex' flexDirection='column' w={{cel:"95%", desk:'50%'}}>
