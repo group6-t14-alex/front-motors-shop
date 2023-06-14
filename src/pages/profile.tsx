@@ -2,9 +2,12 @@
 import { Footer } from "@/components/footer/footer"
 import { HeaderLogged } from "@/components/header/headerLogged"
 import CreateAd from "@/components/modals/createAd";
-import { Avatar, Box, Button, Heading, List, Text } from "@chakra-ui/react"
 
-const Profile = () => {
+import { Avatar, Box, Heading, List, Text } from "@chakra-ui/react"
+import { NextPage } from "next";
+
+
+const Profile: NextPage<any> = ({}) => {
 
     return (
         <>

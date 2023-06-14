@@ -8,12 +8,7 @@ import {
     ModalHeader,
     Button,
     Heading,
-    Text,
-    FormControl,
-    FormLabel,
-    Input,
-    Box,
-    ButtonGroup
+    Text
 } from '@chakra-ui/react'
 import CreateAdForm from '../forms/createAdForm';
 
