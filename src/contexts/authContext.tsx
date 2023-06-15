@@ -1,8 +1,8 @@
-import { UserData, UserRequest} from "@/schemas/user.schema";
-import { api } from "@/services/api";
-import { useRouter } from "next/router";
-import { ReactNode, createContext, useContext } from "react";
-import Toast from "@/components/Toasts/toast";
+import {UserRequest} from "@/schemas/user.schema";
+import {api} from "@/services/api";
+import {useRouter} from "next/router";
+import {createContext, ReactNode, useContext} from "react";
+import {useToast} from "@chakra-ui/toast";
 
 interface Props {
   children: ReactNode;
@@ -16,17 +16,32 @@ const AuthContext = createContext<authProviderData>({} as authProviderData);
 
 export const AuthProvider = ({ children }: Props) => {
   const router = useRouter();
+  const toast = useToast();
 
   const registerUser = (userRequest: UserRequest) => {
     api
       .post("/user", userRequest)
       .then(() => {
-        Toast({ message: "usuário cadastrado com sucesso!", isSucess: true });
+        toast({
+          position: "top-right",
+          title: "Sucesso",
+          description: "usuário cadastrado com sucesso!",
+          status: "success",
+          duration: 6000,
+          isClosable: true,
+        });
         router.push("/login");
       })
       .catch((err) => {
         console.log(err);
-        Toast({ message: "Erro ao criar usuário, tente utilizar outro e-mail!" });
+        toast({
+          position: "top-right",
+          title: "Erro",
+          description: "Erro ao criar usuário, tente utilizar outro e-mail!",
+          status: "error",
+          duration: 6000,
+          isClosable: true,
+        });
       });
   };
   return <AuthContext.Provider value={{ registerUser }}>{children}</AuthContext.Provider>;
