@@ -10,4 +10,9 @@ export const api = axios.create({
     timeout: 5000
 })
 
+export const apiCep = axios.create({
+    baseURL: 'https://viacep.com.br/ws',
+    timeout: 5000
+})
+
 export default apiKenzieKars
