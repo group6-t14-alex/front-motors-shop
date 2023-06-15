@@ -1,31 +1,28 @@
-import { toast } from "react-toastify";
+import {useToast} from "@chakra-ui/toast";
 
 interface IToastProps {
   message: string;
   isSucess?: boolean;
 }
 const Toast = ({ message, isSucess = false }: IToastProps) => {
+  const toast = useToast();
   return isSucess
-    ? toast.success(message, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light"
+    ? toast({
+      position: "top-right",
+      title: "Sucesso",
+      description: message,
+      status: "success",
+      duration: 2000,
+      isClosable: true,
       })
-    : toast.error(message, {
-        position: "top-right",
-        autoClose: 2000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light"
-      });
+    : toast({
+      position: "top-right",
+      title: "Erro",
+      description: message,
+      status: "error",
+      duration: 2000,
+      isClosable: true,
+    });
 };
 
 export default Toast;
