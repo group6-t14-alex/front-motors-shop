@@ -1,4 +1,4 @@
-import { fipeCarsData } from '@/schem/carsFipe/cars.schema'
+import { fipeCarsData } from '@/schemas/carsFipe/cars.schema'
 import apiKenzieKars from '@/services/api'
 import {
     Button,
@@ -12,12 +12,9 @@ import {
 } from '@chakra-ui/react'
 import { GetServerSideProps } from 'next'
 
-// interface CreateAdProps {
-//     car: fipeCarsData[]
-// }
 
 export const getServerSideProps: GetServerSideProps = async (cxt) => {
-    const response = await apiKenzieKars.get<fipeCarsData[]>("cars")
+    const response = await apiKenzieKars.get<fipeCarsData[]>("/cars")
 
     return {
       props: {car: response.data}
@@ -25,9 +22,6 @@ export const getServerSideProps: GetServerSideProps = async (cxt) => {
 }
 
 const CreateAdForm = ({car}: any) => {
-    const { onClose } = useDisclosure();
-
-    console.log(car)
 
     return (
         <>
@@ -51,7 +45,10 @@ const CreateAdForm = ({car}: any) => {
                     </FormLabel>
 
                     <FormLabel width={'100%'} color={"grey1"} fontSize={"body2"} fontFamily={"body"} fontWeight={'500'}>Modelo
-                    <Input type={'text'} color={"grey3"} fontSize={"body2"} fontFamily={"body"} fontWeight={'400'} variant='outline' placeholder={'A 200 CGI ADVANCE SEDAN'} focusBorderColor={'brand1'}/>
+                    <Input type={'text'} color={"grey3"} fontSize={"body2"} fontFamily={"body"} fontWeight={'400'} variant='outline' placeholder={'A 200 CGI ADVANCE SEDAN'} focusBorderColor={'brand1'} list='model'/>
+                    <datalist id='model'>
+                        <option value=""></option>
+                    </datalist>
                     </FormLabel>
 
                     <Box width={'100%'} display={'flex'} flexDir={'row'}>
@@ -115,7 +112,7 @@ const CreateAdForm = ({car}: any) => {
                     <Button size={'sm'} bg={'brand4'} color={'brand1'} marginBottom={'20px'} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'}>Adicionar campo para imagem da galeria</Button>
 
                     <ButtonGroup marginBottom={'32px'} w={'100%'} justifyContent={{cel:'center', desk: 'flex-end'}}>
-                        <Button onClick={() => onClose} w={{cel:'48%', desk:'126px'}} size={'md'} bg={'grey6'} color={"grey2"} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'}>Cancelar</Button>
+                        <Button w={{cel:'48%', desk:'126px'}} size={'md'} bg={'grey6'} color={"grey2"} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'}>Cancelar</Button>
                         <Button type='submit' w={{cel:'48%', desk:'193px'}} size={'md'} bg={'brand3'} color={"brand4"} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'} _hover={{bg:'brand1', color:'white'}}>Criar Anúncio</Button>
                     </ButtonGroup>
                 </FormControl>
