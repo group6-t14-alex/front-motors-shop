@@ -21,8 +21,27 @@ export const userSchema = z.object({
 
 export const userSchemaRequest = userSchema.omit({
   id: true,
-})
+});
+
+export const loginSchema = userSchema.omit({
+  id: true,
+  name: true,
+  cpf: true,
+  phone: true,
+  date_of_birth: true,
+  description: true,
+  cep: true,
+  number: true,
+  complement: true,
+  type_user: true, 
+  confirmPassword: true,
+  state: true,
+  city: true,
+  address: true,
+});
 
 export type UserRequest = z.infer<typeof userSchemaRequest>;
 
 export type UserData = z.infer<typeof userSchema>;
+
+export type LoginData = z.infer<typeof loginSchema>;

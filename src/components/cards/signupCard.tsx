@@ -14,17 +14,24 @@ import {
   useColorModeValue,
   Link, Textarea, FormErrorMessage,
 } from '@chakra-ui/react';
-import { useState } from 'react';
+import {useState} from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import {useForm} from "react-hook-form";
 import {UserRequest, userSchemaRequest} from "@/schemas/user.schema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useAuth} from "@/contexts/authContext";
+import toast from "@/components/Toasts/toast";
+import {useToast} from "@chakra-ui/toast";
+import {apiCep} from "@/services/api";
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [typeUser, setTypeUser] = useState('buyer');
+  const [typeUser, setTypeUser] = useState('comprador');
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+
 
   const {
     register,
@@ -34,12 +41,40 @@ export default function SignupCard() {
     resolver: zodResolver(userSchemaRequest)
   });
 
+  const handleCep = (event: any) => findCep((event.target.value));
+
   const { registerUser  } = useAuth();
+  const toast = useToast();
+
+  const findCep = async (cep: string) => {
+    cep = cep.replace(/[^0-9]/gi, "");
+    if (cep.length == 8) {
+      await apiCep.get(`/${cep}/json/`).then((response) => {
+        console.log(response)
+        setAddress(response.data.logradouro);
+        setCity(response.data.localidade);
+        setState((response.data.uf));
+      }).catch((err) => {
+        console.log(err)
+      });
+    }
+  }
 
   const onFormSubmit = (formData: UserRequest) => {
     console.log(formData);
-    formData.type_user = typeUser;
-    registerUser(formData);
+    if (formData.password != formData.confirmPassword) {
+      toast({
+        position: "top-right",
+        title: "Erro",
+        description: "Erro na Confirmação de senha!",
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+    } else {
+      formData.type_user = typeUser;
+      registerUser(formData);
+    }
   };
 
   return (
@@ -128,6 +163,7 @@ export default function SignupCard() {
                 <Input
                   placeholder={'00000-000'}
                   {...register("cep")}
+                  onChange={handleCep}
                 />
                 <FormErrorMessage>
                   {errors.cep && errors.cep.message}
@@ -141,6 +177,7 @@ export default function SignupCard() {
                       type="text"
                       placeholder={'Digitar Estado'}
                       {...register("state")}
+                      value={state}
                     />
                   </FormControl>
                 </Box>
@@ -151,6 +188,7 @@ export default function SignupCard() {
                       type="text"
                       placeholder={'Digitar cidade'}
                       {...register("city")}
+                      value={city}
                     />
                   </FormControl>
                 </Box>
@@ -160,6 +198,7 @@ export default function SignupCard() {
                 <Input
                   placeholder={'Digitar logradouro'}
                   {...register("address")}
+                  value={address}
                 />
               </FormControl>
               <HStack>
@@ -192,25 +231,25 @@ export default function SignupCard() {
               </Text>
               <Stack direction='row' spacing={4}>
                 <Button
-                  bg={typeUser == 'buyer' ? 'brand1' : 'white'}
-                  color={typeUser == 'buyer' ? 'white' : 'grey0'}
-                  variant={typeUser == 'buyer' ? 'solid' : 'outline'}
-                  _hover={typeUser == 'buyer' ? { bg: "brand1" } : { bg: "grey0", color: "grey10" }}
-                  _focus={typeUser == 'buyer' ? { bg: "brand1" } : { bg: "brand2", color: "grey10" }}
+                  bg={typeUser == 'comprador' ? 'brand1' : 'white'}
+                  color={typeUser == 'comprador' ? 'white' : 'grey0'}
+                  variant={typeUser == 'comprador' ? 'solid' : 'outline'}
+                  _hover={typeUser == 'comprador' ? { bg: "brand1" } : { bg: "grey0", color: "grey10" }}
+                  _focus={typeUser == 'comprador' ? { bg: "brand1" } : { bg: "brand2", color: "grey10" }}
                   onClick={() =>
-                    setTypeUser('buyer')
+                    setTypeUser('comprador')
                   }
                 >
                   Comprador
                 </Button>
                 <Button
-                  bg={typeUser == 'seller' ? 'brand1' : 'white'}
-                  color={typeUser == 'seller' ? 'white' : 'grey0'}
-                  variant={typeUser == 'seller' ? 'solid' : 'outline'}
-                  _hover={typeUser == 'seller' ? { bg: "brand1" } : { bg: "grey0", color: "grey10" }}
-                  _focus={typeUser == 'seller' ? { bg: "brand1" } : { bg: "brand2", color: "grey10" }}
+                  bg={typeUser == 'anunciante' ? 'brand1' : 'white'}
+                  color={typeUser == 'anunciante' ? 'white' : 'grey0'}
+                  variant={typeUser == 'anunciante' ? 'solid' : 'outline'}
+                  _hover={typeUser == 'anunciante' ? { bg: "brand1" } : { bg: "grey0", color: "grey10" }}
+                  _focus={typeUser == 'anunciante' ? { bg: "brand1" } : { bg: "brand2", color: "grey10" }}
                   onClick={() =>
-                    setTypeUser('seller')
+                    setTypeUser('anunciante')
                   }
                 >
                   Anunciante
@@ -280,3 +319,4 @@ export default function SignupCard() {
     </Flex>
   );
 }
+

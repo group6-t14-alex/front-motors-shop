@@ -14,17 +14,35 @@ import {
 import NextLink from 'next/link'
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import { LoginData, loginSchema } from "@/schemas/user.schema";
+import { useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useAuth } from "@/contexts/authContext";
 
 
 const LoginForm: NextPage = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [emailInput, setEmailInput] = useState('')
-    const [passwordInput, setPasswordInput] = useState('')
+    // const [emailInput, setEmailInput] = useState('')
+    // const [passwordInput, setPasswordInput] = useState('')
 
-    const handleInputEmailChange = (e: any) => setEmailInput(e.target.value)
-    const handlePasswordChange = (e: any) => setPasswordInput(e.target.value)
+    // const handleInputEmailChange = (e: any) => setEmailInput(e.target.value)
+    // const handlePasswordChange = (e: any) => setPasswordInput(e.target.value)
 
-    const isError = emailInput === ''
+    // const isError = emailInput === ''
+
+    const { 
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting}
+     } = useForm<LoginData>({
+        resolver: zodResolver(loginSchema)
+    });
+
+    const { loginUser } = useAuth();
+
+    const onFormSubmit = (formData: LoginData) => {        
+        loginUser(formData)
+    };
 
     return (
         <>        
@@ -44,7 +62,7 @@ const LoginForm: NextPage = () => {
             mb={{cel: "4.4rem", desk: "7.5rem"}}
             boxShadow={'lg'}
         >
-        <form>
+        <form onSubmit={handleSubmit(onFormSubmit)}>
         <Heading
             alignSelf={"flex-start"} 
             fontSize={"heading5"} 
@@ -56,24 +74,26 @@ const LoginForm: NextPage = () => {
         </Heading>
         
         <Stack spacing={4} display={"flex"} width={"100%"}>
-            <FormControl id={"email"} isRequired>
+            <FormControl id={"email"} isInvalid={Boolean(errors.email)}>
             <FormLabel>Email</FormLabel>
-            <Input type={'email'} placeholder={"Digitar email"} 
-            //   value={emailInput} onChange={handleInputEmailChange}
-            />
-            {/* {!isError ? (
-                <FormHelperText>
-                Enter the ema
-                </FormHelperText>
-            ) : (
-                <FormErrorMessage>Email is required.</FormErrorMessage>
-            )}            */}
+                <Input
+                 type={'email'} 
+                 placeholder={"Digitar email"}
+                 {...register("email")}
+                />
+                <FormErrorMessage>
+                  {errors.email && errors.email.message}
+                </FormErrorMessage>            
             </FormControl>
 
-            <FormControl id={"password"} isRequired>
+            <FormControl id={"password"} isInvalid={Boolean(errors.password)}>
             <FormLabel>Senha</FormLabel>
             <InputGroup>
-                  <Input type={showPassword ? 'text' : 'password'} placeholder={'Digitar senha'} />
+                  <Input 
+                    type={showPassword ? 'text' : 'password'} 
+                    placeholder={'Digitar senha'} 
+                    {...register("password")}
+                />
                   <InputRightElement h={'full'}>
                     <Button
                       variant={'ghost'}
@@ -83,7 +103,10 @@ const LoginForm: NextPage = () => {
                       {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                     </Button>
                   </InputRightElement>
-                </InputGroup>            
+                </InputGroup>  
+                <FormErrorMessage>
+                  {errors.password && errors.password.message}
+                </FormErrorMessage>          
             </FormControl>
 
             <Link as={NextLink} href='recovery' 
