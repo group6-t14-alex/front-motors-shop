@@ -1,9 +1,8 @@
 import { z } from "zod";
 
 export const carSchemaRequest = z.object({
-    name: z.string().nonempty(),
     description: z.string(),
-    year: z.number(),
+    year: z.string(),
     priceFipe: z.number(),
     km:z.number(),
     price: z.number(),
@@ -12,7 +11,7 @@ export const carSchemaRequest = z.object({
     fuel: z.string(),
     imageUrl:z.string(),
     color:z.string(),
-    isActive: z.boolean()
+    isActive: z.boolean().default(true)
 })
 
 export const carSchemaReturn = carSchemaRequest.extend({

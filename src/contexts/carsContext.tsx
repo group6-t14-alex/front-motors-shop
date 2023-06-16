@@ -1,8 +1,8 @@
 import { api, apiKenzieKars } from "@/services/api";
-import Toast from "@/components/Toasts/toast";
+import {useToast} from "@chakra-ui/toast";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { CarRequest } from "@/schemas/car.schema";
-import { CreateAdInterface, createAdReturnInterface } from "@/interfaces/createAd.interface";
+import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 
 
 interface Props {
@@ -15,7 +15,7 @@ interface carProviderData {
     getBrandByFipe: (brand: string) => Promise<any>;
     adProfile: createAdReturnInterface[];
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
-    getBrands: []
+    getBrands: never[]
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -24,6 +24,7 @@ export const CarProvider = ({children}: Props) => {
     const [adProfile, setAdProfile] = useState<
     createAdReturnInterface[]
   >([]);
+    const toast = useToast();
     const [getBrands, setGetBrands] = useState([])
 
     useEffect(() => {
@@ -59,18 +60,39 @@ export const CarProvider = ({children}: Props) => {
     };
 
     const createAd = async (carRequest: CarRequest) => {
+        const token = localStorage.getItem("motorsShop")
         try {
-            const response = await api.post("/cars", carRequest)
+            const response = await api.post("/cars", carRequest,{
+                headers: {
+                  Authorization: `Bearer ${token}`
+                }
+            })
 
             if(response.data){
-                console.log(response.data)
+                
                 setAdProfile(response.data)
+                console.log(adProfile)
 
-                Toast({ message: "Anúncio criado com sucesso"});
+                toast({
+                    position: "top-right",
+                    title: "Sucesso",
+                    description: "anúncio criado com sucesso!",
+                    status: "success",
+                    duration: 6000,
+                    isClosable: true,
+                  });;
             }
 
-        } catch (error) {
-            Toast({ message: "Erro ao anunciar veículo. Tente novamente!" });
+        } catch (errors) {
+            console.log(errors)
+            toast({
+                position: "top-right",
+                title: "Error",
+                description: "Ops! tente novamente",
+                status: "error",
+                duration: 6000,
+                isClosable: true,
+              });
         }
     };
 
