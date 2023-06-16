@@ -21,14 +21,7 @@ import { useAuth } from "@/contexts/authContext";
 
 
 const LoginForm: NextPage = () => {
-    const [showPassword, setShowPassword] = useState(false);
-    // const [emailInput, setEmailInput] = useState('')
-    // const [passwordInput, setPasswordInput] = useState('')
-
-    // const handleInputEmailChange = (e: any) => setEmailInput(e.target.value)
-    // const handlePasswordChange = (e: any) => setPasswordInput(e.target.value)
-
-    // const isError = emailInput === ''
+    const [showPassword, setShowPassword] = useState(false);    
 
     const { 
         register,
