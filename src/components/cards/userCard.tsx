@@ -3,12 +3,12 @@ import image from '/public/imagem.png'
 
 
 const CardUser = ({carName, description, advertiser, tags, price, fipePrice, userName}: any) => {
-    
+
     const bigDeal = (price: number, fipePrice: number) => {
         if (price < fipePrice) {
             return <Text pos={'absolute'} right={'0'} top={'0'} fontWeight={'500'} color={'white'} bg={'random7'} p={'5px'} borderRadius={'2px'} borderColor={'random7'}>$</Text>
         }
-    }    
+    }
 
     return (
         <Card maxW={'312px'} maxH={'356px'} minW={'312px'} display={'flex'} flexDirection={'column'} border={'none'} boxShadow={'none'} marginBottom={'80px'} >
@@ -24,7 +24,7 @@ const CardUser = ({carName, description, advertiser, tags, price, fipePrice, use
             </CardBody>
 
             <CardFooter bgColor={'white'} pl={1} pr={1} display={'flex'} flexDirection={'column'} gap={'20px'}>
-                <Box display={'flex'} alignItems={'center'} gap={'20px'}>                    
+                <Box display={'flex'} alignItems={'center'} gap={'20px'}>
                     <Avatar name={userName} size={'sm'}/>
                     <Text fontSize={'body2'} fontWeight={'500'} >{userName}</Text>
                 </Box>
