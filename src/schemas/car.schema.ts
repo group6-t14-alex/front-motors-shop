@@ -10,7 +10,7 @@ export const carSchemaRequest = z.object({
     model: z.string().nonempty(),
     brand: z.string().nonempty(),
     fuel: z.string(),
-    image:z.string(),
+    imageUrl:z.string(),
     color:z.string(),
     isActive: z.boolean()
 })

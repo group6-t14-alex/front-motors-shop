@@ -2,7 +2,6 @@ import { useCarContext } from '@/contexts/carsContext'
 import { FipeApi } from '@/interfaces/carApi.interface'
 import { CarRequest, carSchemaRequest } from '@/schemas/car.schema'
 import { fipeCarsData } from '@/schemas/carsFipe/cars.schema'
-import {apiKenzieKars} from '@/services/api'
 
 import {useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -29,15 +28,16 @@ import {
 
 import { GetServerSideProps } from 'next'
 import { useEffect, useState } from 'react'
-import { CreateAdInterface } from '@/interfaces/createAd.interface'
 
-export const getServerSideProps: GetServerSideProps = async (cxt) => {
-    const response = await apiKenzieKars.get<fipeCarsData[]>("/cars")
+// export const getServerSideProps: GetServerSideProps = async (cxt) => {
+//     const response = await apiKenzieKars.get<fipeCarsData[]>("/cars")
 
-    return {
-      props: {car: response.data}
-    }
-}
+
+
+//     return {
+//       props: {car: response.data}
+//     }
+// }
 
 const CreateAd = ({car}: any) => {
     const [brand, setBrand] = useState("");
@@ -45,20 +45,26 @@ const CreateAd = ({car}: any) => {
     const [models, setModels] = useState<FipeApi[]>([]);
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const {createAd, getBrandByFipe} = useCarContext()
+    const {createAd, getBrandByFipe, getBrands} = useCarContext()
 
     const {
         register,
         handleSubmit,
         setValue,
-        control,
         formState: { errors },
     } = useForm<CarRequest>({
         resolver: zodResolver(carSchemaRequest),
     })
 
+    const handleBrand= async (event: any) => {
+        setBrand(event.target.textContent.toLowerCase())
+
+        await getBrandByFipe(event.target.textContent.toLowerCase())
+    }
+
     useEffect(() => {
         if(brand.length){
+            console.log(brand)
             const getModelsBrand = async () => {
                 setModels(await getBrandByFipe(brand))
             }
@@ -69,7 +75,8 @@ const CreateAd = ({car}: any) => {
 
     useEffect(() => {
         if (model.length) {
-          const getYearAndFuel = async () => {
+          const getInfos = async () => {
+
             const findingModel = models.find((car) => car.name === model);
             if (findingModel) {
               const fuelTypes = ["Flex", "Diesel", "Eletrico"];
@@ -80,7 +87,7 @@ const CreateAd = ({car}: any) => {
               setValue("priceFipe", findingModel.value);
             }
           };
-          getYearAndFuel();
+          getInfos();
         }
 
       }, [model, setValue, models]);
@@ -88,7 +95,6 @@ const CreateAd = ({car}: any) => {
 
     const submitHandler = (formData: CarRequest) => {
         console.log(formData);
-
 
         createAd({...formData, km: +formData.km, brand: brand.charAt(0).toUpperCase(), model: model.charAt(0).toUpperCase()});
     };
@@ -202,12 +208,12 @@ const CreateAd = ({car}: any) => {
                                     <Textarea {...register("description")} color={"grey2"} fontSize={"body2"} fontFamily={"body"} fontWeight={'400'}  variant='outline' placeholder={'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.'} focusBorderColor={'brand1'}/>
                                 </FormControl>
 
-                                <FormControl id="image" isInvalid={Boolean(errors.image)}>
+                                <FormControl id="imageUrl" isInvalid={Boolean(errors.imageUrl)}>
                                     <FormLabel  color={"grey1"} fontSize={"body2"} fontFamily={"body"} fontWeight={'500'} width={'100%'}>Imagem da capa</FormLabel>
 
-                                    <Input {...register("image")} type={'text'} color={"grey3"} fontSize={"body2"} fontFamily={"body"} fontWeight={'400'} variant='outline' placeholder={'https://image.com'} focusBorderColor={'brand1'}/>
+                                    <Input {...register("imageUrl")} type={'text'} color={"grey3"} fontSize={"body2"} fontFamily={"body"} fontWeight={'400'} variant='outline' placeholder={'https://image.com'} focusBorderColor={'brand1'}/>
 
-                                    <FormErrorMessage>{errors.image && errors.image.message}</FormErrorMessage>
+                                    <FormErrorMessage>{errors.imageUrl && errors.imageUrl.message}</FormErrorMessage>
                                 </FormControl>
 
                                 <FormControl>
