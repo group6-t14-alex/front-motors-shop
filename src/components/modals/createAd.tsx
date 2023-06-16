@@ -106,7 +106,7 @@ const CreateAd = ({car}: any) => {
         console.log(formData);
 
 
-        createAd({...formData, km: +formData.km,brand: brand.charAt(0).toUpperCase(), model: model.charAt(0).toUpperCase()}, );
+        createAd({...formData,brand: brand.charAt(0).toUpperCase(), model: model.charAt(0).toUpperCase()}, );
     };
 
     return (
