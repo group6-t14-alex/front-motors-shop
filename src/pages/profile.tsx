@@ -2,7 +2,8 @@
 import { Footer } from "@/components/footer/footer"
 import { HeaderLogged } from "@/components/header/headerLogged"
 import CreateAd from "@/components/modals/createAd";
-import { Avatar, Box, Button, Heading, List, Text } from "@chakra-ui/react"
+import {Avatar, Box, Button, Heading, Link, List, Text} from "@chakra-ui/react"
+import CardUser from "@/components/cards/userCard";
 
 const Profile = () => {
 
@@ -22,14 +23,24 @@ const Profile = () => {
                                 Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim maxime possimus debitis, quae earum aliquid, quo aspernatur nobis laborum alias assumenda eligendi necessitatibus repellat accusamus nemo voluptatibus sit beatae et.
                             </Text>
                     </Box>
-                    
+
                     <CreateAd />
                 </Box>
 
-                <Box h={{cel:'498px', desk:'1900px'}}>
-                    <List>
-
-                    </List>
+                <Box maxWidth='1032px' display='flex'
+                     flexWrap={{desk:'wrap', cel: 'nowrap'}}
+                     justifyContent='space-around'
+                     width={'100%'} maxW={{desk: '1400px', cel: '100%'}}
+                     minW={'302px'} minH={'388px'}
+                     overflowX={{cel: 'auto'}} gap={{cel: '12px'}}>
+                    <CardUser carName={'Maserati - Ghibli'} price={10000} fipePrice={6000} userName={'Douglas Diniz'}/>
+                    <CardUser carName={'Brasília'} price={2000} fipePrice={5000} userName={'Edson Kokado'}/>
+                    <CardUser carName={'Fusca'} price={5000} fipePrice={4000} userName={'Lilian Dias'}/>
+                    <CardUser carName={'Opala'} price={4000} fipePrice={8000} userName={'Fernanda Bolinger'}/>
+                    <CardUser carName={'Kadet'} price={5000} fipePrice={2000} userName={'Samir Dourado'}/>
+                    <CardUser carName={'Passat'} price={6000} fipePrice={7000} userName={'Alex'}/>
+                    <CardUser carName={'Passat'} price={6000} fipePrice={7000} userName={'Alex'}/>
+                    <CardUser carName={'Passat'} price={6000} fipePrice={7000} userName={'Alex'}/>
                 </Box>
             </Box>
             <Footer />
