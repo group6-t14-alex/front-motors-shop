@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-const apiKenzieKars = axios.create({
-    baseURL: 'https://kenzie-kars.herokuapp.com/api',
+export const apiKenzieKars = axios.create({
+    baseURL: 'https://kenzie-kars.herokuapp.com/cars',
     timeout: 5000
 })
 
@@ -14,5 +14,3 @@ export const apiCep = axios.create({
     baseURL: 'https://viacep.com.br/ws',
     timeout: 5000
 })
-
-export default apiKenzieKars

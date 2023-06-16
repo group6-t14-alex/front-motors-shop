@@ -5,7 +5,10 @@ import CreateAd from "@/components/modals/createAd";
 import {Avatar, Box, Button, Heading, Link, List, Text} from "@chakra-ui/react"
 import CardUser from "@/components/cards/userCard";
 
-const Profile = () => {
+import { NextPage } from "next";
+
+
+const Profile: NextPage<any> = ({}) => {
 
     return (
         <>
