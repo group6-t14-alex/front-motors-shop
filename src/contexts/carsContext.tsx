@@ -1,5 +1,6 @@
 import { api, apiKenzieKars } from "@/services/api";
 import {useToast} from "@chakra-ui/toast";
+import { parseCookies } from "nookies";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { CarRequest } from "@/schemas/car.schema";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
@@ -11,7 +12,7 @@ interface Props {
 
 
 interface carProviderData {
-    createAd: (carRequest: CarRequest) => void;
+    createAd: (carRequest: CarRequest, onClose: () => void) => void;
     getBrandByFipe: (brand: string) => Promise<any>;
     adProfile: createAdReturnInterface[];
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
@@ -26,6 +27,11 @@ export const CarProvider = ({children}: Props) => {
   >([]);
     const toast = useToast();
     const [getBrands, setGetBrands] = useState([])
+    const cookies = parseCookies();
+
+    if (cookies["@MotorsShop"]) {
+        api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
+    }
 
     useEffect(() => {
         const getApiFipe = async () => {
@@ -59,19 +65,14 @@ export const CarProvider = ({children}: Props) => {
         return result;
     };
 
-    const createAd = async (carRequest: CarRequest) => {
-        const token = localStorage.getItem("motorsShop")
+    const createAd = async (carRequest: CarRequest, onClose: () => void) => {
+        
         try {
-            const response = await api.post("/cars", carRequest,{
-                headers: {
-                  Authorization: `Bearer ${token}`
-                }
-            })
+            const response = await api.post("/cars", carRequest)
 
             if(response.data){
                 
                 setAdProfile(response.data)
-                console.log(adProfile)
 
                 toast({
                     position: "top-right",
@@ -81,6 +82,8 @@ export const CarProvider = ({children}: Props) => {
                     duration: 6000,
                     isClosable: true,
                   });;
+
+                  onClose();
             }
 
         } catch (errors) {

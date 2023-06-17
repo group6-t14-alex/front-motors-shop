@@ -35,7 +35,7 @@ const CreateAd = ({car}: any) => {
     const [models, setModels] = useState<FipeApi[]>([]);
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const {createAd, getBrandByFipe, getBrands} = useCarContext()
+    const {createAd, getBrandByFipe, getBrands, adProfile} = useCarContext()
 
     const {
         register,
@@ -46,6 +46,7 @@ const CreateAd = ({car}: any) => {
         resolver: zodResolver(carSchemaRequest),
     })
 
+
     const handleBrand= async (event: any) => {
         const gettingValue= event.target.value.toLowerCase()
 
@@ -54,7 +55,6 @@ const CreateAd = ({car}: any) => {
         if(verifiyng){
             setBrand(gettingValue)
         }
-        console.log(brand)
     }
 
     useEffect(() => {
@@ -76,7 +76,6 @@ const CreateAd = ({car}: any) => {
         if(verifiyngModel){
             setModel(gettingModelValue)
         }
-        console.log(model)
     }
 
     useEffect(() => {
@@ -87,8 +86,6 @@ const CreateAd = ({car}: any) => {
             if (findingModel) {
               const fuelTypes = ["Flex", "Diesel", "Eletrico"];
               const fuelType = fuelTypes[findingModel.fuel - 1];
-
-              console.log(findingModel)
          
               setValue("year", findingModel.year);
               setValue("fuel", fuelType);
@@ -99,21 +96,20 @@ const CreateAd = ({car}: any) => {
           getInfos();
         }
 
-      }, [model, setValue, models]);
+    }, [model, setValue, models]);
 
 
     const submitHandler = (formData: CarRequest) => {
         console.log(formData);
 
-
-        createAd({...formData,brand: brand.charAt(0).toUpperCase(), model: model.charAt(0).toUpperCase()}, );
+        createAd({...formData,brand: brand.charAt(0).toUpperCase(), model: model.charAt(0).toUpperCase()}, onClose);
     };
 
     return (
         <>
             <Button size={'lg'} colorScheme={'brand1'} borderRadius={'4px'} color={'brand1'} fontFamily={'body'} fontWeight={'600'} fontSize={'body1'} variant='outline' _hover={{bg:'brand4'}} onClick={onOpen}>Criar anuncio</Button>
 
-            <Modal onClose={onClose} isOpen={isOpen} isCentered>
+            <Modal motionPreset='slideInBottom' onClose={onClose} isOpen={isOpen} isCentered>
                 <ModalOverlay/>
 
                 <ModalContent display={'flex'} alignItems={'center'} bg={'white'} mt={'80px'}>
@@ -234,7 +230,7 @@ const CreateAd = ({car}: any) => {
                                 <Button size={'sm'} bg={'brand4'} color={'brand1'} marginBottom={'20px'} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'}>Adicionar campo para imagem da galeria</Button>
 
                                 <ModalFooter marginBottom={'32px'} w={'100%'} justifyContent={{cel:'space-between', desk: 'flex-end'}} gap={{desk:'0.5rem'}}>
-                                    <Button onClick={() => onClose} w={{cel:'48%', desk:'126px'}} size={'md'} bg={'grey6'} color={"grey2"} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'}>Cancelar</Button>
+                                    <Button onClick={onClose} w={{cel:'48%', desk:'126px'}} size={'md'} bg={'grey6'} color={"grey2"} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'}>Cancelar</Button>
                                     <Button type='submit' w={{cel:'48%', desk:'193px'}} size={'md'} bg={'brand3'} color={"brand4"} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'} _hover={{bg:'brand1', color:'white'}}>Criar Anúncio</Button>
                                 </ModalFooter>
                             </Stack>
