@@ -54,8 +54,7 @@ export const HeaderLogged = () => {
                   display={{ cel: "flex", desk: "none" }}
                   isActive={isOpen}
                   _hover={{ bg: "transpatent" }}
-                  _after={{ bg: "transpatent" }}
-                  // as={Button}
+                  _after={{ bg: "transpatent" }}                  
                 >
                   {isOpen ? <CloseIcon /> : <HamburgerIcon />}
                 </MenuButton>
@@ -121,14 +120,14 @@ export const HeaderLogged = () => {
             alignItems={"center"}
             paddingLeft={"2.75rem"}
           >
-            <Avatar name={user.name} />
+            <Avatar name={user?.name} />
             <Text
               color={"grey2"}
               fontFamily={"body"}
               fontWeight={"400"}
               fontSize={"body1"}
             >
-              {user.name}
+              {user?.name}
             </Text>
           </Box>
         </Container>

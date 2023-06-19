@@ -12,6 +12,7 @@ import { useCarContext } from '@/contexts/carsContext'
 import { api } from '@/services/api'
 import { CarDataReturn } from '@/schemas/car.schema'
 import {useToast} from "@chakra-ui/toast";
+import { UserInterface } from "@/interfaces/user.interface";
               
 export const getServerSideProps: GetServerSideProps = async (props) => {
   const cookies = parseCookies(props)
@@ -41,16 +42,10 @@ interface ProfileInterface {
 
 
 const Profile: NextPage<any> = ({ cars }) => {
-   
-  
 
-    
     const { user }: any = useContext(AuthContext)
-    const { userCars }: any = useCarContext()
-    // console.log(user)
-    console.log(userCars)
+    const { userCars }: any = useCarContext()    
     
-
     return (
         <>
             <HeaderLogged />
@@ -84,7 +79,7 @@ const Profile: NextPage<any> = ({ cars }) => {
                       display={'flex'} 
                       flexDirection={'column'}
                       gap={'16px'}>
-                        <Avatar size={'xl'} name={user.name}/>
+                        <Avatar size={'xl'} name={ user?.name }/>
 
                         <Box display={'flex'} flexDirection={'row'} gap={'15px'}>
                             <Heading 
@@ -93,7 +88,7 @@ const Profile: NextPage<any> = ({ cars }) => {
                               fontSize={'heading6'} 
                               color={'grey1'}
                              >
-                              {user.name}
+                              { user?.name }
                             </Heading>
                             <Text 
                               p={'4px 8px'} 
@@ -104,11 +99,11 @@ const Profile: NextPage<any> = ({ cars }) => {
                               fontSize={'body2'} 
                               borderRadius={'4px'}
                              >
-                              {user.type_user}
+                              { user?.type_user }
                              </Text>
                         </Box>
                             <Text color={'grey2'} fontFamily={'body'} fontWeight={'400'} fontSize={'body1'}>
-                                {user.description}
+                                { user?.description }
                             </Text>
                     </Box>
 
@@ -130,7 +125,7 @@ const Profile: NextPage<any> = ({ cars }) => {
                             carImage={car.imageUrl}
                             price={car.price}
                             fipePrice={car.priceFipe}
-                            userName={user.name}
+                            userName={user?.name}
                             description={car.description}
                             year={car.year}
                             km={car.km}
@@ -184,8 +179,8 @@ const Profile: NextPage<any> = ({ cars }) => {
             )
           })}
         </Box>
-      </Box>
-      <Footer /> */}
+      </Box> */}
+      {/* <Footer /> */}
     </>
   )
 }

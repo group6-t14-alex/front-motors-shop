@@ -4,7 +4,6 @@ import { parseCookies } from "nookies";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { CarRequest } from "@/schemas/car.schema";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
-import jwt_decode from "jwt-decode"
 import { useAuth } from "./authContext";
 
 interface Props {
@@ -23,14 +22,10 @@ interface carProviderData {
 const CarContext = createContext<carProviderData>({} as carProviderData);
 
 export const CarProvider = ({children}: Props) => {
-    const [adProfile, setAdProfile] = useState<
-    createAdReturnInterface[]
-  >([]);
-
+    const [adProfile, setAdProfile] = useState<createAdReturnInterface[]>([]);
     const [userCars, setUserCars] = useState<createAdReturnInterface[]>([]);
-
+    
     const {user} = useAuth()
-
     const toast = useToast();
     const [getBrands, setGetBrands] = useState([])
     const cookies = parseCookies();
@@ -38,7 +33,6 @@ export const CarProvider = ({children}: Props) => {
     if (cookies["@MotorsShop"]) {
         api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
     }
-
 
     useEffect(() => {
         const getApiFipe = async () => {
@@ -49,9 +43,7 @@ export const CarProvider = ({children}: Props) => {
     
                 Object.keys(response.data).forEach(key => {
                     arrayOfbrands.push(key);
-                })
-    
-                
+                })                
     
                 setGetBrands(arrayOfbrands)
     
@@ -77,11 +69,11 @@ export const CarProvider = ({children}: Props) => {
         
         try {
             const response = await api.post("/cars", carRequest)
-            console.log(response)
+            
             if(response.data){
-
                 
-                setAdProfile(response.data)
+                setAdProfile((previousProfile) => [...previousProfile,response.data])
+                setUserCars((previousUserCars) => [...previousUserCars, response.data])
 
                 toast({
                     position: "top-right",
@@ -113,8 +105,7 @@ export const CarProvider = ({children}: Props) => {
 
         const getUserCars = async () => {
             try {
-                const response = await api.get(`/user/${user!.id}`)
-                console.log(response)
+                const response = await api.get(`/user/${user!.id}`)                
                 
                 if(response.data){
                     setUserCars(response.data.car)
@@ -128,38 +119,6 @@ export const CarProvider = ({children}: Props) => {
         getUserCars()
 
     }, [user])
-
-    // const getUserCars = async () => {
-    //     try {
-    //         const response = await api.get(`/user/${user.id}`)
-    //         console.log(response)
-  
-    //         if(response.data){
-  
-    //             toast({
-    //                 position: "top-right",
-    //                 title: "Sucesso",
-    //                 description: "anúncio criado com sucesso!",
-    //                 status: "success",
-    //                 duration: 6000,
-    //                 isClosable: true,
-    //               });
-  
-    //         }
-  
-    //     } catch (errors) {
-    //         console.log(errors)
-    //         toast({
-    //             position: "top-right",
-    //             title: "Error",
-    //             description: "Ops! tente novamente",
-    //             status: "error",
-    //             duration: 6000,
-    //             isClosable: true,
-    //           });
-    //     }
-    //   };
-
 
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars}}>

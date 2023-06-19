@@ -29,16 +29,6 @@ import {
 import { useEffect, useState } from 'react'
 
 
-// export const getServerSideProps: GetServerSideProps = async (cxt) => {
-//     const response = await apiKenzieKars.get<fipeCarsData[]>("/cars")
-
-
-
-//     return {
-//       props: {car: response.data}
-//     }
-// }
-
 const CreateAd = ({car}: any) => {
     const [brand, setBrand] = useState("");
     const [model, setModel] = useState("");
