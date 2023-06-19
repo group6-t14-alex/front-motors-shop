@@ -40,14 +40,13 @@ interface ProfileInterface {
 
 
 const Profile: NextPage<any> = ({ cars }) => {
-
-    // const cookiesLadoCliente = parseCookies()
-    // console.log("cliente", cookiesLadoCliente)
+   
+  
 
     
     const { user }: any = useContext(AuthContext)
-    console.log(user)
-    console.log(cars)
+    // console.log(user)
+    // console.log(cars)
 
     return (
         <>
@@ -119,14 +118,23 @@ const Profile: NextPage<any> = ({ cars }) => {
                      width={'100%'} maxW={{desk: '1400px', cel: '100%'}}
                      minW={'302px'} minH={'388px'}
                      overflowX={{cel: 'auto'}} gap={{cel: '12px'}}>
-                    <CardUser carName={'Maserati - Ghibli'} price={10000} fipePrice={6000} userName={'Douglas Diniz'}/>
-                    <CardUser carName={'Brasília'} price={2000} fipePrice={5000} userName={'Edson Kokado'}/>
-                    <CardUser carName={'Fusca'} price={5000} fipePrice={4000} userName={'Lilian Dias'}/>
-                    <CardUser carName={'Opala'} price={4000} fipePrice={8000} userName={'Fernanda Bolinger'}/>
-                    <CardUser carName={'Kadet'} price={5000} fipePrice={2000} userName={'Samir Dourado'}/>
-                    <CardUser carName={'Passat'} price={6000} fipePrice={7000} userName={'Alex'}/>
-                    <CardUser carName={'Passat'} price={6000} fipePrice={7000} userName={'Alex'}/>
-                    <CardUser carName={'Passat'} price={6000} fipePrice={7000} userName={'Alex'}/>
+
+                    {cars.map((car: any) => {
+                        return (
+                          <CardUser
+                            key={car.id}
+                            carName={car.model}
+                            carImage={car.imageUrl}
+                            price={car.price}
+                            fipePrice={car.priceFipe}
+                            userName={user.name}
+                            description={car.description}
+                            year={car.year}
+                            km={car.km}
+                          />
+                        )
+                      })}
+                    
                 </Box>
             </Box>
             <Text
@@ -140,7 +148,7 @@ const Profile: NextPage<any> = ({ cars }) => {
               laborum alias assumenda eligendi necessitatibus repellat accusamus
               nemo voluptatibus sit beatae et.
             </Text>
-          </Box>
+          {/* </Box>
 
           <CreateAd />
         </Box>
@@ -173,26 +181,26 @@ const Profile: NextPage<any> = ({ cars }) => {
           })}
         </Box>
       </Box>
-      <Footer />
+      <Footer /> */}
     </>
   )
 }
 
-<!-- export const getServerSideProps: GetServerSideProps = async (ctx) => {
+// export const getServerSideProps: GetServerSideProps = async (ctx) => {
     
-    const cookies = nookies.get(ctx)
-    if(!cookies["@MotorsShop"]) {
-        return {
-            redirect: {
-                destination: "/login",
-                permanent: false
-            }
-        };
-    };
+//     const cookies = nookies.get(ctx)
+//     if(!cookies["@MotorsShop"]) {
+//         return {
+//             redirect: {
+//                 destination: "/login",
+//                 permanent: false
+//             }
+//         };
+//     };
 
-    return {
-        props: {}
-    };    
-}; -->
+//     return {
+//         props: {}
+//     };    
+// }; 
 
 export default Profile

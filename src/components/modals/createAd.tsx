@@ -69,8 +69,7 @@ const CreateAd = ({car}: any) => {
     }
 
     useEffect(() => {
-        if(brand.length){
-            console.log(brand)
+        if(brand.length){            
             const getModelsBrand = async () => {
                 setModels(await getBrandByFipe(brand))
             }
@@ -110,10 +109,9 @@ const CreateAd = ({car}: any) => {
     }, [model, setValue, models]);
 
 
-    const submitHandler = (formData: CarRequest) => {
-        console.log(formData);
+    const submitHandler = (formData: CarRequest) => {        
 
-        createAd({...formData,brand: brand.charAt(0).toUpperCase(), model: model.charAt(0).toUpperCase()}, onClose);
+        createAd(formData, onClose);
 
     };
 

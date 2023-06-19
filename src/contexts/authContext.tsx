@@ -1,11 +1,12 @@
 import {UserRequest, LoginData} from "@/schemas/user.schema";
 import {api} from "@/services/api";
 import {useRouter} from "next/router";
-import {createContext, ReactNode, useContext, useState} from "react";
+import {createContext, ReactNode, useContext, useState, useEffect} from "react";
 import {useToast} from "@chakra-ui/toast";
 import jwt_decode from "jwt-decode"
 import { UserInterface } from "@/interfaces/user.interface";
-import { setCookie } from "nookies";
+import { setCookie, parseCookies } from "nookies";
+
 
 interface Props {
   children: ReactNode;
@@ -26,6 +27,28 @@ export const AuthProvider = ({ children }: Props) => {
   const router = useRouter();
   const toast = useToast();
   const [user, setUser] = useState<UserInterface | null>(null)
+
+
+  // useEffect( () => {
+  //   (async () =>{
+  //     const token = parseCookies();
+  //     if(token){
+  //       try {
+  //         const result = await api.get("/profile/")
+  //         setUser(result.data[0])          
+  //         router.push("/profile")
+  //     } catch (error) {
+  //       console.log(error)
+  //       toast({
+  //         position: "top-right",
+  //         title: "Erro",
+  //         description: "Sessão expirada, faça o login novamente",
+  //         status: "error",
+  //         duration: 6000,
+  //         isClosable: true,
+  //       });
+  //     }
+  // }})()}, [toast, router]);
 
   const registerUser = (userRequest: UserRequest) => {
     api
@@ -90,41 +113,7 @@ export const AuthProvider = ({ children }: Props) => {
         isClosable: true,
       });
     }
-
-    // api
-    //   .post("/login", loginData)
-    //   .then((response) => {
-    //     setCookie(null, "@MotorsShop", response.data.token, {
-    //       maxAge: 60 * 60 * 1,
-    //       path: "/"
-    //     });
-    //     setUser(response.data.user)
-    //     console.log(response)
-    //     console.log(response.data.user)
-
-    //   })
-    //   .then(() => {
-    //     toast({
-    //       position: "top-right",
-    //       title: "Sucesso",
-    //       description: "usuário logado com sucesso!",
-    //       status: "success",
-    //       duration: 6000,
-    //       isClosable: true,
-    //     });
-    //     router.push("/profile");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);      
-    //     toast({
-    //       position: "top-right",
-    //       title: "Erro",
-    //       description: "Falha no login!",
-    //       status: "error",
-    //       duration: 6000,
-    //       isClosable: true,
-    //     });
-    //   });   
+  
   };
 
   return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser }}>{children}</AuthContext.Provider>;

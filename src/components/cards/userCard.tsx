@@ -12,6 +12,7 @@ import image from '/public/imagem.png'
 
 const CardUser = ({
   carName,
+  carImage,
   description,
   advertiser,
   tags,
@@ -22,7 +23,7 @@ const CardUser = ({
   userName
 }: any) => {
   const bigDeal = (price: number, fipePrice: number) => {
-    if (price < fipePrice) {
+    if (+price < fipePrice) {
       return (
         <Text
           pos={'absolute'}
@@ -54,7 +55,7 @@ const CardUser = ({
     >
       <CardHeader bgColor={'grey7'} mb={1}>
         <Image
-          src={image.src}
+          src={carImage}
           alt={'Car A'}
           width={'100%'}
           maxW={'262px'}

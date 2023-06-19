@@ -20,7 +20,6 @@ import {useForm} from "react-hook-form";
 import {UserRequest, userSchemaRequest} from "@/schemas/user.schema";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useAuth} from "@/contexts/authContext";
-import toast from "@/components/Toasts/toast";
 import {useToast} from "@chakra-ui/toast";
 import {apiCep} from "@/services/api";
 
@@ -50,7 +49,7 @@ export default function SignupCard() {
     cep = cep.replace(/[^0-9]/gi, "");
     if (cep.length == 8) {
       await apiCep.get(`/${cep}/json/`).then((response) => {
-        console.log(response)
+        
         setAddress(response.data.logradouro);
         setCity(response.data.localidade);
         setState((response.data.uf));
@@ -61,7 +60,7 @@ export default function SignupCard() {
   }
 
   const onFormSubmit = (formData: UserRequest) => {
-    console.log(formData);
+    
     if (formData.password != formData.confirmPassword) {
       toast({
         position: "top-right",
