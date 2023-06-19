@@ -17,8 +17,6 @@ interface authProviderData {
   loginUser: (loginData: LoginData) => void;
   user: UserInterface | null;
   setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>
-  // setToken: (value: string) => void;
-  // token: string | undefined;
 }
 
 export const AuthContext = createContext<authProviderData>({} as authProviderData);
@@ -28,27 +26,35 @@ export const AuthProvider = ({ children }: Props) => {
   const toast = useToast();
   const [user, setUser] = useState<UserInterface | null>(null)
 
+  useEffect(() => {
+    
+    const getLocalToken = async () => {
+      try {
+        const tokenLocal = parseCookies();
+        if (!tokenLocal) {
+          return {
+            redirect: {
+              destination: "/login",
+              permanent: false
+            }
+          };
+        }
+        const token: any = jwt_decode(tokenLocal["@MotorsShop"])
+        
+        const userData = await api.get(`/user/${+token.sub}`, {
+          headers: {
+            Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`
+          }
+        })
 
-  // useEffect( () => {
-  //   (async () =>{
-  //     const token = parseCookies();
-  //     if(token){
-  //       try {
-  //         const result = await api.get("/profile/")
-  //         setUser(result.data[0])          
-  //         router.push("/profile")
-  //     } catch (error) {
-  //       console.log(error)
-  //       toast({
-  //         position: "top-right",
-  //         title: "Erro",
-  //         description: "Sessão expirada, faça o login novamente",
-  //         status: "error",
-  //         duration: 6000,
-  //         isClosable: true,
-  //       });
-  //     }
-  // }})()}, [toast, router]);
+        setUser(userData.data)        
+      } catch (error) {
+        console.log(error)        
+      }
+    }    
+    getLocalToken();
+  
+  },[]);
 
   const registerUser = (userRequest: UserRequest) => {
     api
@@ -83,7 +89,7 @@ export const AuthProvider = ({ children }: Props) => {
     try {
       const response = await api.post("/login", loginData);      
       const token: any = jwt_decode(response.data.token);
-      const user = await api.get(`/user/${token.sub}`, {
+      const userData = await api.get(`/user/${token.sub}`, {
         headers: {
           Authorization: `Bearer ${response.data.token}`
         }
@@ -100,8 +106,8 @@ export const AuthProvider = ({ children }: Props) => {
         duration: 6000,
         isClosable: true,
       });
-      router.push("/profile");      
-      setUser(user.data)
+      router.push("/profile");
+      setUser(userData.data)
     } catch (error) {
       console.log(error)
       toast({

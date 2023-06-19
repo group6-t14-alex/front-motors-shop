@@ -17,8 +17,6 @@ import {
 } from "@chakra-ui/react";
 import NextLink from "next/link"
 
-// import { Link as LinkDom } from "react-router-dom";
-
 export const Header = () => {
   const { isOpen } = useDisclosure();
   return (

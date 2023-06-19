@@ -47,18 +47,25 @@ const CardUser = ({
       maxW={'312px'}
       maxH={'356px'}
       minW={'312px'}
+      minH={'356px'}
       display={'flex'}
       flexDirection={'column'}
       border={'none'}
       boxShadow={'none'}
       marginBottom={'80px'}
     >
-      <CardHeader bgColor={'grey7'} mb={1}>
+      <CardHeader 
+        bgColor={'grey7'} 
+        mb={1} 
+        maxH={"150px"}
+        display={"flex"}
+        justifyContent={"center"}
+        alignContent={"center"}
+        p={"0"}
+      >
         <Image
           src={carImage}
-          alt={'Car A'}
-          width={'100%'}
-          maxW={'262px'}
+          alt={'Car A'}          
           height={'auto'}
           objectFit={'cover'}
         />
@@ -72,10 +79,23 @@ const CardUser = ({
         display={'flex'}
         flexDir={'column'}
       >
-        <Text fontSize={'body1'} fontWeight={'600'} color={'grey1'}>
+        <Text 
+          fontSize={'body1'} 
+          fontWeight={'600'} 
+          color={'grey1'} 
+          white-space={"nowrap"}
+          width={"100%"}
+          maxH={"22px"}
+          overflow={"hidden"}
+          text-overflow={"ellipsis"}
+          mb={"1rem"}          
+         >
           {carName}
         </Text>
-        <Text fontSize={'body2'} fontWeight={'400'} color={'grey2'}>
+        <Text fontSize={'body2'} fontWeight={'400'} color={'grey2'} minH={"50px"} maxH={"50px"}
+        overflow={"hidden"}
+        text-overflow={"ellipsis"}
+        mb={"1rem"}  >
           {description}
         </Text>
       </CardBody>
