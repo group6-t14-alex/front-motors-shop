@@ -8,9 +8,9 @@ export interface UserInterface {
     phone: string;
     date_of_birth: string;
     description: string;
-    type_user: "comprador" | "anunciante";
+    type_user: string;
     cep: string;
     number: string;
     complement?: string;
     car: Array<createAdReturnInterface>;
-  }
+}
