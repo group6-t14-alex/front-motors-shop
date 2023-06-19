@@ -5,6 +5,7 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 import { CarRequest } from "@/schemas/car.schema";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 import jwt_decode from "jwt-decode"
+import { useAuth } from "./authContext";
 
 interface Props {
     children: ReactNode;
@@ -15,7 +16,8 @@ interface carProviderData {
     getBrandByFipe: (brand: string) => Promise<any>;
     adProfile: createAdReturnInterface[];
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
-    getBrands: never[]
+    getBrands: never[];
+    userCars:createAdReturnInterface[]
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -24,6 +26,10 @@ export const CarProvider = ({children}: Props) => {
     const [adProfile, setAdProfile] = useState<
     createAdReturnInterface[]
   >([]);
+
+    const [userCars, setUserCars] = useState<createAdReturnInterface[]>([]);
+
+    const {user} = useAuth()
 
     const toast = useToast();
     const [getBrands, setGetBrands] = useState([])
@@ -103,9 +109,60 @@ export const CarProvider = ({children}: Props) => {
         }
     };
 
+    useEffect(() => {
+
+        const getUserCars = async () => {
+            try {
+                const response = await api.get(`/user/${user!.id}`)
+                console.log(response)
+                
+                if(response.data){
+                    setUserCars(response.data.car)
+                }
+      
+            } catch (errors) {
+                console.log(errors)
+            }
+        }
+
+        getUserCars()
+
+    }, [user])
+
+    // const getUserCars = async () => {
+    //     try {
+    //         const response = await api.get(`/user/${user.id}`)
+    //         console.log(response)
+  
+    //         if(response.data){
+  
+    //             toast({
+    //                 position: "top-right",
+    //                 title: "Sucesso",
+    //                 description: "anúncio criado com sucesso!",
+    //                 status: "success",
+    //                 duration: 6000,
+    //                 isClosable: true,
+    //               });
+  
+    //         }
+  
+    //     } catch (errors) {
+    //         console.log(errors)
+    //         toast({
+    //             position: "top-right",
+    //             title: "Error",
+    //             description: "Ops! tente novamente",
+    //             status: "error",
+    //             duration: 6000,
+    //             isClosable: true,
+    //           });
+    //     }
+    //   };
+
 
     return (
-        <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands}}>
+        <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars}}>
             {children}
         </CarContext.Provider>
     )
