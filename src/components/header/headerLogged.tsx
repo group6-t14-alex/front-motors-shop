@@ -1,3 +1,4 @@
+import { AuthContext } from "@/contexts/authContext";
 import logoMotors from "../../assets/logoMotors.png";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
@@ -17,11 +18,14 @@ import {
   useDisclosure,
   Avatar,
 } from "@chakra-ui/react";
+import { useContext, useEffect, useState } from 'react'
 
 // import { Link as LinkDom } from "react-router-dom";
 
 export const HeaderLogged = () => {
   const { isOpen } = useDisclosure();
+  const { user }: any = useContext(AuthContext)
+      
   return (
     <>
       <Flex flexDirection={"row"} borderBottom={"2px solid #dee2e6"} id="topo">
@@ -117,14 +121,14 @@ export const HeaderLogged = () => {
             alignItems={"center"}
             paddingLeft={"2.75rem"}
           >
-            <Avatar name="Samuel Leão" />
+            <Avatar name={user.name} />
             <Text
               color={"grey2"}
               fontFamily={"body"}
               fontWeight={"400"}
               fontSize={"body1"}
             >
-              Samuel Leão
+              {user.name}
             </Text>
           </Box>
         </Container>

@@ -3,4 +3,5 @@ export const convertToNumber = (value: string) => {
     const values =  parseFloat(getPrice)
 
     return String(values)
+
 }

@@ -29,6 +29,16 @@ import {
 import { useEffect, useState } from 'react'
 
 
+// export const getServerSideProps: GetServerSideProps = async (cxt) => {
+//     const response = await apiKenzieKars.get<fipeCarsData[]>("/cars")
+
+
+
+//     return {
+//       props: {car: response.data}
+//     }
+// }
+
 const CreateAd = ({car}: any) => {
     const [brand, setBrand] = useState("");
     const [model, setModel] = useState("");
@@ -45,6 +55,7 @@ const CreateAd = ({car}: any) => {
     } = useForm<CarRequest>({
         resolver: zodResolver(carSchemaRequest),
     })
+
 
 
     const handleBrand= async (event: any) => {
@@ -103,6 +114,7 @@ const CreateAd = ({car}: any) => {
         console.log(formData);
 
         createAd({...formData,brand: brand.charAt(0).toUpperCase(), model: model.charAt(0).toUpperCase()}, onClose);
+
     };
 
     return (

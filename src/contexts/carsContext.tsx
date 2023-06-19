@@ -5,11 +5,9 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 import { CarRequest } from "@/schemas/car.schema";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 
-
 interface Props {
     children: ReactNode;
 }
-
 
 interface carProviderData {
     createAd: (carRequest: CarRequest, onClose: () => void) => void;
@@ -25,6 +23,7 @@ export const CarProvider = ({children}: Props) => {
     const [adProfile, setAdProfile] = useState<
     createAdReturnInterface[]
   >([]);
+
     const toast = useToast();
     const [getBrands, setGetBrands] = useState([])
     const cookies = parseCookies();
@@ -32,6 +31,7 @@ export const CarProvider = ({children}: Props) => {
     if (cookies["@MotorsShop"]) {
         api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
     }
+
 
     useEffect(() => {
         const getApiFipe = async () => {
@@ -71,6 +71,7 @@ export const CarProvider = ({children}: Props) => {
             const response = await api.post("/cars", carRequest)
 
             if(response.data){
+
                 
                 setAdProfile(response.data)
 
@@ -81,7 +82,8 @@ export const CarProvider = ({children}: Props) => {
                     status: "success",
                     duration: 6000,
                     isClosable: true,
-                  });;
+                  });
+
 
                   onClose();
             }
