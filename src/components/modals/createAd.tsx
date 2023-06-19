@@ -95,7 +95,6 @@ const CreateAd = ({car}: any) => {
 
     const submitHandler = (formData: CarRequest) => {
         console.log(formData);
-
         createAd({...formData, km: +formData.km, brand: brand.charAt(0).toUpperCase(), model: model.charAt(0).toUpperCase()});
     };
 

@@ -4,11 +4,20 @@ import { HeaderLogged } from "@/components/header/headerLogged"
 import CreateAd from "@/components/modals/createAd";
 import {Avatar, Box, Button, Heading, Link, List, Text} from "@chakra-ui/react"
 import CardUser from "@/components/cards/userCard";
-
-import { NextPage } from "next";
+import { useContext, useEffect, useState } from 'react'
+import { NextPage, GetServerSideProps } from "next";
+import nookies, {parseCookies} from "nookies"
+import { AuthContext } from '@/contexts/authContext'
 
 
 const Profile: NextPage<any> = ({}) => {
+
+    // const cookiesLadoCliente = parseCookies()
+    // console.log("cliente", cookiesLadoCliente)
+
+
+    const { user }: any = useContext(AuthContext)
+    console.log(user)
 
     return (
         <>
@@ -16,14 +25,14 @@ const Profile: NextPage<any> = ({}) => {
             <Box h='100%' w='100%' display='flex' alignItems='center' flexDirection='column' bgGradient={{cel: 'linear(to-b, brand1 0%, brand1 23%,brand4 23%, brand4 100%)', desk:'linear(to-b, brand1 0%, brand1 11%,brand4 11%, brand4 100%)'}}>
                 <Box w={{cel:'92%', desk:'80%'}} h={{cel:'465px', desk:'400px'}} p={'40px 29px'} marginTop={{cel: '65px', desk:'75px'}} borderRadius={'4px'} display={{cel: 'flex', desk:'flex'}} flexDirection={{cel: 'column', desk:'column'}} alignItems={{cel: 'flex-start', desk:'flex-start'}} bg={'grey10'} gap={'16px'} justifyContent={'space-between'} marginBottom={'12px'}>
                     <Box h={'317px'} display={'flex'} flexDirection={'column'} gap={'16px'}>
-                        <Avatar size={'xl'} name="Samuel Leão"/>
+                        <Avatar size={'xl'} name={user.name}/>
 
                         <Box display={'flex'} flexDirection={'row'} gap={'15px'}>
-                            <Heading fontFamily={'heading'} fontWeight={'600'} fontSize={'heading6'} color={'grey1'}>Samuel Leão</Heading>
-                            <Text p={'4px 8px'} bg={'brand4'} color={'brand1'}fontFamily={'body'} fontWeight={'500'} fontSize={'body2'} borderRadius={'4px'}>Anunciante</Text>
+                            <Heading fontFamily={'heading'} fontWeight={'600'} fontSize={'heading6'} color={'grey1'}>{user.name}</Heading>
+                            <Text p={'4px 8px'} bg={'brand4'} color={'brand1'}fontFamily={'body'} fontWeight={'500'} fontSize={'body2'} borderRadius={'4px'}>{user.type_user}</Text>
                         </Box>
                             <Text color={'grey2'} fontFamily={'body'} fontWeight={'400'} fontSize={'body1'}>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Enim maxime possimus debitis, quae earum aliquid, quo aspernatur nobis laborum alias assumenda eligendi necessitatibus repellat accusamus nemo voluptatibus sit beatae et.
+                                {user.description}
                             </Text>
                     </Box>
 
@@ -50,5 +59,22 @@ const Profile: NextPage<any> = ({}) => {
         </>
     )
 }
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+    
+    const cookies = nookies.get(ctx)
+    if(!cookies["@MotorsShop"]) {
+        return {
+            redirect: {
+                destination: "/login",
+                permanent: false
+            }
+        };
+    };
+
+    return {
+        props: {}
+    };    
+};
 
 export default Profile

@@ -9,9 +9,12 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <AuthProvider>
+        {/* <UserContext> */}
+
         <CarProvider>
           <Component {...pageProps} />
         </CarProvider>
+        {/* </UserContext> */}
       </AuthProvider>
     </ChakraProvider>
   );
