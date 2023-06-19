@@ -4,6 +4,7 @@ import { parseCookies } from "nookies";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { CarRequest } from "@/schemas/car.schema";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
+import jwt_decode from "jwt-decode"
 
 interface Props {
     children: ReactNode;
@@ -44,7 +45,7 @@ export const CarProvider = ({children}: Props) => {
                     arrayOfbrands.push(key);
                 })
     
-                console.log(arrayOfbrands)
+                
     
                 setGetBrands(arrayOfbrands)
     
@@ -61,15 +62,16 @@ export const CarProvider = ({children}: Props) => {
         const { data: result }= await apiKenzieKars.get("", {
           params: { brand: brand },
         });
-        console.log(brand)
+        
         return result;
     };
 
     const createAd = async (carRequest: CarRequest, onClose: () => void) => {
         
+        
         try {
             const response = await api.post("/cars", carRequest)
-
+            console.log(response)
             if(response.data){
 
                 
