@@ -11,6 +11,7 @@ import { AuthContext } from '@/contexts/authContext'
 import { useCarContext } from '@/contexts/carsContext'
 import { api } from '@/services/api'
 import { CarDataReturn } from '@/schemas/car.schema'
+import {useToast} from "@chakra-ui/toast";
               
 export const getServerSideProps: GetServerSideProps = async (props) => {
   const cookies = parseCookies(props)
@@ -45,8 +46,10 @@ const Profile: NextPage<any> = ({ cars }) => {
 
     
     const { user }: any = useContext(AuthContext)
+    const { userCars }: any = useCarContext()
     // console.log(user)
-    // console.log(cars)
+    console.log(userCars)
+    
 
     return (
         <>
@@ -119,7 +122,7 @@ const Profile: NextPage<any> = ({ cars }) => {
                      minW={'302px'} minH={'388px'}
                      overflowX={{cel: 'auto'}} gap={{cel: '12px'}}>
 
-                    {cars.map((car: any) => {
+                    {userCars.map((car: any) => {
                         return (
                           <CardUser
                             key={car.id}
@@ -137,7 +140,8 @@ const Profile: NextPage<any> = ({ cars }) => {
                     
                 </Box>
             </Box>
-            <Text
+            <Footer />
+            {/* <Text
               color={'grey2'}
               fontFamily={'body'}
               fontWeight={'400'}
@@ -147,7 +151,7 @@ const Profile: NextPage<any> = ({ cars }) => {
               maxime possimus debitis, quae earum aliquid, quo aspernatur nobis
               laborum alias assumenda eligendi necessitatibus repellat accusamus
               nemo voluptatibus sit beatae et.
-            </Text>
+            </Text> */}
           {/* </Box>
 
           <CreateAd />
