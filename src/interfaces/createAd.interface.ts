@@ -5,9 +5,9 @@ export interface CreateAdInterface {
     model: string;
     year: string;
     fuel: string;
-    km: number;
+    km: string;
     color: string;
-    priceFipe: string;
+    priceFipe: number;
     price: string;
     description: string;
     image: string;
@@ -19,9 +19,9 @@ export interface createAdReturnInterface {
   model: string;
   year: string;
   fuel: string;
-  km: number;
+  km: string;
   color: string;
-  priceFipe: string;
+  priceFipe: number;
   price: string;
   description: string;
   userId: UserInterface;
