@@ -1,12 +1,17 @@
-import {UserRequest, LoginData} from "@/schemas/user.schema";
-import {api} from "@/services/api";
-import {useRouter} from "next/router";
-import {createContext, ReactNode, useContext, useState, useEffect} from "react";
-import {useToast} from "@chakra-ui/toast";
-import jwt_decode from "jwt-decode"
+import { UserRequest, LoginData } from "@/schemas/user.schema";
+import { api } from "@/services/api";
+import { useRouter } from "next/router";
+import {
+  createContext,
+  ReactNode,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
+import { useToast } from "@chakra-ui/toast";
+import jwt_decode from "jwt-decode";
 import { UserInterface } from "@/interfaces/user.interface";
 import { setCookie, parseCookies } from "nookies";
-
 
 interface Props {
   children: ReactNode;
@@ -16,18 +21,22 @@ interface authProviderData {
   registerUser: (userData: UserRequest) => void;
   loginUser: (loginData: LoginData) => void;
   user: UserInterface | null;
-  setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>
+  setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>;
+  isLogged: boolean;
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const AuthContext = createContext<authProviderData>({} as authProviderData);
+export const AuthContext = createContext<authProviderData>(
+  {} as authProviderData
+);
 
 export const AuthProvider = ({ children }: Props) => {
   const router = useRouter();
   const toast = useToast();
-  const [user, setUser] = useState<UserInterface | null>(null)
+  const [user, setUser] = useState<UserInterface | null>(null);
+  const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
-    
     const getLocalToken = async () => {
       try {
         const tokenLocal = parseCookies();
@@ -35,26 +44,24 @@ export const AuthProvider = ({ children }: Props) => {
           return {
             redirect: {
               destination: "/login",
-              permanent: false
-            }
+              permanent: false,
+            },
           };
         }
-        const token: any = jwt_decode(tokenLocal["@MotorsShop"])
-        
+        const token: any = jwt_decode(tokenLocal["@MotorsShop"]);
+
         const userData = await api.get(`/user/${+token.sub}`, {
           headers: {
-            Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`
-          }
-        })
-
-        setUser(userData.data)        
+            Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`,
+          },
+        });
+        setUser(userData.data);
       } catch (error) {
-        console.log(error)        
+        console.log(error);
       }
-    }    
+    };
     getLocalToken();
-  
-  },[]);
+  }, []);
 
   const registerUser = (userRequest: UserRequest) => {
     api
@@ -83,21 +90,20 @@ export const AuthProvider = ({ children }: Props) => {
       });
   };
 
-  
   const loginUser = async (loginData: LoginData) => {
-
     try {
-      const response = await api.post("/login", loginData);      
+      const response = await api.post("/login", loginData);
       const token: any = jwt_decode(response.data.token);
       const userData = await api.get(`/user/${token.sub}`, {
         headers: {
-          Authorization: `Bearer ${response.data.token}`
-        }
+          Authorization: `Bearer ${response.data.token}`,
+        },
       });
       setCookie(null, "@MotorsShop", response.data.token, {
         maxAge: 60 * 60 * 1,
-        path: "/"
+        path: "/",
       });
+      api.defaults.headers.common.authorization = `Bearer ${response.data.token}`;
       toast({
         position: "top-right",
         title: "Sucesso",
@@ -107,9 +113,10 @@ export const AuthProvider = ({ children }: Props) => {
         isClosable: true,
       });
       router.push("/profile");
-      setUser(userData.data)
+      setUser(userData.data);
+      setIsLogged(true);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
         position: "top-right",
         title: "Erro",
@@ -119,10 +126,15 @@ export const AuthProvider = ({ children }: Props) => {
         isClosable: true,
       });
     }
-  
   };
 
-  return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{ registerUser, loginUser, user, setUser, isLogged, setIsLogged }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);
