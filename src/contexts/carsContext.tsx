@@ -1,134 +1,143 @@
 import { api, apiKenzieKars } from "@/services/api";
-import {useToast} from "@chakra-ui/toast";
+import { useToast } from "@chakra-ui/toast";
 import { parseCookies } from "nookies";
-import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { CarRequest } from "@/schemas/car.schema";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 import { useAuth } from "./authContext";
+import { GetServerSideProps } from "next";
 
 interface Props {
-    children: ReactNode;
+  children: ReactNode;
 }
 
 interface carProviderData {
-    createAd: (carRequest: CarRequest, onClose: () => void) => void;
-    getBrandByFipe: (brand: string) => Promise<any>;
-    adProfile: createAdReturnInterface[];
-    setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
-    getBrands: never[];
-    userCars:createAdReturnInterface[]
+  createAd: (carRequest: CarRequest, onClose: () => void) => void;
+  getBrandByFipe: (brand: string) => Promise<any>;
+  adProfile: createAdReturnInterface[];
+  setAdProfile: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
+  getBrands: never[];
+  userCars: createAdReturnInterface[];
+  cars: createAdReturnInterface[];
+  setCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
 
-export const CarProvider = ({children}: Props) => {
-    const [adProfile, setAdProfile] = useState<createAdReturnInterface[]>([]);
-    const [userCars, setUserCars] = useState<createAdReturnInterface[]>([]);
-    
-    const {user} = useAuth()
-    const toast = useToast();
-    const [getBrands, setGetBrands] = useState([])
-    const cookies = parseCookies();
+export const CarProvider = ({ children }: Props) => {
+  const [adProfile, setAdProfile] = useState<createAdReturnInterface[]>([]);
+  const [userCars, setUserCars] = useState<createAdReturnInterface[]>([]);
+  const [cars, setCars] = useState<createAdReturnInterface[]>([]);
 
-    if (cookies["@MotorsShop"]) {
-        api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
-    }
+  const { user } = useAuth();
+  const toast = useToast();
+  const [getBrands, setGetBrands] = useState([]);
+  const cookies = parseCookies();
 
-    useEffect(() => {
-        const getApiFipe = async () => {
-            try {
-                const response = await apiKenzieKars.get("")
-    
-                const arrayOfbrands: any = []; 
-    
-                Object.keys(response.data).forEach(key => {
-                    arrayOfbrands.push(key);
-                })                
-    
-                setGetBrands(arrayOfbrands)
-    
-            } catch (error) {
-                console.log(error)
-            }
-        }
+  if (cookies["@MotorsShop"]) {
+    api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
+  }
 
-        getApiFipe()
-    }, [])
-    
+  useEffect(() => {
+    const getApiFipe = async () => {
+      try {
+        const response = await apiKenzieKars.get("");
 
-    const getBrandByFipe = async (brand: string) => {
-        const { data: result }= await apiKenzieKars.get("", {
-          params: { brand: brand },
+        const arrayOfbrands: any = [];
+
+        Object.keys(response.data).forEach((key) => {
+          arrayOfbrands.push(key);
         });
-        
-        return result;
+
+        setGetBrands(arrayOfbrands);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
-    const createAd = async (carRequest: CarRequest, onClose: () => void) => {
-        
-        
-        try {
-            const response = await api.post("/cars", carRequest)
-            
-            if(response.data){
-                
-                setAdProfile((previousProfile) => [...previousProfile,response.data])
-                setUserCars((previousUserCars) => [...previousUserCars, response.data])
+    getApiFipe();
+  }, []);
 
-                toast({
-                    position: "top-right",
-                    title: "Sucesso",
-                    description: "anúncio criado com sucesso!",
-                    status: "success",
-                    duration: 6000,
-                    isClosable: true,
-                  });
+  const getBrandByFipe = async (brand: string) => {
+    const { data: result } = await apiKenzieKars.get("", {
+      params: { brand: brand },
+    });
 
+    return result;
+  };
 
-                  onClose();
-            }
+  const createAd = async (carRequest: CarRequest, onClose: () => void) => {
+    try {
+      const response = await api.post("/cars", carRequest);
 
-        } catch (errors) {
-            console.log(errors)
-            toast({
-                position: "top-right",
-                title: "Error",
-                description: "Ops! tente novamente",
-                status: "error",
-                duration: 6000,
-                isClosable: true,
-              });
+      if (response.data) {
+        setAdProfile((previousProfile) => [...previousProfile, response.data]);
+        setUserCars((previousUserCars) => [...previousUserCars, response.data]);
+
+        toast({
+          position: "top-right",
+          title: "Sucesso",
+          description: "anúncio criado com sucesso!",
+          status: "success",
+          duration: 6000,
+          isClosable: true,
+        });
+
+        onClose();
+      }
+    } catch (errors) {
+      console.log(errors);
+      toast({
+        position: "top-right",
+        title: "Error",
+        description: "Ops! tente novamente",
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
+  };
+
+  useEffect(() => {
+    const getUserCars = async () => {
+      try {
+        const response = await api.get(`/user/${user!.id}`);
+
+        if (response.data) {
+          setUserCars(response.data.car);
         }
+      } catch (errors) {
+        console.log(errors);
+      }
     };
 
-    useEffect(() => {
+    getUserCars();
+  }, [user]);
 
-        const getUserCars = async () => {
-            try {
-                const response = await api.get(`/user/${user!.id}`)                
-                
-                if(response.data){
-                    setUserCars(response.data.car)
-                }
-      
-            } catch (errors) {
-                console.log(errors)
-            }
-        }
-
-        getUserCars()
-
-    }, [user])
-
-    return (
-        <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars}}>
-            {children}
-        </CarContext.Provider>
-    )
-}
-
-export const useCarContext = () => {
-    return useContext(CarContext);
+  return (
+    <CarContext.Provider
+      value={{
+        createAd,
+        adProfile,
+        setAdProfile,
+        getBrandByFipe,
+        getBrands,
+        userCars,
+        cars,
+        setCars,
+      }}
+    >
+      {children}
+    </CarContext.Provider>
+  );
 };
 
-
+export const useCarContext = () => {
+  return useContext(CarContext);
+};
