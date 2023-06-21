@@ -4,7 +4,7 @@ import { RecoveryEmailForm } from "@/components/forms/recoveryEmailForm";
 import { Header } from "@/components/header/header";
 import { NextPage } from "next";
 
-const Recovery: NextPage = () => {
+const ResetPasswordEmail: NextPage = () => {
 
     return (
         <>
@@ -15,4 +15,4 @@ const Recovery: NextPage = () => {
     )
 }
 
-export default Recovery
+export default ResetPasswordEmail

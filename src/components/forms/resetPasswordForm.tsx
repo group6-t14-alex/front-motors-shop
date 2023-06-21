@@ -59,12 +59,12 @@ export const ResetPasswordForm = ({token}:ResetPasswordProps) => {
                 <Box height={"90%"} width={"100%"} >
                     <form onSubmit={handleSubmit(onFormSubmit)}>
                         <Stack height={"14rem"} display={'flex'} flexDir={'column'} justifyContent={'space-around'}>
-                            <FormControl id={"email"} h={'6rem'} gap={"body3"}>
+                            <FormControl id={"password"} h={'6rem'} gap={"body3"}>
                                 <FormLabel>Insira sua nova senha</FormLabel>
                                 <Input placeholder={"Digite sua nova senha"} {...register("password")}/>         
                             </FormControl>
 
-                            <FormControl id={"email"} h={'6rem'} gap={"body3"}>
+                            <FormControl id={"confirmPassword"} h={'6rem'} gap={"body3"}>
                                 <FormLabel>Confirmação de senha</FormLabel>
                                 <Input placeholder={"Digite novamente a senha"} {...register("confirmPassword")}/>         
                             </FormControl>

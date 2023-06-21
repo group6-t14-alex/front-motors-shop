@@ -1,18 +1,20 @@
 import { UnorderedList, Input, Box, Text } from "@chakra-ui/react";
 import FilterList from "./filterList/filtersList";
+import { useCarContext } from "@/contexts/carsContext";
 
 const Filter = () => {
+  const {getBrands} = useCarContext()
   return (
     <Box display="flex" gap="1.6rem" flexDirection="column">
       <Text fontSize="heading4" fontWeight="bold" color="black">
         Marca
       </Text>
       <UnorderedList listStyleType="none">
-        <FilterList filter={"Marca 1"} />
-        <FilterList filter={"Marca 2"} />
-        <FilterList filter={"Marca 3"} />
-        <FilterList filter={"Marca 4"} />
-        <FilterList filter={"Marca 5"} />
+        {getBrands.map((brand) => {
+          return(
+            <FilterList key={brand} filter={brand}/>
+          )
+        })}
       </UnorderedList>
 
       <Text fontSize="heading4" fontWeight="bold" color="black">
