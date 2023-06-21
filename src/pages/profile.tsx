@@ -1,6 +1,6 @@
-'use client';
-import { Footer } from "@/components/footer/footer"
-import { HeaderLogged } from "@/components/header/headerLogged"
+"use client";
+import { Footer } from "@/components/footer/footer";
+import { HeaderLogged } from "@/components/header/headerLogged";
 import CreateAd from "@/components/modals/createAd";
 import {Avatar, Box, Heading, Grid, Text, List} from "@chakra-ui/react"
 import { useContext } from 'react'
@@ -10,36 +10,37 @@ import { AuthContext } from '@/contexts/authContext'
 import { useCarContext } from '@/contexts/carsContext'
 import { api } from '@/services/api'
 import { CarDataReturn } from '@/schemas/car.schema'
-import ProfileCardUser from "@/components/cards/profileUserCards";
-              
+import ProfileCardUser from "@/components/cards/profileUserCards";              
+
 export const getServerSideProps: GetServerSideProps = async (props) => {
-  const cookies = parseCookies(props)
-//   const cookies = nookies.get(props)
-    if(!cookies["@MotorsShop"]) {
-        return {
-            redirect: {
-                destination: "/login",
-                permanent: false
-            }
-        };
+  const cookies = parseCookies(props);
+  //   const cookies = nookies.get(props)
+  if (!cookies["@MotorsShop"]) {
+    return {
+      redirect: {
+        destination: "/login",
+        permanent: false,
+      },
     };
-  
-  if (cookies['@MotorsShop']) {
-    api.defaults.headers.common.authorization = `Bearer ${cookies['@MotorsShop']}`
   }
 
-  const response = await api.get<CarDataReturn[]>('/cars')
-  return {
-    props: { cars: response.data }
+  if (cookies["@MotorsShop"]) {
+    api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
   }
-}
+
+  const response = await api.get<CarDataReturn[]>("/cars");
+  return {
+    props: { cars: response.data },
+  };
+};
 
 interface ProfileInterface {
-  cars: CarDataReturn[]
+  cars: CarDataReturn[];
 }
 
-
 const Profile: NextPage<any> = ({ cars }) => {
+  const { user }: any = useContext(AuthContext);
+  const { userCars }: any = useCarContext();
 
     const { user }: any = useContext(AuthContext)
     const { userCars }: any = useCarContext()    
@@ -104,9 +105,37 @@ const Profile: NextPage<any> = ({ cars }) => {
                                 { user?.description }
                             </Text>
                     </Box>
+            <Box display={"flex"} flexDirection={"row"} gap={"15px"}>
+              <Heading
+                fontFamily={"heading"}
+                fontWeight={"600"}
+                fontSize={"heading6"}
+                color={"grey1"}
+              >
+                {user?.name}
+              </Heading>
+              <Text
+                p={"4px 8px"}
+                bg={"brand4"}
+                color={"brand1"}
+                fontFamily={"body"}
+                fontWeight={"500"}
+                fontSize={"body2"}
+                borderRadius={"4px"}
+              >
+                {user?.type_user}
+              </Text>
+            </Box>
+            <Text
+              color={"grey2"}
+              fontFamily={"body"}
+              fontWeight={"400"}
+              fontSize={"body1"}
+            >
+              {user?.description}
+            </Text>
+          </Box>
 
-                    <CreateAd />
-                </Box>
 
                 <Box maxWidth='1032px' display='flex'
                      flexWrap={{desk:'wrap', cel: 'nowrap'}}
@@ -138,6 +167,7 @@ const Profile: NextPage<any> = ({ cars }) => {
             </Box>
             <Footer />
             {/* <Text
+
               color={'grey2'}
               fontFamily={'body'}
               fontWeight={'400'}
@@ -148,7 +178,7 @@ const Profile: NextPage<any> = ({ cars }) => {
               laborum alias assumenda eligendi necessitatibus repellat accusamus
               nemo voluptatibus sit beatae et.
             </Text> */}
-          {/* </Box>
+      {/* </Box>
 
           <CreateAd />
         </Box>
@@ -183,11 +213,11 @@ const Profile: NextPage<any> = ({ cars }) => {
       </Box> */}
       {/* <Footer /> */}
     </>
-  )
-}
+  );
+};
 
 // export const getServerSideProps: GetServerSideProps = async (ctx) => {
-    
+
 //     const cookies = nookies.get(ctx)
 //     if(!cookies["@MotorsShop"]) {
 //         return {
@@ -200,7 +230,7 @@ const Profile: NextPage<any> = ({ cars }) => {
 
 //     return {
 //         props: {}
-//     };    
-// }; 
+//     };
+// };
 
-export default Profile
+export default Profile;
