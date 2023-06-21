@@ -7,8 +7,21 @@ import { Header } from "@/components/header/header";
 import { Box, Button, Text } from "@chakra-ui/react";
 import { Hero } from "@/components/hero/hero";
 import { Footer } from "@/components/footer/footer";
+import { GetServerSideProps, NextPage } from "next";
+import { api } from "@/services/api";
+import { useCarContext } from "@/contexts/carsContext";
+import { useEffect } from "react";
+import { CarDataReturn } from "@/schemas/car.schema";
 
-export default function Home() {
+interface HomeProps {
+  cars: CarDataReturn;
+}
+
+const Home: NextPage<HomeProps> = ({ cars }) => {
+  const { setCars }: any = useCarContext();
+  useEffect(() => {
+    setCars(cars);
+  }, []);
   return (
     <>
       <Head>
@@ -20,7 +33,7 @@ export default function Home() {
 
       <Box display={"flex"} flexDir={"column"} justifyContent={"center"}>
         <Header />
-        <Hero/>
+        <Hero />
       </Box>
 
       <Box
@@ -32,10 +45,10 @@ export default function Home() {
         width={"100%"}
         maxW={"1570px"}
         gap={{ desk: "1rem" }}
-        mt={'3.75rem'}
-        p={'0.5'}
+        mt={"3.75rem"}
+        p={"0.5"}
       >
-        <CardWrapper />
+        <CardWrapper cars={cars} />
 
         <FilterDesk />
       </Box>
@@ -55,8 +68,16 @@ export default function Home() {
         <Button>{"Seguinte >"} </Button>
       </Box>
 
-      <Footer/>
-
+      <Footer />
     </>
   );
-}
+};
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const response = await api.get<CarDataReturn[]>("/cars");
+  return {
+    props: { cars: response.data },
+  };
+};
+
+export default Home;
