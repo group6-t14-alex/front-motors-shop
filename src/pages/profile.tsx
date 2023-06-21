@@ -2,17 +2,15 @@
 import { Footer } from "@/components/footer/footer"
 import { HeaderLogged } from "@/components/header/headerLogged"
 import CreateAd from "@/components/modals/createAd";
-import {Avatar, Box, Button, Heading, Link, List, Text} from "@chakra-ui/react"
-import CardUser from "@/components/cards/userCard";
-import { useContext, useEffect, useState } from 'react'
+import {Avatar, Box, Heading, Grid, Text, List} from "@chakra-ui/react"
+import { useContext } from 'react'
 import { NextPage, GetServerSideProps } from "next";
 import nookies, {parseCookies} from "nookies"
 import { AuthContext } from '@/contexts/authContext'
 import { useCarContext } from '@/contexts/carsContext'
 import { api } from '@/services/api'
 import { CarDataReturn } from '@/schemas/car.schema'
-import {useToast} from "@chakra-ui/toast";
-import { UserInterface } from "@/interfaces/user.interface";
+import ProfileCardUser from "@/components/cards/profileUserCards";
               
 export const getServerSideProps: GetServerSideProps = async (props) => {
   const cookies = parseCookies(props)
@@ -56,8 +54,8 @@ const Profile: NextPage<any> = ({ cars }) => {
               alignItems='center' 
               flexDirection='column' 
               bgGradient={{
-                cel: 'linear(to-b, brand1 0%, brand1 23%,brand4 23%, brand4 100%)', 
-                desk:'linear(to-b, brand1 0%, brand1 11%,brand4 11%, brand4 100%)'
+                cel: 'linear(to-b, brand1 0%, brand1 250px,brand4 250px, brand4 100%)', 
+                desk:'linear(to-b, brand1 0%, brand1 260px,brand4 260px, brand4 100%)'
                 }}
               >
                 <Box 
@@ -115,11 +113,12 @@ const Profile: NextPage<any> = ({ cars }) => {
                      justifyContent='space-around'
                      width={'100%'} maxW={{desk: '1400px', cel: '100%'}}
                      minW={'302px'} minH={'388px'}
-                     overflowX={{cel: 'auto'}} gap={{cel: '12px'}}>
+                     overflowX={{cel: 'auto'}} p={'50px 0'} gap={{cel: '12px'}}>
 
-                    {userCars.map((car: any) => {
-                        return (
-                          <CardUser
+                    <List w={'90%'} display={'grid'} gridTemplateColumns={{cel: 'repeat()',desk:'repeat(2, 1fr)', pc:'repeat(3, 1fr)', full:'repeat(4, 1fr)'}} gap={'16px'}>
+                      {userCars.map((car: any) => {
+                          return (
+                            <ProfileCardUser
                             key={car.id}
                             carName={car.model}
                             carImage={car.imageUrl}
@@ -129,9 +128,11 @@ const Profile: NextPage<any> = ({ cars }) => {
                             description={car.description}
                             year={car.year}
                             km={car.km}
-                          />
+                            active={car.isActive}
+                            />
                         )
                       })}
+                    </List>
                     
                 </Box>
             </Box>
