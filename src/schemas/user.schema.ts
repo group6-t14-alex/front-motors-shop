@@ -40,8 +40,36 @@ export const loginSchema = userSchema.omit({
   address: true,
 });
 
+export const sendingEmailSchema = loginSchema.omit({
+  password: true
+})
+
+export const recoveryPasswordSchema = userSchema.omit({
+  id: true,
+  name: true,
+  cpf: true,
+  phone: true,
+  date_of_birth: true,
+  description: true,
+  cep: true,
+  number: true,
+  complement: true,
+  type_user: true, 
+  state: true,
+  city: true,
+  address: true,
+  email: true
+}).refine(({ password, confirmPassword }) => password === confirmPassword, {
+  message: "As senhas precisam corresponderem",
+  path: ["confirm"]
+});
+
 export type UserRequest = z.infer<typeof userSchemaRequest>;
 
 export type UserData = z.infer<typeof userSchema>;
 
 export type LoginData = z.infer<typeof loginSchema>;
+
+export type SendingEmailData = z.infer<typeof sendingEmailSchema>;
+
+export type RecoveryPasswordData = z.infer<typeof recoveryPasswordSchema>;

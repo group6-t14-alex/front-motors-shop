@@ -1,4 +1,4 @@
-import {UserRequest, LoginData} from "@/schemas/user.schema";
+import {UserRequest, LoginData, SendingEmailData, RecoveryPasswordData} from "@/schemas/user.schema";
 import {api} from "@/services/api";
 import {useRouter} from "next/router";
 import {createContext, ReactNode, useContext, useState, useEffect} from "react";
@@ -17,6 +17,8 @@ interface authProviderData {
   loginUser: (loginData: LoginData) => void;
   user: UserInterface | null;
   setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>
+  sendEmail: (email :SendingEmailData) => void;
+  newPassword: (password: RecoveryPasswordData, token: string) => void;
 }
 
 export const AuthContext = createContext<authProviderData>({} as authProviderData);
@@ -122,7 +124,63 @@ export const AuthProvider = ({ children }: Props) => {
   
   };
 
-  return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser }}>{children}</AuthContext.Provider>;
+  const sendEmail = (email: SendingEmailData) => {
+    try {
+        const getEmail = api.post("/user/resetPassword", email)
+
+        toast({
+          position: "top-right",
+          title: "Sucesso",
+          description: "Email enviado com sucesso!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        })
+  
+        router.push("/")
+      
+    } catch (error) {
+      console.log(error)
+      toast({
+        position: "top-right",
+        title: "Erro",
+        description: "Erro ao enviar email, tente novamente!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }
+
+  const newPassword = (resetPassword: RecoveryPasswordData, token: string) => {
+    try {
+      const getPass = api.patch(`/user/resetPassword/${token}`, {password: resetPassword.password})
+
+      toast({
+        position: "top-right",
+        title: "Sucesso",
+        description: "Email enviado com sucesso!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      })
+
+      router.push("/login")
+      
+    } catch (error) {
+      console.log(error)
+      toast({
+        position: "top-right",
+        title: "Erro",
+        description: "Erro ao atualizar senha, tente novamente!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }
+
+  return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser, sendEmail, newPassword }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);
