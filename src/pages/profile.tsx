@@ -39,10 +39,10 @@ interface ProfileInterface {
 }
 
 const Profile: NextPage<any> = ({ cars }) => {
-    const { user }: any = useContext(AuthContext)
-    const { userCars }: any = useCarContext()    
+  const { user }: any = useContext(AuthContext);
+  const { userCars }: any = useCarContext();
 
-    return (
+  return (
       <>
         <HeaderLogged />
         <Box 

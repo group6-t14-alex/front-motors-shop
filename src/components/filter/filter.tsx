@@ -1,9 +1,29 @@
 import { UnorderedList, Input, Box, Text } from "@chakra-ui/react";
 import FilterList from "./filterList/filtersList";
 import { useCarContext } from "@/contexts/carsContext";
+import { useEffect } from "react";
+import { api } from "@/services/api";
+import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 
 const Filter = () => {
-  const {getBrands} = useCarContext()
+  const {getBrands, colors, filterOptions, years, fuelTypes} = useCarContext()
+
+  useEffect(() => {
+
+      (async () => {
+        const announcements = await api.get<createAdReturnInterface[]>('/cars');
+
+        const filteringAnnouncements = announcements.data.filter((ad) => 
+          ad
+        )
+
+        if (filteringAnnouncements) {
+          filterOptions(filteringAnnouncements);
+        }
+      })();
+   
+  }, [filterOptions]);
+
   return (
     <Box display="flex" gap="1.6rem" flexDirection="column">
       <Text fontSize="heading4" fontWeight="bold" color="black">
@@ -33,11 +53,12 @@ const Filter = () => {
         Cor
       </Text>
       <UnorderedList listStyleType="none">
-        <FilterList filter={"cor 1"} />
-        <FilterList filter={"cor 2"} />
-        <FilterList filter={"cor 3"} />
-        <FilterList filter={"cor 4"} />
-        <FilterList filter={"cor 5"} />
+      {colors.map((color) => {
+          return(
+            <FilterList key={color} filter={color}/>
+          )
+      })}
+      
       </UnorderedList>
 
       <Text fontSize="heading4" fontWeight="bold" color="black">
@@ -45,11 +66,23 @@ const Filter = () => {
       </Text>
 
       <UnorderedList listStyleType="none">
-        <FilterList filter={"9999"} />
-        <FilterList filter={"9999"} />
-        <FilterList filter={"9999"} />
-        <FilterList filter={"9999"} />
-        <FilterList filter={"9999"} />
+      {years.map((year) => {
+          return(
+            <FilterList key={year} filter={year}/>
+          )
+      })}
+      </UnorderedList>
+
+      <Text fontSize="heading4" fontWeight="bold" color="black">
+        Combustível
+      </Text>
+
+      <UnorderedList listStyleType="none">
+      {fuelTypes.map((fuel) => {
+          return(
+            <FilterList key={fuel} filter={fuel}/>
+          )
+      })}
       </UnorderedList>
 
       <Text fontSize="heading4" fontWeight="bold" color="black">
