@@ -1,11 +1,29 @@
 import { UnorderedList, Input, Box, Text } from "@chakra-ui/react";
 import FilterList from "./filterList/filtersList";
 import { useCarContext } from "@/contexts/carsContext";
+import { useEffect } from "react";
+import { api } from "@/services/api";
+import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 
 const Filter = () => {
-  const {getBrands, colors, filterOptions} = useCarContext()
+  const {getBrands, colors, filterOptions, years} = useCarContext()
 
-  console.log(colors)
+  useEffect(() => {
+
+      (async () => {
+        const announcements = await api.get<createAdReturnInterface[]>('/cars');
+
+        const filteringAnnouncements = announcements.data.filter((ad) => 
+          ad
+        )
+
+        if (filteringAnnouncements) {
+          filterOptions(filteringAnnouncements);
+        }
+      })();
+   
+  }, []);
+
   return (
     <Box display="flex" gap="1.6rem" flexDirection="column">
       <Text fontSize="heading4" fontWeight="bold" color="black">
@@ -39,12 +57,8 @@ const Filter = () => {
           return(
             <FilterList key={color} filter={color}/>
           )
-        })}
-        {/* <FilterList filter={"cor 1"} />
-        <FilterList filter={"cor 2"} />
-        <FilterList filter={"cor 3"} />
-        <FilterList filter={"cor 4"} />
-        <FilterList filter={"cor 5"} /> */}
+      })}
+      
       </UnorderedList>
 
       <Text fontSize="heading4" fontWeight="bold" color="black">
@@ -52,11 +66,11 @@ const Filter = () => {
       </Text>
 
       <UnorderedList listStyleType="none">
-        <FilterList filter={"9999"} />
-        <FilterList filter={"9999"} />
-        <FilterList filter={"9999"} />
-        <FilterList filter={"9999"} />
-        <FilterList filter={"9999"} />
+      {years.map((year) => {
+          return(
+            <FilterList key={year} filter={year}/>
+          )
+      })}
       </UnorderedList>
 
       <Text fontSize="heading4" fontWeight="bold" color="black">

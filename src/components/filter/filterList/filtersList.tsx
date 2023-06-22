@@ -1,6 +1,6 @@
 import { ListItem } from "@chakra-ui/react";
 
-const FilterList = ({ filter }: { filter: string }) => {
+const FilterList = ({ filter }: any) => {
   return (
     <>
       <ListItem cursor="pointer" color="grey3">
