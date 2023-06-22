@@ -6,9 +6,10 @@ import {
   Text,
   Box,
   Image,
-  Avatar
-} from '@chakra-ui/react'
-import image from '/public/imagem.png'
+  Avatar,
+} from "@chakra-ui/react";
+import { useRouter } from "next/router";
+import image from "/public/imagem.png";
 
 const CardUser = ({
   carName,
@@ -20,43 +21,46 @@ const CardUser = ({
   fipePrice,
   year,
   km,
-  userName
+  userName,
+  userId,
 }: any) => {
+  const router = useRouter();
+
   const bigDeal = (price: number, fipePrice: number) => {
     if (+price < fipePrice) {
       return (
         <Text
-          pos={'absolute'}
-          right={'0'}
-          top={'0'}
-          fontWeight={'500'}
-          color={'white'}
-          bg={'random7'}
-          p={'5px'}
-          borderRadius={'2px'}
-          borderColor={'random7'}
+          pos={"absolute"}
+          right={"0"}
+          top={"0"}
+          fontWeight={"500"}
+          color={"white"}
+          bg={"random7"}
+          p={"5px"}
+          borderRadius={"2px"}
+          borderColor={"random7"}
         >
           $
         </Text>
-      )
+      );
     }
-  }
+  };
 
   return (
     <Card
-      maxW={'312px'}
-      maxH={'356px'}
-      minW={'312px'}
-      minH={'356px'}
-      display={'flex'}
-      flexDirection={'column'}
-      border={'none'}
-      boxShadow={'none'}
-      marginBottom={'80px'}
+      maxW={"312px"}
+      maxH={"356px"}
+      minW={"312px"}
+      minH={"356px"}
+      display={"flex"}
+      flexDirection={"column"}
+      border={"none"}
+      boxShadow={"none"}
+      marginBottom={"80px"}
     >
-      <CardHeader 
-        bgColor={'grey7'} 
-        mb={1} 
+      <CardHeader
+        bgColor={"grey7"}
+        mb={1}
         maxH={"150px"}
         display={"flex"}
         justifyContent={"center"}
@@ -65,88 +69,102 @@ const CardUser = ({
       >
         <Image
           src={carImage}
-          alt={'Car A'}          
-          height={'auto'}
-          objectFit={'cover'}
+          alt={"Car A"}
+          height={"auto"}
+          objectFit={"cover"}
         />
         {bigDeal(price, fipePrice)}
       </CardHeader>
 
       <CardBody
-        bgColor={'white'}
+        bgColor={"white"}
         pl={1}
         pr={1}
-        display={'flex'}
-        flexDir={'column'}
+        display={"flex"}
+        flexDir={"column"}
       >
-        <Text 
-          fontSize={'body1'} 
-          fontWeight={'600'} 
-          color={'grey1'} 
+        <Text
+          fontSize={"body1"}
+          fontWeight={"600"}
+          color={"grey1"}
           white-space={"nowrap"}
           width={"100%"}
           maxH={"22px"}
           overflow={"hidden"}
           text-overflow={"ellipsis"}
-          mb={"1rem"}          
-         >
+          mb={"1rem"}
+        >
           {carName}
         </Text>
-        <Text fontSize={'body2'} fontWeight={'400'} color={'grey2'} minH={"50px"} maxH={"50px"}
-        overflow={"hidden"}
-        text-overflow={"ellipsis"}
-        mb={"1rem"}  >
+        <Text
+          fontSize={"body2"}
+          fontWeight={"400"}
+          color={"grey2"}
+          minH={"50px"}
+          maxH={"50px"}
+          overflow={"hidden"}
+          text-overflow={"ellipsis"}
+          mb={"1rem"}
+        >
           {description}
         </Text>
       </CardBody>
 
       <CardFooter
-        bgColor={'white'}
+        bgColor={"white"}
         pl={1}
         pr={1}
-        display={'flex'}
-        flexDirection={'column'}
-        gap={'20px'}
+        display={"flex"}
+        flexDirection={"column"}
+        gap={"20px"}
       >
-        <Box display={'flex'} alignItems={'center'} gap={'20px'}>
-          <Avatar name={userName} size={'sm'} />
-          <Text fontSize={'body2'} fontWeight={'500'}>
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          gap={"20px"}
+          cursor={"pointer"}
+          onClick={() => {
+            router.push(`/${userId}`);
+          }}
+        >
+          <Avatar name={userName} size={"sm"} />
+          <Text fontSize={"body2"} fontWeight={"500"}>
             {userName}
           </Text>
         </Box>
 
         <Box
-          display={'flex'}
-          justifyContent={'space-between'}
-          alignItems={'center'}
+          display={"flex"}
+          justifyContent={"space-between"}
+          alignItems={"center"}
         >
-          <Box display={'flex'} gap={'0.75rem'}>
+          <Box display={"flex"} gap={"0.75rem"}>
             <Text
-              fontSize={'body2'}
-              bgColor={'brand4'}
-              color={'brand1'}
-              p={['8px', '4px']}
-              fontWeight={'500'}
+              fontSize={"body2"}
+              bgColor={"brand4"}
+              color={"brand1"}
+              p={["8px", "4px"]}
+              fontWeight={"500"}
             >
               {km} KM
             </Text>
             <Text
-              fontSize={'body2'}
-              bgColor={'brand4'}
-              color={'brand1'}
-              p={['8px', '4px']}
-              fontWeight={'500'}
+              fontSize={"body2"}
+              bgColor={"brand4"}
+              color={"brand1"}
+              p={["8px", "4px"]}
+              fontWeight={"500"}
             >
               {year}
             </Text>
           </Box>
-          <Text fontSize={'body1'} fontWeight={'500'} color={'grey1'}>
+          <Text fontSize={"body1"} fontWeight={"500"} color={"grey1"}>
             R$ {price}
           </Text>
         </Box>
       </CardFooter>
     </Card>
-  )
-}
+  );
+};
 
-export default CardUser
+export default CardUser;
