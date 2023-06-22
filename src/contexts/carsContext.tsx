@@ -138,14 +138,14 @@ export const CarProvider = ({children}: Props) => {
 
     }, [user])
 
-
     const filterOptions = (ads: createAdReturnInterface[]) => {
-    
+        const carsModels = ads.map((model) => model.model)
         const carsColors = ads.map((elem) => elem.color);
         const carsFuel = ads.map((elem) => elem.fuel);
         const carsYears = ads.map((elem) => elem.year);
     
         //remover info repetida
+        const modelsSetModel = new Set(carsModels)
         const modelsSetAnos = new Set(carsYears);
         const modelsSetCores = new Set(carsColors);
         const modelsSetCombustiveis = new Set(carsFuel);
@@ -153,6 +153,7 @@ export const CarProvider = ({children}: Props) => {
         setYears(Array.from(modelsSetAnos));
         setColors(Array.from(modelsSetCores));
         setFuelTypes(Array.from(modelsSetCombustiveis));
+        setModels(Array.from(modelsSetModel))
     };
 
 
