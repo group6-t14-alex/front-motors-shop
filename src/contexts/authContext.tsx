@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useToast } from "@chakra-ui/toast";
 import jwt_decode from "jwt-decode";
+
 import { UserInterface } from "@/interfaces/user.interface";
 import { setCookie, parseCookies } from "nookies";
 
@@ -23,7 +24,9 @@ interface authProviderData {
   user: UserInterface | null;
   setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>;
   isLogged: boolean;
-  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;  
+  sendEmail: (email :SendingEmailData) => void;
+  newPassword: (password: RecoveryPasswordData, token: string) => void;
 }
 
 export const AuthContext = createContext<authProviderData>(
@@ -128,13 +131,65 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ registerUser, loginUser, user, setUser, isLogged, setIsLogged }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
 
+  const sendEmail = (email: SendingEmailData) => {
+    try {
+        const getEmail = api.post("/user/resetPassword", email)
+
+        toast({
+          position: "top-right",
+          title: "Sucesso",
+          description: "Email enviado com sucesso!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        })
+  
+        router.push("/")
+      
+    } catch (error) {
+      console.log(error)
+      toast({
+        position: "top-right",
+        title: "Erro",
+        description: "Erro ao enviar email, tente novamente!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }
+
+  const newPassword = (resetPassword: RecoveryPasswordData, token: string) => {
+    try {
+      const getPass = api.patch(`/user/resetPassword/${token}`, {password: resetPassword.password})
+     
+      toast({
+        position: "top-right",
+        title: "Sucesso",
+        description: "Senha atualizada com sucesso!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      })
+
+      router.push("/login")
+      
+    } catch (error) {
+      console.log(error)
+      toast({
+        position: "top-right",
+        title: "Erro",
+        description: "Erro ao atualizar senha, tente novamente!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  }
+
+  return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser, sendEmail, newPassword, isLogged, setIsLogged }}>{children}</AuthContext.Provider>;
+
+};
+   
 export const useAuth = () => useContext(AuthContext);
