@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 const ResetPassword: NextPage = () => {
     const router = useRouter();
     const { token } = router.query;
+    console.log(token)
 
     return (
         <>

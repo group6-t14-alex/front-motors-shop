@@ -4,7 +4,7 @@ const FilterList = ({ filter }: { filter: string }) => {
   return (
     <>
       <ListItem cursor="pointer" color="grey3">
-        {filter}
+        {filter[0].toUpperCase() + filter.substring(1)}
       </ListItem>
     </>
   );

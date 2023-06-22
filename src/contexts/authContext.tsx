@@ -155,11 +155,11 @@ export const AuthProvider = ({ children }: Props) => {
   const newPassword = (resetPassword: RecoveryPasswordData, token: string) => {
     try {
       const getPass = api.patch(`/user/resetPassword/${token}`, {password: resetPassword.password})
-
+     
       toast({
         position: "top-right",
         title: "Sucesso",
-        description: "Email enviado com sucesso!",
+        description: "Senha atualizada com sucesso!",
         status: "success",
         duration: 5000,
         isClosable: true,
