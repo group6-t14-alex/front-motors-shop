@@ -131,7 +131,6 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
-
   const sendEmail = (email: SendingEmailData) => {
     try {
         const getEmail = api.post("/user/resetPassword", email)
@@ -158,7 +157,7 @@ export const AuthProvider = ({ children }: Props) => {
         isClosable: true,
       });
     }
-  }
+  };
 
   const newPassword = (resetPassword: RecoveryPasswordData, token: string) => {
     try {
@@ -186,7 +185,7 @@ export const AuthProvider = ({ children }: Props) => {
         isClosable: true,
       });
     }
-  }
+  };
 
   return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser, sendEmail, newPassword, isLogged, setIsLogged }}>{children}</AuthContext.Provider>;
 
