@@ -27,6 +27,7 @@ interface carProviderData {
     setFuelTypes: React.Dispatch<React.SetStateAction<string[]>>;
     fuelTypes: string[]
     filterOptions: (ads: createAdReturnInterface[]) => void;
+
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -48,6 +49,7 @@ export const CarProvider = ({children}: Props) => {
 
     if (cookies["@MotorsShop"]) {
         api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
+
     }
 
     useEffect(() => {
@@ -70,7 +72,7 @@ export const CarProvider = ({children}: Props) => {
 
         getApiFipe()
     }, [])
-    
+
 
     const getBrandByFipe = async (brand: string) => {
         const { data: result }= await apiKenzieKars.get("", {
@@ -152,12 +154,16 @@ export const CarProvider = ({children}: Props) => {
         setFuelTypes(Array.from(modelsSetCombustiveis));
     };
 
+
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
         setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes}}>
             {children}
         </CarContext.Provider>
     )
+
+
+
 }
 
 export const useCarContext = () => {
