@@ -8,6 +8,7 @@ import {
   Image,
   Avatar,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import image from "/public/imagem.png";
 
 const CardUser = ({
@@ -21,7 +22,10 @@ const CardUser = ({
   year,
   km,
   userName,
+  userId,
 }: any) => {
+  const router = useRouter();
+
   const bigDeal = (price: number, fipePrice: number) => {
     if (+price < fipePrice) {
       return (
@@ -114,7 +118,15 @@ const CardUser = ({
         flexDirection={"column"}
         gap={"20px"}
       >
-        <Box display={"flex"} alignItems={"center"} gap={"20px"}>
+        <Box
+          display={"flex"}
+          alignItems={"center"}
+          gap={"20px"}
+          cursor={"pointer"}
+          onClick={() => {
+            router.push(`/${userId}`);
+          }}
+        >
           <Avatar name={userName} size={"sm"} />
           <Text fontSize={"body2"} fontWeight={"500"}>
             {userName}

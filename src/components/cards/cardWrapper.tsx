@@ -20,6 +20,7 @@ const CardWrapper = ({ cars }: any) => {
         return (
           <CardUser
             key={car.id}
+            userId={car.userId}
             carName={car.model}
             price={car.price}
             fipePrice={car.priceFipe}
