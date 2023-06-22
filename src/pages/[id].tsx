@@ -124,13 +124,22 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = ({
 export const getServerSideProps: GetServerSideProps<
   AdvertiserPageProps
 > = async (ctx) => {
-  const cookies = nookies.get(ctx);
+  // const cookies = nookies.get(ctx);
   //   api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
-
+  
   const id = ctx.params!.id;
-  const response = await api.get<UserInterface>(`/user/${id}`, {
-    headers: { Authorization: `Bearer ${cookies["@MotorsShop"]}` },
+  
+  if (!id) {
+    console.log("id nulo")
+  }
+
+  const idNumber = Number(id);
+
+  const response = await api.get<UserInterface>(`/user/${idNumber}`, {
+    // headers: { Authorization: `Bearer ${cookies["@MotorsShop"]}` },
   });
+
+  console.log(response)
 
   return { props: { userData: response.data } };
 };
