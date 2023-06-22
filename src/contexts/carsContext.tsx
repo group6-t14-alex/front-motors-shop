@@ -123,7 +123,7 @@ export const CarProvider = ({children}: Props) => {
 
         const getUserCars = async () => {
             try {
-                const response = await api.get(`/user/${user!.id}`)                
+                const response = await api.get(`/user/${user?.id}`)                
                 
                 if(response.data){
                     setUserCars(response.data.car)

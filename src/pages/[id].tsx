@@ -1,5 +1,6 @@
+"use client"
 import { HeaderLogged } from "@/components/header/headerLogged";
-import { GetServerSideProps, GetStaticProps, NextPage } from "next";
+import { GetServerSideProps, GetStaticProps, GetStaticPropsContext, NextPage } from "next";
 import { Box, Avatar, Heading, Text } from "@chakra-ui/react";
 import { Footer } from "@/components/footer/footer";
 import CardUser from "@/components/cards/userCard";
@@ -121,27 +122,35 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = ({
   );
 };
 
-export const getServerSideProps: GetServerSideProps<
-  AdvertiserPageProps
-> = async (ctx) => {
+export const getStaticProps: GetStaticProps<AdvertiserPageProps> = async (ctx) => {
   // const cookies = nookies.get(ctx);
   //   api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
   
   const id = ctx.params!.id;
+  console.log(id);
   
   if (!id) {
     console.log("id nulo")
-  }
+  }  
 
-  const idNumber = Number(id);
-
-  const response = await api.get<UserInterface>(`/user/${idNumber}`, {
+  const response = await api.get<UserInterface>(`/user/${id}`, {
     // headers: { Authorization: `Bearer ${cookies["@MotorsShop"]}` },
   });
-
-  console.log(response)
+  console.log(response.data);
 
   return { props: { userData: response.data } };
 };
+
+export const getStaticPaths = async () => {
+  return {
+    paths: [
+      {
+        params: { id: "1" }
+      }
+    ],
+    fallback: "blocking"
+  };
+};
+
 
 export default AdvertiserDetail;
