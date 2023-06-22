@@ -17,7 +17,10 @@ interface carProviderData {
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
     getBrands: string[];
     userCars:createAdReturnInterface[];
-    models:string[]
+    models:string[];
+    years: number[];
+    colors: string[];
+    filterOptions: (ads: createAdReturnInterface[]) => void;
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -127,28 +130,23 @@ export const CarProvider = ({children}: Props) => {
     }, [user])
 
     const filterOptions = (ads: createAdReturnInterface[]) => {
-        const modelsName = ads.map((elem) => {
-          const [name1, name2] = elem.model.split(" ");
-          return [name1, name2].join(" ");
-        });
     
         const carsColors = ads.map((elem) => elem.color);
         const carsFuel = ads.map((elem) => elem.fuel);
         const carsYears = ads.map((elem) => elem.year);
     
+        //remover info repetida
         const modelsSetAnos = new Set(carsYears);
-        const modelsSetNames = new Set(modelsName);
         const modelsSetCores = new Set(carsColors);
         const modelsSetCombustiveis = new Set(carsFuel);
     
         setYears(Array.from(modelsSetAnos));
         setColors(Array.from(modelsSetCores));
-        setModels(Array.from(modelsSetNames));
         setFuelTypes(Array.from(modelsSetCombustiveis));
     };
 
     return (
-        <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars, models}}>
+        <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars, models, years, colors, filterOptions}}>
             {children}
         </CarContext.Provider>
     )

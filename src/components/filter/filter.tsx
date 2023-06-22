@@ -3,7 +3,9 @@ import FilterList from "./filterList/filtersList";
 import { useCarContext } from "@/contexts/carsContext";
 
 const Filter = () => {
-  const {getBrands} = useCarContext()
+  const {getBrands, colors, filterOptions} = useCarContext()
+
+  console.log(colors)
   return (
     <Box display="flex" gap="1.6rem" flexDirection="column">
       <Text fontSize="heading4" fontWeight="bold" color="black">
@@ -33,11 +35,16 @@ const Filter = () => {
         Cor
       </Text>
       <UnorderedList listStyleType="none">
-        <FilterList filter={"cor 1"} />
+      {colors.map((color) => {
+          return(
+            <FilterList key={color} filter={color}/>
+          )
+        })}
+        {/* <FilterList filter={"cor 1"} />
         <FilterList filter={"cor 2"} />
         <FilterList filter={"cor 3"} />
         <FilterList filter={"cor 4"} />
-        <FilterList filter={"cor 5"} />
+        <FilterList filter={"cor 5"} /> */}
       </UnorderedList>
 
       <Text fontSize="heading4" fontWeight="bold" color="black">
