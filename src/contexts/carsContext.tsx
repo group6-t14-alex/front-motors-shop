@@ -138,6 +138,7 @@ export const CarProvider = ({children}: Props) => {
 
     }, [user])
 
+
     const filterOptions = (ads: createAdReturnInterface[]) => {
     
         const carsColors = ads.map((elem) => elem.color);
