@@ -27,7 +27,7 @@ interface carProviderData {
     setFuelTypes: React.Dispatch<React.SetStateAction<string[]>>;
     fuelTypes: string[]
     filterOptions: (ads: createAdReturnInterface[]) => void;
-
+    setUserCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -119,33 +119,33 @@ export const CarProvider = ({children}: Props) => {
         }
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const getUserCars = async () => {
-            try {
-                const response = await api.get(`/user/${user!.id}`)                
+    //     const getUserCars = async () => {
+    //         try {
+    //             const response = await api.get(`/user/${user!.id}`)                
                 
-                if(response.data){
-                    setUserCars(response.data.car)
-                }
+    //             if(response.data){
+    //                 setUserCars(response.data.car)
+    //             }
       
-            } catch (errors) {
-                console.log(errors)
-            }
-        }
+    //         } catch (errors) {
+    //             console.log(errors)
+    //         }
+    //     }
 
-        getUserCars()
+    //     getUserCars()
 
-    }, [user])
-
+    // }, [user])
 
     const filterOptions = (ads: createAdReturnInterface[]) => {
-    
+        const carsModels = ads.map((model) => model.model)
         const carsColors = ads.map((elem) => elem.color);
         const carsFuel = ads.map((elem) => elem.fuel);
         const carsYears = ads.map((elem) => elem.year);
     
         //remover info repetida
+        const modelsSetModel = new Set(carsModels)
         const modelsSetAnos = new Set(carsYears);
         const modelsSetCores = new Set(carsColors);
         const modelsSetCombustiveis = new Set(carsFuel);
@@ -153,12 +153,13 @@ export const CarProvider = ({children}: Props) => {
         setYears(Array.from(modelsSetAnos));
         setColors(Array.from(modelsSetCores));
         setFuelTypes(Array.from(modelsSetCombustiveis));
+        setModels(Array.from(modelsSetModel))
     };
 
 
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
-        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes}}>
+        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars}}>
             {children}
         </CarContext.Provider>
     )

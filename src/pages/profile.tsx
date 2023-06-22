@@ -3,7 +3,7 @@ import { Footer } from "@/components/footer/footer";
 import { HeaderLogged } from "@/components/header/headerLogged";
 import CreateAd from "@/components/modals/createAd";
 import {Avatar, Box, Heading, Grid, Text, List} from "@chakra-ui/react"
-import { useContext } from 'react'
+import { useContext, useEffect } from 'react'
 import { NextPage, GetServerSideProps } from "next";
 import nookies, {parseCookies} from "nookies"
 import { AuthContext } from '@/contexts/authContext'
@@ -40,7 +40,26 @@ interface ProfileInterface {
 
 const Profile: NextPage<any> = ({ cars }) => {
   const { user }: any = useContext(AuthContext);
-  const { userCars }: any = useCarContext();
+  const { userCars, setUserCars }: any = useCarContext();
+
+  useEffect(() => {
+
+    const getUserCars = async () => {
+        try {
+            const response = await api.get(`/user/${user!.id}`)                
+            
+            if(response.data){
+                setUserCars(response.data.car)
+            }
+  
+        } catch (errors) {
+            console.log(errors)
+        }
+    }
+
+    getUserCars()
+
+}, [user, setUserCars])
 
   return (
       <>
