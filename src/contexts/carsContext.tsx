@@ -25,6 +25,8 @@ interface carProviderData {
     getBrands: string[];
     userCars:createAdReturnInterface[];
     models:string[]
+    cars: createAdReturnInterface[];
+    setCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -34,6 +36,7 @@ export const CarProvider = ({children}: Props) => {
     const [adProfile, setAdProfile] = useState<createAdReturnInterface[]>([]);
     const [userCars, setUserCars] = useState<createAdReturnInterface[]>([]);
     const [models, setModels] = useState<string[]>([]);
+    const [cars, setCars] = useState<createAdReturnInterface[]>([]);
     const [fuelTypes, setFuelTypes] = useState<string[]>([]);
     const [getBrands, setGetBrands] = useState<string[]>([]);
     const [years, setYears] = useState<number[]>([]);
@@ -46,16 +49,7 @@ export const CarProvider = ({children}: Props) => {
 
     if (cookies["@MotorsShop"]) {
         api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
-    }
-
-  const { user } = useAuth();
-  const toast = useToast();
-  const [getBrands, setGetBrands] = useState([]);
-  const cookies = parseCookies();
-
-  if (cookies["@MotorsShop"]) {
-    api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
-  }
+    };  
 
   useEffect(() => {
     const getApiFipe = async () => {
@@ -107,75 +101,69 @@ export const CarProvider = ({children}: Props) => {
         setFuelTypes(Array.from(modelsSetCombustiveis));
     };
 
-    return (
-        <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars, models}}>
-            {children}
-        </CarContext.Provider>
-    )
-}
-
-
-      if (response.data) {
-        setAdProfile((previousProfile) => [...previousProfile, response.data]);
-        setUserCars((previousUserCars) => [...previousUserCars, response.data]);
-
-        toast({
-          position: "top-right",
-          title: "Sucesso",
-          description: "anúncio criado com sucesso!",
-          status: "success",
-          duration: 6000,
-          isClosable: true,
-        });
-
-        onClose();
-      }
-    } catch (errors) {
-      console.log(errors);
-      toast({
-        position: "top-right",
-        title: "Error",
-        description: "Ops! tente novamente",
-        status: "error",
-        duration: 6000,
-        isClosable: true,
-      });
-    }
-  };
-
-  useEffect(() => {
-    const getUserCars = async () => {
+    const createAd = async (carRequest: CarRequest, onClose: () => void) => {
       try {
-        const response = await api.get(`/user/${user!.id}`);
-
-        if (response.data) {
-          setUserCars(response.data.car);
-        }
+          const response = await api.post("/cars", carRequest)
+          if(response.data){
+              setAdProfile((previousProfile) => [...previousProfile,response.data])
+              setUserCars((previousUserCars) => [...previousUserCars, response.data])
+              toast({
+                  position: "top-right",
+                  title: "Sucesso",
+                  description: "anúncio criado com sucesso!",
+                  status: "success",
+                  duration: 6000,
+                  isClosable: true,
+                });
+                onClose();
+          }
       } catch (errors) {
-        console.log(errors);
+          console.log(errors)
+          toast({
+              position: "top-right",
+              title: "Error",
+              description: "Ops! tente novamente",
+              status: "error",
+              duration: 6000,
+              isClosable: true,
+            });
       }
-    };
+  };
+  
+    useEffect(() => {
+      const getUserCars = async () => {
+        try {
+          const response = await api.get(`/user/${user?.id}`);
+  
+          if (response.data) {
+            setUserCars(response.data.car);
+          }
+        } catch (errors) {
+          console.log(errors);
+        }
+      };
+  
+      getUserCars();
+    }, [user]);
 
-    getUserCars();
-  }, [user]);
-
-  return (
-    <CarContext.Provider
-      value={{
-        createAd,
-        adProfile,
-        setAdProfile,
-        getBrandByFipe,
-        getBrands,
-        userCars,
-        cars,
-        setCars,
-      }}
-    >
-      {children}
-    </CarContext.Provider>
-  );
-};
+    return (
+      <CarContext.Provider
+        value={{
+          createAd,
+          adProfile,
+          setAdProfile,
+          getBrandByFipe,
+          getBrands,
+          userCars,
+          cars,
+          setCars,
+          models
+        }}
+      >
+        {children}
+      </CarContext.Provider>
+    );
+}
 
 export const useCarContext = () => {
   return useContext(CarContext);
