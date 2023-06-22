@@ -27,7 +27,7 @@ interface carProviderData {
     setFuelTypes: React.Dispatch<React.SetStateAction<string[]>>;
     fuelTypes: string[]
     filterOptions: (ads: createAdReturnInterface[]) => void;
-
+    setUserCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -119,24 +119,24 @@ export const CarProvider = ({children}: Props) => {
         }
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const getUserCars = async () => {
-            try {
-                const response = await api.get(`/user/${user!.id}`)                
+    //     const getUserCars = async () => {
+    //         try {
+    //             const response = await api.get(`/user/${user!.id}`)                
                 
-                if(response.data){
-                    setUserCars(response.data.car)
-                }
+    //             if(response.data){
+    //                 setUserCars(response.data.car)
+    //             }
       
-            } catch (errors) {
-                console.log(errors)
-            }
-        }
+    //         } catch (errors) {
+    //             console.log(errors)
+    //         }
+    //     }
 
-        getUserCars()
+    //     getUserCars()
 
-    }, [user])
+    // }, [user])
 
     const filterOptions = (ads: createAdReturnInterface[]) => {
         const carsModels = ads.map((model) => model.model)
@@ -159,7 +159,7 @@ export const CarProvider = ({children}: Props) => {
 
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
-        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes}}>
+        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars}}>
             {children}
         </CarContext.Provider>
     )
