@@ -1,4 +1,4 @@
-import { UserRequest, LoginData } from "@/schemas/user.schema";
+import { UserRequest, LoginData, SendingEmailData, RecoveryPasswordData } from "@/schemas/user.schema";
 import { api } from "@/services/api";
 import { useRouter } from "next/router";
 import {
