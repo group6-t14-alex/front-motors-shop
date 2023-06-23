@@ -9,7 +9,7 @@ const CardWrapper = ({ cars }: any) => {
     return existingBrands.filter(car => car === selectedFilters)
 }
  
-  // const carFilter = getFilteredCars(selectedCars, getBrands)
+  const carFilter = getFilteredCars(selectedCars, getBrands)
   // console.log(carFilter)
   return (
     <Box
@@ -26,22 +26,22 @@ const CardWrapper = ({ cars }: any) => {
       gap={{ cel: "12px" }}
     >
       {
-      // carFilter.length > 0 ? carFilter.map((car: any) => {
-      //   return (
-      //     <CardUser
-      //       key={car.id}
-      //       userId={car.userId}
-      //       carName={car.model}
-      //       price={car.price}
-      //       fipePrice={car.priceFipe}
-      //       userName={car.user.name}
-      //       carImage={car.imageUrl}
-      //       km={car.km}
-      //       year={car.year}
-      //       description={car.description}
-      //     />
-      //   );
-      // }): 
+      carFilter.length > 0 ? carFilter.map((car: any) => {
+        return (
+          <CardUser
+            key={car.id}
+            userId={car.userId}
+            carName={car.model}
+            price={car.price}
+            fipePrice={car.priceFipe}
+            userName={car.user.name}
+            carImage={car.imageUrl}
+            km={car.km}
+            year={car.year}
+            description={car.description}
+          />
+        );
+      }): 
       cars.map((car: any) => {
         return (
           <CardUser

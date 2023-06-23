@@ -4,7 +4,7 @@ const FilterList = ({ filter, handleFunction }: any) => {
 
   return (
     <>
-      <Button variant={'ghost'} key={filter} cursor="pointer" color="grey3" onClick={() => handleFunction(filter)}>
+      <Button variant={'ghost'} key={filter} cursor="pointer" color="grey3" onClick={() => handleFunction}>
         {filter[0].toUpperCase() + filter.substring(1) }
       </Button>
     </>
