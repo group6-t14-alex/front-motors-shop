@@ -15,8 +15,19 @@ interface carProviderData {
     getBrandByFipe: (brand: string) => Promise<any>;
     adProfile: createAdReturnInterface[];
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
-    getBrands: never[];
-    userCars:createAdReturnInterface[]
+    getBrands: string[];
+    userCars:createAdReturnInterface[];
+    models:string[];
+    cars:createAdReturnInterface[];
+    setCars:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
+    years: number[];
+    setYears: React.Dispatch<React.SetStateAction<number[]>>
+    colors: string[];
+    setColors: React.Dispatch<React.SetStateAction<string[]>>
+    setFuelTypes: React.Dispatch<React.SetStateAction<string[]>>;
+    fuelTypes: string[]
+    filterOptions: (ads: createAdReturnInterface[]) => void;
+    setUserCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -24,14 +35,21 @@ const CarContext = createContext<carProviderData>({} as carProviderData);
 export const CarProvider = ({children}: Props) => {
     const [adProfile, setAdProfile] = useState<createAdReturnInterface[]>([]);
     const [userCars, setUserCars] = useState<createAdReturnInterface[]>([]);
+    const [models, setModels] = useState<string[]>([]);
+    const [cars, setCars] = useState<createAdReturnInterface[]>([]);
+    const [fuelTypes, setFuelTypes] = useState<string[]>([]);
+    const [getBrands, setGetBrands] = useState<string[]>([]);
+    const [years, setYears] = useState<number[]>([]);
+    const [colors, setColors] = useState<string[]>([]);
     
     const {user} = useAuth()
     const toast = useToast();
-    const [getBrands, setGetBrands] = useState([])
+
     const cookies = parseCookies();
 
     if (cookies["@MotorsShop"]) {
         api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
+
     }
 
     useEffect(() => {
@@ -54,7 +72,7 @@ export const CarProvider = ({children}: Props) => {
 
         getApiFipe()
     }, [])
-    
+
 
     const getBrandByFipe = async (brand: string) => {
         const { data: result }= await apiKenzieKars.get("", {
@@ -101,30 +119,53 @@ export const CarProvider = ({children}: Props) => {
         }
     };
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const getUserCars = async () => {
-            try {
-                const response = await api.get(`/user/${user!.id}`)                
+    //     const getUserCars = async () => {
+    //         try {
+    //             const response = await api.get(`/user/${user!.id}`)                
                 
-                if(response.data){
-                    setUserCars(response.data.car)
-                }
+    //             if(response.data){
+    //                 setUserCars(response.data.car)
+    //             }
       
-            } catch (errors) {
-                console.log(errors)
-            }
-        }
+    //         } catch (errors) {
+    //             console.log(errors)
+    //         }
+    //     }
 
-        getUserCars()
+    //     getUserCars()
 
-    }, [user])
+    // }, [user])
+
+    const filterOptions = (ads: createAdReturnInterface[]) => {
+        const carsModels = ads.map((model) => model.model)
+        const carsColors = ads.map((elem) => elem.color);
+        const carsFuel = ads.map((elem) => elem.fuel);
+        const carsYears = ads.map((elem) => elem.year);
+    
+        //remover info repetida
+        const modelsSetModel = new Set(carsModels)
+        const modelsSetAnos = new Set(carsYears);
+        const modelsSetCores = new Set(carsColors);
+        const modelsSetCombustiveis = new Set(carsFuel);
+    
+        setYears(Array.from(modelsSetAnos));
+        setColors(Array.from(modelsSetCores));
+        setFuelTypes(Array.from(modelsSetCombustiveis));
+        setModels(Array.from(modelsSetModel))
+    };
+
 
     return (
-        <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars}}>
+        <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
+        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars}}>
             {children}
         </CarContext.Provider>
     )
+
+
+
 }
 
 export const useCarContext = () => {

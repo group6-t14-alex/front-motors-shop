@@ -1,4 +1,4 @@
-import { UserRequest, LoginData } from "@/schemas/user.schema";
+import { UserRequest, LoginData, SendingEmailData, RecoveryPasswordData } from "@/schemas/user.schema";
 import { api } from "@/services/api";
 import { useRouter } from "next/router";
 import {
@@ -23,6 +23,10 @@ interface authProviderData {
   user: UserInterface | null;
   setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>;
   logOut: () => Promise<void>;
+  isLogged: boolean;
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;  
+  sendEmail: (email :SendingEmailData) => void;
+  newPassword: (password: RecoveryPasswordData, token: string) => void;
 }
 
 export const AuthContext = createContext<authProviderData>(
@@ -33,6 +37,7 @@ export const AuthProvider = ({ children }: Props) => {
   const router = useRouter();
   const toast = useToast();
   const [user, setUser] = useState<UserInterface | null>(null);
+  const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
     const getLocalToken = async () => {
@@ -53,7 +58,6 @@ export const AuthProvider = ({ children }: Props) => {
             Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`,
           },
         });
-
         setUser(userData.data);
       } catch (error) {
         console.log(error);
@@ -102,6 +106,7 @@ export const AuthProvider = ({ children }: Props) => {
         maxAge: 60 * 60 * 1,
         path: "/",
       });
+      api.defaults.headers.common.authorization = `Bearer ${response.data.token}`;
       toast({
         position: "top-right",
         title: "Sucesso",
@@ -112,6 +117,7 @@ export const AuthProvider = ({ children }: Props) => {
       });
       router.push("/profile");
       setUser(userData.data);
+      setIsLogged(true);
     } catch (error) {
       console.log(error);
       toast({
@@ -153,13 +159,62 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ registerUser, loginUser, user, setUser, logOut }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
-};
+  const sendEmail = (email: SendingEmailData) => {
+    try {
+        const getEmail = api.post("/user/resetPassword", email)
 
+        toast({
+          position: "top-right",
+          title: "Sucesso",
+          description: "Email enviado com sucesso!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        })
+  
+        router.push("/")
+      
+    } catch (error) {
+      console.log(error)
+      toast({
+        position: "top-right",
+        title: "Erro",
+        description: "Erro ao enviar email, tente novamente!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  const newPassword = (resetPassword: RecoveryPasswordData, token: string) => {
+    try {
+      const getPass = api.patch(`/user/resetPassword/${token}`, {password: resetPassword.password})
+     
+      toast({
+        position: "top-right",
+        title: "Sucesso",
+        description: "Senha atualizada com sucesso!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      })
+      router.push("/login")      
+    } catch (error) {
+      console.log(error)
+      toast({
+        position: "top-right",
+        title: "Erro",
+        description: "Erro ao atualizar senha, tente novamente!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  };
+
+  return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser,logOut, sendEmail, newPassword, isLogged, setIsLogged }}>{children}</AuthContext.Provider>;
+
+};
+   
 export const useAuth = () => useContext(AuthContext);
