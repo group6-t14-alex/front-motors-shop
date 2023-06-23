@@ -2,10 +2,13 @@
 import { Footer } from "@/components/footer/footer";
 import { HeaderLogged } from "@/components/header/headerLogged";
 import CreateAd from "@/components/modals/createAd";
-import {Avatar, Box, Heading, Grid, Text, List} from "@chakra-ui/react"
-import { useContext } from 'react'
+import {Avatar, Box, Heading, Grid, Text, List, Button, Link,} from "@chakra-ui/react"
+import { useContext, useEffect, useState } from 'react'
 import { NextPage, GetServerSideProps } from "next";
-import nookies, {parseCookies} from "nookies"
+import nookies, { parseCookies } from "nookies";
+import { useToast } from "@chakra-ui/toast";
+import { UserInterface } from "@/interfaces/user.interface";
+import CardUser from "@/components/cards/userCard";
 import { AuthContext } from '@/contexts/authContext'
 import { useCarContext } from '@/contexts/carsContext'
 import { api } from '@/services/api'
@@ -40,7 +43,26 @@ interface ProfileInterface {
 
 const Profile: NextPage<any> = ({ cars }) => {
   const { user }: any = useContext(AuthContext);
-  const { userCars }: any = useCarContext();
+  const { userCars, setUserCars }: any = useCarContext();
+
+  useEffect(() => {
+
+    const getUserCars = async () => {
+        try {
+            const response = await api.get(`/user/${user!.id}`)                
+            
+            if(response.data){
+                setUserCars(response.data.car)
+            }
+  
+        } catch (errors) {
+            console.log(errors)
+        }
+    }
+
+    getUserCars()
+
+}, [user, setUserCars])
 
   return (
       <>
@@ -102,6 +124,7 @@ const Profile: NextPage<any> = ({ cars }) => {
         <Text color={'grey2'} fontFamily={'body'} fontWeight={'400'} fontSize={'body1'}>
             { user?.description }
         </Text>
+
 
           </Box>
           <CreateAd/>

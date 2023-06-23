@@ -17,15 +17,21 @@ import {
   Text,
   useDisclosure,
   Avatar,
+  MenuItem,
 } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from "react";
+import LogOutButon from "../modals/logOut";
+import { useRouter } from "next/router";
+import EditProfileButton from "../modals/editProfie";
+import EditAddressButton from "../modals/editAddressUser";
 
 // import { Link as LinkDom } from "react-router-dom";
 
 export const HeaderLogged = () => {
   const { isOpen } = useDisclosure();
-  const { user }: any = useContext(AuthContext)
-      
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
+
   return (
     <>
       <Flex flexDirection={"row"} borderBottom={"2px solid #dee2e6"} id="topo">
@@ -54,7 +60,7 @@ export const HeaderLogged = () => {
                   display={{ cel: "flex", desk: "none" }}
                   isActive={isOpen}
                   _hover={{ bg: "transpatent" }}
-                  _after={{ bg: "transpatent" }}                  
+                  _after={{ bg: "transpatent" }}
                 >
                   {isOpen ? <CloseIcon /> : <HamburgerIcon />}
                 </MenuButton>
@@ -68,68 +74,124 @@ export const HeaderLogged = () => {
                   flexDirection={"column"}
                   gap={"1.5rem"}
                 >
-                  <MenuItemOption
-                    fontFamily={"body"}
-                    fontSize={"body1"}
-                    fontWeight={"600"}
-                    color={"grey2"}
-                    height={"3rem"}
-                    isChecked={false}
-                    _hover={{ bg: "transparent" }}
-                    _after={{ bg: "transparent" }}
-                    _before={{ bg: "transparent" }}
-                  >
-                    Meus anúncios
-                  </MenuItemOption>
-                  <MenuItemOption
-                    fontFamily={"body"}
-                    fontSize={"body1"}
-                    fontWeight={"600"}
-                    color={"grey2"}
-                    height={"3rem"}
-                    isChecked={false}
-                    _hover={{ bg: "transparent" }}
-                    _after={{ bg: "transparent" }}
-                    _before={{ bg: "transparent" }}
+                  {/* <MenuItem
+                  fontFamily={"body"}
+                  fontSize={"body1"}
+                  fontWeight={"600"}
+                  color={"grey2"}
+                  height={"3rem"}
+                  isChecked={false}
+                  _hover={{ bg: "transparent" }}
+                  _after={{ bg: "transparent" }}
+                  _before={{ bg: "transparent" }}
                   >
                     Editar perfil
-                  </MenuItemOption>
-                  <MenuItemOption
-                    fontFamily={"body"}
-                    fontSize={"body1"}
-                    fontWeight={"600"}
-                    color={"grey2"}
-                    height={"3rem"}
-                    isChecked={false}
-                    _hover={{ bg: "transparent" }}
-                    _after={{ bg: "transparent" }}
-                    _before={{ bg: "transparent" }}
+                  </MenuItem> */}
+
+                  <EditProfileButton userData={user} />
+
+                  {/* <MenuItem
+                  fontFamily={"body"}
+                  fontSize={"body1"}
+                  fontWeight={"600"}
+                  color={"grey2"}
+                  height={"3rem"}
+                  isChecked={false}
+                  _hover={{ bg: "transparent" }}
+                  _after={{ bg: "transparent" }}
+                  _before={{ bg: "transparent" }}
                   >
-                    Logout
-                  </MenuItemOption>
+                    Editar endereço
+                  </MenuItem> */}
+
+                  <EditAddressButton userData={user} />
+
+                  {user?.type_user == "anunciante" ? (
+                    <MenuItem
+                      _hover={{ bg: "none" }}
+                      onClick={() => router.push("/profile")}
+                      // fontFamily={"body"}
+                      // fontSize={"body1"}
+                      // fontWeight={"600"}
+                      // color={"grey2"}
+                      // height={"3rem"}
+                      // isChecked={false}
+                      // _hover={{ bg: "transparent" }}
+                      // _after={{ bg: "transparent" }}
+                      // _before={{ bg: "transparent" }}
+                    >
+                      Meus anúncios
+                    </MenuItem>
+                  ) : (
+                    <></>
+                  )}
+                  {/* <MenuItem
+                  fontFamily={"body"}
+                  fontSize={"body1"}
+                  fontWeight={"600"}
+                  color={"grey2"}
+                  height={"3rem"}
+                  isChecked={false}
+                  _hover={{ bg: "transparent" }}
+                  _after={{ bg: "transparent" }}
+                  _before={{ bg: "transparent" }}
+                  >
+                    Sair
+                  </MenuItem> */}
+                  <LogOutButon />
                 </MenuList>
               </>
             )}
           </Menu>
-          <Box
-            display={{ cel: "none", desk: "flex" }}
-            gap={"0.5rem"}
-            borderLeftColor={"grey6"}
-            borderLeftWidth={"2px"}
-            height={"100%"}
-            alignItems={"center"}
-            paddingLeft={"2.75rem"}
-          >
-            <Avatar name={user?.name} />
-            <Text
-              color={"grey2"}
-              fontFamily={"body"}
-              fontWeight={"400"}
-              fontSize={"body1"}
+          <Menu>
+            <Box
+              display={{ cel: "none", desk: "flex" }}
+              gap={"0.5rem"}
+              borderLeftColor={"grey6"}
+              borderLeftWidth={"2px"}
+              height={"100%"}
+              alignItems={"center"}
+              paddingLeft={"2.75rem"}
+              justifyContent={"center"}
             >
-              {user?.name}
-            </Text>
-          </Box>
+              <MenuButton width={"100%"} display={"flex"} alignItems="center">
+                <Flex gap={"0.5rem"} alignItems="center">
+                  <Avatar name={user?.name} />
+                  <Text
+                    color={"grey2"}
+                    fontFamily={"body"}
+                    fontWeight={"400"}
+                    fontSize={"body1"}
+                  >
+                    {user?.name}
+                  </Text>
+                </Flex>
+              </MenuButton>
+              <MenuList
+                borderRadius={"3px"}
+                display={"flex"}
+                justifyContent={"center"}
+                flexDirection={"column"}
+                padding={"1rem"}
+              >
+                <EditProfileButton userData={user} />
+
+                <EditAddressButton userData={user} />
+
+                {user?.type_user == "anunciante" ? (
+                  <MenuItem
+                    _hover={{ bg: "none" }}
+                    onClick={() => router.push("/profile")}
+                  >
+                    Meus anuncios
+                  </MenuItem>
+                ) : (
+                  <></>
+                )}
+                <LogOutButon />
+              </MenuList>
+            </Box>
+          </Menu>
         </Container>
       </Flex>
     </>

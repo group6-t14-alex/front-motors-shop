@@ -23,6 +23,8 @@ export const userSchemaRequest = userSchema.omit({
   id: true,
 });
 
+export const userSchemaRequestUpdate = userSchemaRequest.deepPartial();
+
 export const loginSchema = userSchema.omit({
   id: true,
   name: true,
@@ -33,7 +35,7 @@ export const loginSchema = userSchema.omit({
   cep: true,
   number: true,
   complement: true,
-  type_user: true, 
+  type_user: true,
   confirmPassword: true,
   state: true,
   city: true,
@@ -69,6 +71,11 @@ export type UserRequest = z.infer<typeof userSchemaRequest>;
 export type UserData = z.infer<typeof userSchema>;
 
 export type LoginData = z.infer<typeof loginSchema>;
+
+
+export type userSchemaRequestUpdateData = z.infer<
+  typeof userSchemaRequestUpdate
+>;
 
 export type SendingEmailData = z.infer<typeof sendingEmailSchema>;
 

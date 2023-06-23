@@ -10,7 +10,6 @@ import {
 } from "react";
 import { useToast } from "@chakra-ui/toast";
 import jwt_decode from "jwt-decode";
-
 import { UserInterface } from "@/interfaces/user.interface";
 import { setCookie, parseCookies } from "nookies";
 
@@ -23,6 +22,7 @@ interface authProviderData {
   loginUser: (loginData: LoginData) => void;
   user: UserInterface | null;
   setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>;
+  logOut: () => Promise<void>;
   isLogged: boolean;
   setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;  
   sendEmail: (email :SendingEmailData) => void;
@@ -131,6 +131,34 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
+  const logOut = async () => {
+    try {
+      const token: any = parseCookies();
+
+      setCookie(null, "@MotorsShop", token, { maxAge: 0, path: "/" });
+      setUser(null);
+      toast({
+        position: "top-right",
+        title: "Sucesso",
+        description: "Logout feito com sucesso!",
+        status: "success",
+        duration: 6000,
+        isClosable: true,
+      });
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+      toast({
+        position: "top-right",
+        title: "Erro",
+        description: "Ocorreu algum erro, tente novamente!",
+        status: "error",
+        duration: 6000,
+        isClosable: true,
+      });
+    }
+  };
+
   const sendEmail = (email: SendingEmailData) => {
     try {
         const getEmail = api.post("/user/resetPassword", email)
@@ -171,9 +199,7 @@ export const AuthProvider = ({ children }: Props) => {
         duration: 5000,
         isClosable: true,
       })
-
-      router.push("/login")
-      
+      router.push("/login")      
     } catch (error) {
       console.log(error)
       toast({
@@ -187,7 +213,7 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
-  return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser, sendEmail, newPassword, isLogged, setIsLogged }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser,logOut, sendEmail, newPassword, isLogged, setIsLogged }}>{children}</AuthContext.Provider>;
 
 };
    

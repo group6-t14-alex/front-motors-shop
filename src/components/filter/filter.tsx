@@ -6,7 +6,7 @@ import { api } from "@/services/api";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 
 const Filter = () => {
-  const {getBrands, colors, filterOptions, years, fuelTypes} = useCarContext()
+  const {getBrands, colors, filterOptions, years, fuelTypes, models} = useCarContext()
 
   useEffect(() => {
 
@@ -41,12 +41,11 @@ const Filter = () => {
         Modelo
       </Text>
       <UnorderedList listStyleType="none">
-        {" "}
-        <FilterList filter={"Modelo 1"} />
-        <FilterList filter={"Modelo 2"} />
-        <FilterList filter={"Modelo 3"} />
-        <FilterList filter={"Modelo 4"} />
-        <FilterList filter={"Modelo 5"} />
+      {models.map((model) => {
+          return(
+            <FilterList key={model} filter={model}/>
+          )
+        })}
       </UnorderedList>
 
       <Text fontSize="heading4" fontWeight="bold" color="black">
