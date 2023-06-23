@@ -21,7 +21,7 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
   const { setCars }: any = useCarContext();
   useEffect(() => {
     setCars(cars);
-  }, []);
+  }, [cars, setCars]);
   return (
     <>
       <Head>
