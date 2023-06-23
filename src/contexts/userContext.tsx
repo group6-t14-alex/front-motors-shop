@@ -1,7 +1,7 @@
 import { api } from "@/services/api";
 import { useRouter } from "next/router";
 import { parseCookies, setCookie } from "nookies";
-import { ReactNode, createContext, useContext } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 import { useAuth } from "./authContext";
 import { userSchemaRequestUpdateData } from "@/schemas/user.schema";
 import { useToast } from "@chakra-ui/toast";
@@ -22,6 +22,8 @@ interface userProviderData {
     id: number,
     onClose: () => void
   ) => Promise<void>;
+  idUser: string;
+  setIdUser: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const UserContext = createContext<userProviderData>({} as userProviderData);
@@ -29,6 +31,7 @@ const UserContext = createContext<userProviderData>({} as userProviderData);
 export const UserProvider = ({ children }: Props) => {
   const router = useRouter();
   const cookies = parseCookies();
+  const [idUser, setIdUser] = useState("");
   if (cookies["@MotorsShop"]) {
     api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
   }
@@ -127,7 +130,13 @@ export const UserProvider = ({ children }: Props) => {
 
   return (
     <UserContext.Provider
-      value={{ updateUserInfos, deleteUser, updateUserAddress }}
+      value={{
+        updateUserInfos,
+        deleteUser,
+        updateUserAddress,
+        idUser,
+        setIdUser,
+      }}
     >
       {children}
     </UserContext.Provider>
