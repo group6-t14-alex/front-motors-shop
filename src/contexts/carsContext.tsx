@@ -1,10 +1,10 @@
 import { api, apiKenzieKars } from "@/services/api";
+import { CarRequest } from "@/schemas/car.schema";
+import { createAdReturnInterface } from "@/interfaces/createAd.interface";
+
 import {useToast} from "@chakra-ui/toast";
 import { parseCookies } from "nookies";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { CarRequest } from "@/schemas/car.schema";
-import { createAdReturnInterface } from "@/interfaces/createAd.interface";
-import { useAuth } from "./authContext";
 
 interface Props {
     children: ReactNode;
@@ -27,7 +27,11 @@ interface carProviderData {
     setFuelTypes: React.Dispatch<React.SetStateAction<string[]>>;
     fuelTypes: string[]
     filterOptions: (ads: createAdReturnInterface[]) => void;
-    setUserCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>
+    setUserCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
+    setFiltering:React.Dispatch<React.SetStateAction<string[]>>;
+    filtering: string[];
+    setFilteredCars:React.Dispatch<React.SetStateAction<string>>;
+    filteredCars:string;
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -41,8 +45,13 @@ export const CarProvider = ({children}: Props) => {
     const [getBrands, setGetBrands] = useState<string[]>([]);
     const [years, setYears] = useState<number[]>([]);
     const [colors, setColors] = useState<string[]>([]);
-    
-    const {user} = useAuth()
+    const [filteredCars, setFilteredCars] = useState("");
+    const [filtering, setFiltering]= useState<string[]>([]);
+    const [maxKm, setMaxKm] = useState<string | undefined>();
+    const [minKm, setMinKm] = useState<string | undefined>();
+    const [maxPrice, setMaxPrice] = useState<string | undefined>();
+    const [minPrice, setMinPrice] = useState<string | undefined>();
+
     const toast = useToast();
 
     const cookies = parseCookies();
@@ -119,25 +128,6 @@ export const CarProvider = ({children}: Props) => {
         }
     };
 
-    // useEffect(() => {
-
-    //     const getUserCars = async () => {
-    //         try {
-    //             const response = await api.get(`/user/${user!.id}`)                
-                
-    //             if(response.data){
-    //                 setUserCars(response.data.car)
-    //             }
-      
-    //         } catch (errors) {
-    //             console.log(errors)
-    //         }
-    //     }
-
-    //     getUserCars()
-
-    // }, [user])
-
     const filterOptions = (ads: createAdReturnInterface[]) => {
         const carsModels = ads.map((model) => model.model)
         const carsColors = ads.map((elem) => elem.color);
@@ -159,7 +149,7 @@ export const CarProvider = ({children}: Props) => {
 
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
-        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars}}>
+        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars, setFiltering, filtering, setFilteredCars, filteredCars}}>
             {children}
         </CarContext.Provider>
     )

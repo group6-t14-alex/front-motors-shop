@@ -18,7 +18,7 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ cars }) => {
-  const { setCars }: any = useCarContext();
+  const { setCars, filteredCars, filtering }: any = useCarContext();
   useEffect(() => {
     setCars(cars);
   }, []);
@@ -48,6 +48,7 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
         mt={"3.75rem"}
         p={"0.5"}
       >
+       
         <CardWrapper cars={cars} />
 
         <FilterDesk />

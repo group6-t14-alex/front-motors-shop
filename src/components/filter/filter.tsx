@@ -2,11 +2,13 @@ import { UnorderedList, Input, Box, Text } from "@chakra-ui/react";
 import FilterList from "./filterList/filtersList";
 import { useCarContext } from "@/contexts/carsContext";
 import { useEffect } from "react";
+import {useToast} from "@chakra-ui/toast";
 import { api } from "@/services/api";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 
 const Filter = () => {
-  const {getBrands, colors, filterOptions, years, fuelTypes, models} = useCarContext()
+  const toast = useToast();
+  const {getBrands, colors, filterOptions, years, fuelTypes, models, setFiltering, filtering, filteredCars, setFilteredCars} = useCarContext()
 
   useEffect(() => {
 
@@ -24,15 +26,19 @@ const Filter = () => {
    
   }, [filterOptions]);
 
+  const filteringBrands = getBrands.filter((brand) => brand.startsWith(filteredCars))
+  // console.log(filteringBrands)
+ 
+
   return (
     <Box display="flex" gap="1.6rem" flexDirection="column">
       <Text fontSize="heading4" fontWeight="bold" color="black">
         Marca
       </Text>
       <UnorderedList listStyleType="none">
-        {getBrands.map((brand) => {
+        {filteringBrands.map((brand) => {
           return(
-            <FilterList key={brand} filter={brand}/>
+            <FilterList filteredCars={filteredCars} setFilteredCars={setFilteredCars} key={brand} filter={brand}/>
           )
         })}
       </UnorderedList>
