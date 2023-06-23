@@ -2,10 +2,13 @@
 import { Footer } from "@/components/footer/footer";
 import { HeaderLogged } from "@/components/header/headerLogged";
 import CreateAd from "@/components/modals/createAd";
-import {Avatar, Box, Heading, Grid, Text, List} from "@chakra-ui/react"
-import { useContext, useEffect } from 'react'
+import {Avatar, Box, Heading, Grid, Text, List, Button, Link,} from "@chakra-ui/react"
+import { useContext, useEffect, useState } from 'react'
 import { NextPage, GetServerSideProps } from "next";
-import nookies, {parseCookies} from "nookies"
+import nookies, { parseCookies } from "nookies";
+import { useToast } from "@chakra-ui/toast";
+import { UserInterface } from "@/interfaces/user.interface";
+import CardUser from "@/components/cards/userCard";
 import { AuthContext } from '@/contexts/authContext'
 import { useCarContext } from '@/contexts/carsContext'
 import { api } from '@/services/api'
@@ -121,6 +124,7 @@ const Profile: NextPage<any> = ({ cars }) => {
         <Text color={'grey2'} fontFamily={'body'} fontWeight={'400'} fontSize={'body1'}>
             { user?.description }
         </Text>
+
 
           </Box>
           <CreateAd/>

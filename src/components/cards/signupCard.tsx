@@ -12,55 +12,56 @@ import {
   Heading,
   Text,
   useColorModeValue,
-  Link, Textarea, FormErrorMessage,
-} from '@chakra-ui/react';
-import {useState} from 'react';
-import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import {useForm} from "react-hook-form";
-import {UserRequest, userSchemaRequest} from "@/schemas/user.schema";
-import {zodResolver} from "@hookform/resolvers/zod";
-import {useAuth} from "@/contexts/authContext";
-import {useToast} from "@chakra-ui/toast";
-import {apiCep} from "@/services/api";
+  Textarea,
+  FormErrorMessage,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useForm } from "react-hook-form";
+import { UserRequest, userSchemaRequest } from "@/schemas/user.schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/contexts/authContext";
+import { useToast } from "@chakra-ui/toast";
+import { apiCep } from "@/services/api";
 
 export default function SignupCard() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [typeUser, setTypeUser] = useState('comprador');
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-
+  const [typeUser, setTypeUser] = useState("comprador");
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    setValue,
+    setFocus,
+    formState: { errors },
   } = useForm<UserRequest>({
-    resolver: zodResolver(userSchemaRequest)
+    resolver: zodResolver(userSchemaRequest),
   });
 
-  const handleCep = (event: any) => findCep((event.target.value));
+  const handleCep = (event: any) => findCep(event.target.value);
 
-  const { registerUser  } = useAuth();
+  const { registerUser } = useAuth();
   const toast = useToast();
 
   const findCep = async (cep: string) => {
     cep = cep.replace(/[^0-9]/gi, "");
     if (cep.length == 8) {
-      await apiCep.get(`/${cep}/json/`).then((response) => {
-        
-        setAddress(response.data.logradouro);
-        setCity(response.data.localidade);
-        setState((response.data.uf));
-      }).catch((err) => {
-        console.log(err)
-      });
+      await apiCep
+        .get(`/${cep}/json/`)
+        .then((response) => {
+          setValue("address", response.data.logradouro);
+          setValue("city", response.data.localidade);
+          setValue("state", response.data.uf);
+          setFocus("number");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  }
+  };
 
   const onFormSubmit = (formData: UserRequest) => {
-    
     if (formData.password != formData.confirmPassword) {
       toast({
         position: "top-right",
@@ -72,28 +73,26 @@ export default function SignupCard() {
       });
     } else {
       formData.type_user = typeUser;
+
       registerUser(formData);
     }
   };
 
   return (
-    <Flex
-      minH={'100vh'}
-      align={'center'}
-      justify={'center'}
-      bg={'grey9'}>
+    <Flex minH={"100vh"} align={"center"} justify={"center"} bg={"grey9"}>
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Box
-            rounded={'lg'}
-            bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
-            p={8}>
+            rounded={"lg"}
+            bg={useColorModeValue("white", "gray.700")}
+            boxShadow={"lg"}
+            p={8}
+          >
             <Stack>
-              <Heading fontSize={'heading5'} pb={'1.5rem'} pt={'1.5rem'}>
+              <Heading fontSize={"heading5"} pb={"1.5rem"} pt={"1.5rem"}>
                 Cadastro
               </Heading>
-              <Text fontSize={'body1'} as={'b'} pb={'1.5rem'}>
+              <Text fontSize={"body1"} as={"b"} pb={"1.5rem"}>
                 Informações pessoais️
               </Text>
             </Stack>
@@ -102,7 +101,7 @@ export default function SignupCard() {
                 <FormLabel>Nome</FormLabel>
                 <Input
                   type="text"
-                  placeholder={'Ex. Samuel Leão'}
+                  placeholder={"Ex. Samuel Leão"}
                   {...register("name")}
                 />
                 <FormErrorMessage>
@@ -113,7 +112,7 @@ export default function SignupCard() {
                 <FormLabel>Email</FormLabel>
                 <Input
                   type="email"
-                  placeholder={'Ex: samuel@kenzie.com.br'}
+                  placeholder={"Ex: samuel@kenzie.com.br"}
                   {...register("email")}
                 />
                 <FormErrorMessage>
@@ -124,7 +123,7 @@ export default function SignupCard() {
                 <FormLabel>CPF</FormLabel>
                 <Input
                   type="text"
-                  placeholder={'000.000.000-00'}
+                  placeholder={"000.000.000-00"}
                   {...register("cpf")}
                 />
                 <FormErrorMessage>
@@ -135,7 +134,7 @@ export default function SignupCard() {
                 <FormLabel>Celular</FormLabel>
                 <Input
                   type="text"
-                  placeholder={'(DDD) 90000-0000'}
+                  placeholder={"(DDD) 90000-0000"}
                   {...register("phone")}
                 />
               </FormControl>
@@ -143,24 +142,24 @@ export default function SignupCard() {
                 <FormLabel>Data de Nascimento</FormLabel>
                 <Input
                   type="date"
-                  placeholder={'00/00/0000'}
+                  placeholder={"00/00/0000"}
                   {...register("date_of_birth")}
                 />
               </FormControl>
               <FormControl id="description">
                 <FormLabel>Descrição</FormLabel>
                 <Textarea
-                  placeholder={'Digitar descrição'}
+                  placeholder={"Digitar descrição"}
                   {...register("description")}
                 />
               </FormControl>
-              <Text fontSize={'body1'} as={'b'} pb={'1.5rem'} pt={'1.5rem'}>
+              <Text fontSize={"body1"} as={"b"} pb={"1.5rem"} pt={"1.5rem"}>
                 Informações de endereço️
               </Text>
               <FormControl id="cep" isInvalid={Boolean(errors.cep)}>
                 <FormLabel>CEP</FormLabel>
                 <Input
-                  placeholder={'00000-000'}
+                  placeholder={"00000-000"}
                   {...register("cep")}
                   onChange={handleCep}
                 />
@@ -170,34 +169,31 @@ export default function SignupCard() {
               </FormControl>
               <HStack>
                 <Box>
-                  <FormControl id="state" isReadOnly={true}>
+                  <FormControl isReadOnly id="state">
                     <FormLabel>Estado</FormLabel>
                     <Input
                       type="text"
-                      placeholder={'Digitar Estado'}
+                      placeholder={"Digitar Estado"}
                       {...register("state")}
-                      value={state}
                     />
                   </FormControl>
                 </Box>
                 <Box>
-                  <FormControl id="city" isReadOnly={true}>
+                  <FormControl isReadOnly id="city">
                     <FormLabel>Cidade</FormLabel>
                     <Input
                       type="text"
-                      placeholder={'Digitar cidade'}
+                      placeholder={"Digitar cidade"}
                       {...register("city")}
-                      value={city}
                     />
                   </FormControl>
                 </Box>
               </HStack>
-              <FormControl id="address" isReadOnly={true}>
+              <FormControl isReadOnly id="address">
                 <FormLabel>Rua</FormLabel>
                 <Input
-                  placeholder={'Digitar logradouro'}
+                  placeholder={"Digitar logradouro"}
                   {...register("address")}
-                  value={address}
                 />
               </FormControl>
               <HStack>
@@ -206,7 +202,7 @@ export default function SignupCard() {
                     <FormLabel>Número</FormLabel>
                     <Input
                       type="text"
-                      placeholder={'Digitar número'}
+                      placeholder={"Digitar número"}
                       {...register("number")}
                     />
                     <FormErrorMessage>
@@ -219,37 +215,49 @@ export default function SignupCard() {
                     <FormLabel>Complemento</FormLabel>
                     <Input
                       type="text"
-                      placeholder={'Ex: apto 3307'}
+                      placeholder={"Ex: apto 3307"}
                       {...register("complement")}
                     />
                   </FormControl>
                 </Box>
               </HStack>
-              <Text fontSize={'body1'} as={'b'} pb={'1.5rem'} pt={'1.5rem'}>
+              <Text fontSize={"body1"} as={"b"} pb={"1.5rem"} pt={"1.5rem"}>
                 Tipo de conta️
               </Text>
-              <Stack direction='row' spacing={4}>
+              <Stack direction="row" spacing={4}>
                 <Button
-                  bg={typeUser == 'comprador' ? 'brand1' : 'white'}
-                  color={typeUser == 'comprador' ? 'white' : 'grey0'}
-                  variant={typeUser == 'comprador' ? 'solid' : 'outline'}
-                  _hover={typeUser == 'comprador' ? { bg: "brand1" } : { bg: "grey0", color: "grey10" }}
-                  _focus={typeUser == 'comprador' ? { bg: "brand1" } : { bg: "brand2", color: "grey10" }}
-                  onClick={() =>
-                    setTypeUser('comprador')
+                  bg={typeUser == "comprador" ? "brand1" : "white"}
+                  color={typeUser == "comprador" ? "white" : "grey0"}
+                  variant={typeUser == "comprador" ? "solid" : "outline"}
+                  _hover={
+                    typeUser == "comprador"
+                      ? { bg: "brand1" }
+                      : { bg: "grey0", color: "grey10" }
                   }
+                  _focus={
+                    typeUser == "comprador"
+                      ? { bg: "brand1" }
+                      : { bg: "brand2", color: "grey10" }
+                  }
+                  onClick={() => setTypeUser("comprador")}
                 >
                   Comprador
                 </Button>
                 <Button
-                  bg={typeUser == 'anunciante' ? 'brand1' : 'white'}
-                  color={typeUser == 'anunciante' ? 'white' : 'grey0'}
-                  variant={typeUser == 'anunciante' ? 'solid' : 'outline'}
-                  _hover={typeUser == 'anunciante' ? { bg: "brand1" } : { bg: "grey0", color: "grey10" }}
-                  _focus={typeUser == 'anunciante' ? { bg: "brand1" } : { bg: "brand2", color: "grey10" }}
-                  onClick={() =>
-                    setTypeUser('anunciante')
+                  bg={typeUser == "anunciante" ? "brand1" : "white"}
+                  color={typeUser == "anunciante" ? "white" : "grey0"}
+                  variant={typeUser == "anunciante" ? "solid" : "outline"}
+                  _hover={
+                    typeUser == "anunciante"
+                      ? { bg: "brand1" }
+                      : { bg: "grey0", color: "grey10" }
                   }
+                  _focus={
+                    typeUser == "anunciante"
+                      ? { bg: "brand1" }
+                      : { bg: "brand2", color: "grey10" }
+                  }
+                  onClick={() => setTypeUser("anunciante")}
                 >
                   Anunciante
                 </Button>
@@ -258,16 +266,17 @@ export default function SignupCard() {
                 <FormLabel>Senha</FormLabel>
                 <InputGroup>
                   <Input
-                    type={showPassword ? 'text' : 'password'}
-                    placeholder={'Digitar senha'}
+                    type={showPassword ? "text" : "password"}
+                    placeholder={"Digitar senha"}
                     {...register("password")}
                   />
-                  <InputRightElement h={'full'}>
+                  <InputRightElement h={"full"}>
                     <Button
-                      variant={'ghost'}
+                      variant={"ghost"}
                       onClick={() =>
                         setShowPassword((showPassword) => !showPassword)
-                      }>
+                      }
+                    >
                       {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                     </Button>
                   </InputRightElement>
@@ -276,20 +285,24 @@ export default function SignupCard() {
                   {errors.password && errors.password.message}
                 </FormErrorMessage>
               </FormControl>
-              <FormControl id="confirmPassword" isInvalid={Boolean(errors.confirmPassword)}>
+              <FormControl
+                id="confirmPassword"
+                isInvalid={Boolean(errors.confirmPassword)}
+              >
                 <FormLabel>Confirmar Senha</FormLabel>
                 <InputGroup>
                   <Input
-                    type={showConfirmPassword ? 'text' : 'password'}
-                    placeholder={'Confirmar senha'}
+                    type={showConfirmPassword ? "text" : "password"}
+                    placeholder={"Confirmar senha"}
                     {...register("confirmPassword")}
                   />
-                  <InputRightElement h={'full'}>
+                  <InputRightElement h={"full"}>
                     <Button
-                      variant={'ghost'}
+                      variant={"ghost"}
                       onClick={() =>
                         setShowConfirmPassword((showPassword) => !showPassword)
-                      }>
+                      }
+                    >
                       {showConfirmPassword ? <ViewIcon /> : <ViewOffIcon />}
                     </Button>
                   </InputRightElement>
@@ -302,10 +315,10 @@ export default function SignupCard() {
                 <Button
                   loadingText="Submitting"
                   size="lg"
-                  bg={'brand1'}
-                  color={'white'}
-                  _hover={{ bg: "brand2"}}
-                  _focus={{ bg: "brand1", color: "white"}}
+                  bg={"brand1"}
+                  color={"white"}
+                  _hover={{ bg: "brand2" }}
+                  _focus={{ bg: "brand1", color: "white" }}
                   type="submit"
                 >
                   Finalizar cadastro
@@ -318,4 +331,3 @@ export default function SignupCard() {
     </Flex>
   );
 }
-
