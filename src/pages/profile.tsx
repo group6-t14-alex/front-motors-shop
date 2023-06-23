@@ -121,13 +121,18 @@ const Profile: NextPage<any> = ({ cars }) => {
             { user?.type_user }
           </Text>
         </Box>
-        <Text color={'grey2'} fontFamily={'body'} fontWeight={'400'} fontSize={'body1'}>
+        <Text color={'grey2'} fontFamily={'body'} fontWeight={'400'} fontSize={'body1'}        
+        overflowY= "hidden"
+        text-overflow= "ellipsis"        
+        maxH={{desk: '6rem'}}
+        minH={{desk: '6rem'}}
+        >
             { user?.description }
         </Text>
 
 
           </Box>
-          <CreateAd/>
+          {user?.type_user === "anunciante" ? <CreateAd/> : <></>}          
         </Box>
 
         <Box 

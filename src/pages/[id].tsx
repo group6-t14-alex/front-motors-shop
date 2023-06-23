@@ -123,20 +123,15 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = ({
 };
 
 export const getStaticProps: GetStaticProps<AdvertiserPageProps> = async (ctx) => {
-  // const cookies = nookies.get(ctx);
-  //   api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
-  
   const id = ctx.params!.id;
-  console.log(id);
   
-  if (!id) {
-    console.log("id nulo")
-  }  
+  if (!id) {    
+    throw new Error("User not found")
+  };
 
   const response = await api.get<UserInterface>(`/user/${id}`, {
     // headers: { Authorization: `Bearer ${cookies["@MotorsShop"]}` },
   });
-  console.log(response.data);
 
   return { props: { userData: response.data } };
 };

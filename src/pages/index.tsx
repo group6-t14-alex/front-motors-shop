@@ -18,10 +18,11 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ cars }) => {
-  const { setCars }: any = useCarContext();
-  useEffect(() => {
-    setCars(cars);
-  }, [cars, setCars]);
+  // const { setCars }: any = useCarContext();
+  // useEffect(() => {
+  //   setCars(cars);
+  // }, [cars, setCars]);
+  console.log("re-render")
   return (
     <>
       <Head>
