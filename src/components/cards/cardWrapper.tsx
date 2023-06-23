@@ -3,8 +3,14 @@ import CardUser from "./userCard";
 import { useCarContext } from "@/contexts/carsContext";
 
 const CardWrapper = ({ cars }: any) => {
-  const { setCars, filteredCars, filtering }: any = useCarContext();
+  const {selectedCars, getBrands} = useCarContext()
+
+  const getFilteredCars = (selectedFilters: string, existingBrands: string[]) => {
+    return existingBrands.filter(car => car === selectedFilters)
+}
  
+  // const carFilter = getFilteredCars(selectedCars, getBrands)
+  // console.log(carFilter)
   return (
     <Box
       maxWidth="1032px"
@@ -18,38 +24,25 @@ const CardWrapper = ({ cars }: any) => {
       minH={"388px"}
       overflowX={{ cel: "auto" }}
       gap={{ cel: "12px" }}
-    >{
-      filtering.length <= 0 ? cars.map((car: any) => {
-        return (
-          <CardUser
-            key={car.id}
-            userId={car.userId}
-            carName={car.model}
-            price={car.price}
-            fipePrice={car.priceFipe}
-            userName={car.user.name}
-            carImage={car.imageUrl}
-            km={car.km}
-            year={car.year}
-            description={car.description}
-          />
-        )}): filtering.map((car: any) => {
-          return (
-            <CardUser
-              key={car.id}
-              userId={car.userId}
-              carName={car.model}
-              price={car.price}
-              fipePrice={car.priceFipe}
-              userName={car.user.name}
-              carImage={car.imageUrl}
-              km={car.km}
-              year={car.year}
-              description={car.description}
-            />
-          )})
-    }
-      {/* {cars.map((car: any) => {
+    >
+      {
+      // carFilter.length > 0 ? carFilter.map((car: any) => {
+      //   return (
+      //     <CardUser
+      //       key={car.id}
+      //       userId={car.userId}
+      //       carName={car.model}
+      //       price={car.price}
+      //       fipePrice={car.priceFipe}
+      //       userName={car.user.name}
+      //       carImage={car.imageUrl}
+      //       km={car.km}
+      //       year={car.year}
+      //       description={car.description}
+      //     />
+      //   );
+      // }): 
+      cars.map((car: any) => {
         return (
           <CardUser
             key={car.id}
@@ -64,7 +57,8 @@ const CardWrapper = ({ cars }: any) => {
             description={car.description}
           />
         );
-      })} */}
+      })
+    }
     </Box>
   );
 };

@@ -1,12 +1,12 @@
-import { ListItem } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 
-const FilterList = ({ filter, setFilteredCars }: any) => {
-  // console.log(filteredCars)
+const FilterList = ({ filter, handleFunction }: any) => {
+
   return (
     <>
-      <ListItem key={filter} cursor="pointer" color="grey3" onChange={(e) => setFilteredCars(e.currentTarget.value)}>
+      <Button variant={'ghost'} key={filter} cursor="pointer" color="grey3" onClick={() => handleFunction(filter)}>
         {filter[0].toUpperCase() + filter.substring(1) }
-      </ListItem>
+      </Button>
     </>
   );
 };

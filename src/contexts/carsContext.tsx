@@ -13,6 +13,7 @@ interface Props {
 interface carProviderData {
     createAd: (carRequest: CarRequest, onClose: () => void) => void;
     getBrandByFipe: (brand: string) => Promise<any>;
+    getFilteredCarsBrand: (selectedFilters: string, existingCars: string[]) => void;
     adProfile: createAdReturnInterface[];
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
     getBrands: string[];
@@ -28,10 +29,8 @@ interface carProviderData {
     fuelTypes: string[]
     filterOptions: (ads: createAdReturnInterface[]) => void;
     setUserCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
-    setFiltering:React.Dispatch<React.SetStateAction<string[]>>;
-    filtering: string[];
-    setFilteredCars:React.Dispatch<React.SetStateAction<string>>;
-    filteredCars:string;
+    selectedCars: string;
+    setSelectedCars:React.Dispatch<React.SetStateAction<string>>;
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -45,12 +44,11 @@ export const CarProvider = ({children}: Props) => {
     const [getBrands, setGetBrands] = useState<string[]>([]);
     const [years, setYears] = useState<number[]>([]);
     const [colors, setColors] = useState<string[]>([]);
-    const [filteredCars, setFilteredCars] = useState("");
-    const [filtering, setFiltering]= useState<string[]>([]);
     const [maxKm, setMaxKm] = useState<string | undefined>();
     const [minKm, setMinKm] = useState<string | undefined>();
     const [maxPrice, setMaxPrice] = useState<string | undefined>();
     const [minPrice, setMinPrice] = useState<string | undefined>();
+    const [selectedCars, setSelectedCars] = useState<string>("")
 
     const toast = useToast();
 
@@ -146,10 +144,14 @@ export const CarProvider = ({children}: Props) => {
         setModels(Array.from(modelsSetModel))
     };
 
+    const getFilteredCarsBrand = (selectedFilters: string, existingCars: string[]) => {
+        return existingCars.filter(car => car === selectedFilters)
+    }
+
 
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
-        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars, setFiltering, filtering, setFilteredCars, filteredCars}}>
+        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars, selectedCars, setSelectedCars, getFilteredCarsBrand}}>
             {children}
         </CarContext.Provider>
     )
