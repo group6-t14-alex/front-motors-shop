@@ -1,15 +1,22 @@
-"use client"
+"use client";
 import { HeaderLogged } from "@/components/header/headerLogged";
-import { GetServerSideProps, GetStaticProps, GetStaticPropsContext, NextPage } from "next";
+import {
+  GetServerSideProps,
+  GetStaticProps,
+  GetStaticPropsContext,
+  NextPage,
+} from "next";
 import { Box, Avatar, Heading, Text } from "@chakra-ui/react";
 import { Footer } from "@/components/footer/footer";
 import CardUser from "@/components/cards/userCard";
 import { AuthContext } from "@/contexts/authContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserInterface } from "@/interfaces/user.interface";
 import { api } from "@/services/api";
 import { AuthRoute } from "@/util/authComponent";
 import nookies, { parseCookies } from "nookies";
+import { useUser } from "@/contexts/userContext";
+import { useRouter } from "next/router";
 
 interface AdvertiserPageProps {
   userData: UserInterface;
@@ -18,7 +25,26 @@ interface AdvertiserPageProps {
 const AdvertiserDetail: NextPage<AdvertiserPageProps> = ({
   userData,
 }: AdvertiserPageProps) => {
+  const { query } = useRouter();
+  const { idUser, setIdUser } = useUser();
   const { user }: any = useContext(AuthContext);
+
+  // useEffect(() => {
+  //   if (query.id) {
+  //     setIdUser(query.id as string);
+  //     const id = idUser;
+  //   }
+  // // }, [query.id, setIdUser, idUser]);
+
+  const router = useRouter();
+  useEffect(() => {
+    if (router.isReady) {
+      // Code using query
+      console.log(router.query);
+      // this will set the state before component is mounted
+      setIdUser(router.query.id as string);
+    }
+  }, [router.isReady]);
 
   return (
     <>
@@ -122,35 +148,48 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = ({
   );
 };
 
-export const getStaticProps: GetStaticProps<AdvertiserPageProps> = async (ctx) => {
-  // const cookies = nookies.get(ctx);
-  //   api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
-  
+// export const getStaticProps: GetStaticProps<AdvertiserPageProps> = async (
+//   ctx
+// ) => {
+//   // const cookies = nookies.get(ctx);
+//   //   api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
+
+//   const id = ctx.params!.id;
+//   console.log(id);
+
+//   if (!id) {
+//     console.log("id nulo");
+//   }
+
+//   const response = await api.get<UserInterface>(`/user/${id}`, {
+//     // headers: { Authorization: `Bearer ${cookies["@MotorsShop"]}` },
+//   });
+//   console.log(response.data);
+
+//   return { props: { userData: response.data } };
+// };
+
+// export const getStaticPaths = async () => {
+//   return {
+//     paths: [
+//       {
+//         params: { id:  }
+//       }
+//     ],
+//     fallback: "blocking"
+//   };
+// };
+
+export const getServerSideProps: GetServerSideProps<
+  AdvertiserPageProps
+> = async (ctx) => {
   const id = ctx.params!.id;
   console.log(id);
-  
-  if (!id) {
-    console.log("id nulo")
-  }  
 
-  const response = await api.get<UserInterface>(`/user/${id}`, {
-    // headers: { Authorization: `Bearer ${cookies["@MotorsShop"]}` },
-  });
+  const response = await api.get<UserInterface>(`/user/${id}`, {});
   console.log(response.data);
 
   return { props: { userData: response.data } };
 };
-
-export const getStaticPaths = async () => {
-  return {
-    paths: [
-      {
-        params: { id: "1" }
-      }
-    ],
-    fallback: "blocking"
-  };
-};
-
 
 export default AdvertiserDetail;
