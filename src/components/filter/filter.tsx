@@ -6,25 +6,25 @@ import { api } from "@/services/api";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 
 const Filter = () => {
-  const {getBrands, colors, filterOptions, years, fuelTypes, models, filtredCars, setFiltredCars} = useCarContext()
+  const {getBrands, colors, filterOptions, years, fuelTypes, models, filtredCars, setFiltredCars, brandFilter } = useCarContext()
+
   
 
-  useEffect(() => {
+  // useEffect(() => {
 
-      (async () => {
-        const announcements = await api.get<createAdReturnInterface[]>('/cars');
+  //     (async () => {
+  //       const announcements = await api.get<createAdReturnInterface[]>('/cars');
 
-        const filteringAnnouncements = announcements.data.filter((ad) => 
-          ad
-        )
+  //       const filteringAnnouncements = announcements.data.filter((ad) => 
+  //         ad
+  //       )
 
-        if (filteringAnnouncements) {
-          filterOptions(filteringAnnouncements);
-        }
-      })();
+  //       if (filteringAnnouncements) {
+  //         filterOptions(filteringAnnouncements);
+  //       }
+  //     })();
    
-  }, [filterOptions]);
- 
+  // }, []); 
 
   return (
     <Box display="flex" gap="1.6rem" flexDirection="column">
@@ -32,7 +32,8 @@ const Filter = () => {
         Marca
       </Text>
       <UnorderedList listStyleType="none">
-        {getBrands.map((brand) => {
+        {/* {getBrands.map((brand) => { */}
+        {brandFilter.map((brand: any) => {
           return(
             <FilterList key={brand} filter={brand} />
           )

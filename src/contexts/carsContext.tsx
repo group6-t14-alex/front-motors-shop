@@ -30,6 +30,9 @@ interface carProviderData {
     setUserCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>
     filtredCars: any
     setFiltredCars: any
+    brandFilter: any
+    setBrandFilter: React.Dispatch<any>
+    getCarsByBrand: (brand: string) => Promise<void>
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -44,6 +47,7 @@ export const CarProvider = ({children}: Props) => {
     const [years, setYears] = useState<number[]>([]);
     const [colors, setColors] = useState<string[]>([]);
     const [filtredCars, setFiltredCars] = useState<any>([]);
+    const [brandFilter, setBrandFilter] = useState<any>([]);
     
     const {user} = useAuth()
     const toast = useToast();
@@ -83,6 +87,12 @@ export const CarProvider = ({children}: Props) => {
         });
         
         return result;
+    };
+
+    const getCarsByBrand = async (brand: string) => {
+        const response = await api.get('/cars');
+        console.log(response.data.filter((marca: { brand: string; }) => marca.brand == brand));
+        setFiltredCars(response.data.filter((marca: { brand: string; }) => marca.brand == brand));
     };
 
     const createAd = async (carRequest: CarRequest, onClose: () => void) => {
@@ -144,17 +154,20 @@ export const CarProvider = ({children}: Props) => {
     // }, [user])
 
     const filterOptions = (ads: createAdReturnInterface[]) => {
-        const carsModels = ads.map((model) => model.model)
+        const carsBrand = ads.map((model) => model.brand);
+        const carsModels = ads.map((model) => model.model);
         const carsColors = ads.map((elem) => elem.color);
         const carsFuel = ads.map((elem) => elem.fuel);
         const carsYears = ads.map((elem) => elem.year);
     
         //remover info repetida
-        const modelsSetModel = new Set(carsModels)
+        const modelsSetBrand = new Set(carsBrand);
+        const modelsSetModel = new Set(carsModels);
         const modelsSetAnos = new Set(carsYears);
         const modelsSetCores = new Set(carsColors);
         const modelsSetCombustiveis = new Set(carsFuel);
     
+        setBrandFilter(Array.from(modelsSetBrand));
         setYears(Array.from(modelsSetAnos));
         setColors(Array.from(modelsSetCores));
         setFuelTypes(Array.from(modelsSetCombustiveis));
@@ -165,7 +178,7 @@ export const CarProvider = ({children}: Props) => {
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
         setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars,
-        filtredCars, setFiltredCars
+        filtredCars, setFiltredCars, setBrandFilter, brandFilter, getCarsByBrand
         }}>
             {children}
         </CarContext.Provider>

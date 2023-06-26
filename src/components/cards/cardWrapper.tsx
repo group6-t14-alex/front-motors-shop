@@ -2,9 +2,16 @@ import { Box } from "@chakra-ui/react";
 import CardUser from "./userCard";
 import { useCarContext } from "@/contexts/carsContext";
 
-const CardWrapper = ({ cars }: any) => {
+// const CardWrapper = ({ cars }: any) => {
+const CardWrapper = () => {
+  const { cars, setCars, filtredCars, filterOptions }: any = useCarContext();
+  
 
-  const {filtredCars, setFiltredCars} = useCarContext()
+  // const {filtredCars, setFiltredCars} = useCarContext()
+  console.log(cars)
+  
+  // console.log(filtredCars) 
+  // console.log(filtredCars.length)
 
   return (
     <Box
@@ -22,7 +29,7 @@ const CardWrapper = ({ cars }: any) => {
     >
      
      {
-      filtredCars.lenght ? (
+      filtredCars.lenght > 0 ? (
         filtredCars.map((carFiltred: any) => {
           return (
             <CardUser

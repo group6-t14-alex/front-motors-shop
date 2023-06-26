@@ -4,17 +4,7 @@ import { ListItem } from "@chakra-ui/react";
 
 const FilterList = ({ filter }: any) => {
 
-  const teste = () => {
-    console.log(filter)
-  }
-
-  const {filtredCars, setFiltredCars} = useCarContext()
-
-  const getCarsByBrand = async (brand: string) => {
-    const response = await api.get('/cars');
-    console.log(response.data.filter((marca: { brand: string; }) => marca.brand === brand));
-    setFiltredCars(response.data.filter((marca: { brand: string; }) => marca.brand === brand));
-  };
+  const {filtredCars, setFiltredCars, getCarsByBrand} = useCarContext()
 
   return (
     <>

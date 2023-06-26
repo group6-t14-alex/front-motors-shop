@@ -18,11 +18,15 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ cars }) => {
-  const { setCars }: any = useCarContext();
-  // useEffect(() => {
-  //   setCars(cars);
-  // }, []);
-  console.log("re-render")
+  const { setCars, filtredCars, filterOptions }: any = useCarContext();
+  // console.log(filtredCars) 
+  // console.log(filtredCars.length) 
+  // console.log("re-render")
+  useEffect(() => {
+    setCars(cars);
+    filterOptions(cars);
+  }, []);
+
   return (
     <>
       <Head>
@@ -49,7 +53,16 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
         mt={"3.75rem"}
         p={"0.5"}
       >
-        <CardWrapper cars={cars} />
+        {/* {
+          filtredCars.lenght > 0 ? (
+          <CardWrapper cars={filtredCars} />
+          ) : (
+          <CardWrapper cars={cars} />)
+        } */}
+
+        <CardWrapper />
+        {/* <CardWrapper cars={cars} /> */}
+        
 
         <FilterDesk />
       </Box>
@@ -76,7 +89,7 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const response = await api.get<CarDataReturn[]>("/cars");
-  console.log(response)
+  
   return {
     props: { cars: response.data },
   };
