@@ -18,13 +18,15 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ cars }) => {
-  const { setCars, filtredCars, filterOptions }: any = useCarContext();
+  const { setCars, filtredCars, filterOptions, setFiltredCars }: any = useCarContext();
   // console.log(filtredCars) 
   // console.log(filtredCars.length) 
   // console.log("re-render")
   useEffect(() => {
     setCars(cars);
+    setFiltredCars(cars);
     filterOptions(cars);
+    console.log(cars);
   }, []);
 
   return (
