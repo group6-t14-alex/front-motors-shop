@@ -28,6 +28,17 @@ interface carProviderData {
     fuelTypes: string[]
     filterOptions: (ads: createAdReturnInterface[]) => void;
     setUserCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>
+    filtredCars: any
+    setFiltredCars: any
+    brandFilter: any
+    setBrandFilter: React.Dispatch<any>
+    getCarsByBrand: (brand: string) => Promise<void>
+    getCarsByModel: (model: string) => Promise<void>
+    getCarsByColor: (color: string) => Promise<void>
+    getCarsByFuel: (fuel: string) => Promise<void>
+    getCarsByYear: (year: number) => Promise<void>
+    getCarsByKm: (kmMin: number, kmMax: number) => Promise<void>
+    getCarsByPrice: (priceMin: number, priceMax: number) => Promise<void>
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -41,6 +52,8 @@ export const CarProvider = ({children}: Props) => {
     const [getBrands, setGetBrands] = useState<string[]>([]);
     const [years, setYears] = useState<number[]>([]);
     const [colors, setColors] = useState<string[]>([]);
+    const [filtredCars, setFiltredCars] = useState<any>([]);
+    const [brandFilter, setBrandFilter] = useState<any>([]);
     
     const {user} = useAuth()
     const toast = useToast();
@@ -80,6 +93,58 @@ export const CarProvider = ({children}: Props) => {
         });
         
         return result;
+    };
+
+    const getCarsByBrand = async (brand: string) => {
+        const response = await api.get('/cars');
+        const data = response.data.filter((item: { brand: string; }) => item.brand == brand)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByModel = async (model: string) => {
+        const response = await api.get('/cars');
+        const data = response.data.filter((item: { model: string; }) => item.model == model)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByColor = async (color: string) => {
+        const response = await api.get('/cars');
+        const data = response.data.filter((item: { color: string; }) => item.color == color)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByFuel = async (fuel: string) => {
+        const response = await api.get('/cars');
+        const data = response.data.filter((item: { fuel: string; }) => item.fuel == fuel)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByYear = async (year: number) => {
+        const response = await api.get('/cars');
+        const data = response.data.filter((item: { year: number; }) => item.year == year)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByKm = async (kmMin: number, kmMax: number) => {
+        const response = await api.get('/cars');
+        console.log(response.data)
+        const data = response.data.filter((item: { km: number; }) => item.km >= kmMin && item.km <= kmMax)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByPrice = async (priceMin: number, priceMax: number) => {
+        const response = await api.get('/cars');
+        console.log(response.data)
+        const data = response.data.filter((item: { price: number; }) => 
+            item.price >= priceMin && item.price <= priceMax)
+        console.log(data);
+        setFiltredCars(data);
     };
 
     const createAd = async (carRequest: CarRequest, onClose: () => void) => {
@@ -141,17 +206,20 @@ export const CarProvider = ({children}: Props) => {
     // }, [user])
 
     const filterOptions = (ads: createAdReturnInterface[]) => {
-        const carsModels = ads.map((model) => model.model)
+        const carsBrand = ads.map((model) => model.brand);
+        const carsModels = ads.map((model) => model.model);
         const carsColors = ads.map((elem) => elem.color);
         const carsFuel = ads.map((elem) => elem.fuel);
         const carsYears = ads.map((elem) => elem.year);
     
         //remover info repetida
-        const modelsSetModel = new Set(carsModels)
+        const modelsSetBrand = new Set(carsBrand);
+        const modelsSetModel = new Set(carsModels);
         const modelsSetAnos = new Set(carsYears);
         const modelsSetCores = new Set(carsColors);
         const modelsSetCombustiveis = new Set(carsFuel);
     
+        setBrandFilter(Array.from(modelsSetBrand));
         setYears(Array.from(modelsSetAnos));
         setColors(Array.from(modelsSetCores));
         setFuelTypes(Array.from(modelsSetCombustiveis));
@@ -161,7 +229,10 @@ export const CarProvider = ({children}: Props) => {
 
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
-        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars}}>
+        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars,
+        filtredCars, setFiltredCars, setBrandFilter, brandFilter, getCarsByBrand, getCarsByModel, getCarsByColor,
+        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice
+        }}>
             {children}
         </CarContext.Provider>
     )

@@ -1,28 +1,73 @@
 import { UnorderedList, Input, Box, Text } from "@chakra-ui/react";
 import FilterList from "./filterList/filtersList";
 import { useCarContext } from "@/contexts/carsContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "@/services/api";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 
 const Filter = () => {
-  const {getBrands, colors, filterOptions, years, fuelTypes, models} = useCarContext()
+  const [kmMin, setKmMin] = useState(0);
+  const [kmMax, setKmMax] = useState(0);
+  const [priceMin, setPriceMin] = useState(0);
+  const [priceMax, setPriceMax] = useState(0);
 
-  useEffect(() => {
+  const {getBrands, colors, filterOptions, years, fuelTypes, models, filtredCars, 
+    setFiltredCars, brandFilter, getCarsByBrand, getCarsByModel,
+    getCarsByColor, getCarsByFuel, getCarsByKm, getCarsByYear, getCarsByPrice } = useCarContext()
 
-      (async () => {
-        const announcements = await api.get<createAdReturnInterface[]>('/cars');
 
-        const filteringAnnouncements = announcements.data.filter((ad) => 
-          ad
-        )
-
-        if (filteringAnnouncements) {
-          filterOptions(filteringAnnouncements);
+    useEffect(() => {
+      const getUserCarsKm = async () => {
+        if (kmMin > 0 && kmMax > 0) {
+          await getCarsByKm(kmMin, kmMax);
         }
-      })();
+      }
+
+      getUserCarsKm();
+    }, [kmMin, kmMax])
+
+    useEffect(() => {
+      const getUserCarsPrice = async () => {
+        if (priceMin > 0 && priceMax > 0) {
+          await getCarsByPrice(priceMin, priceMax);
+        }
+      }
+
+      getUserCarsPrice();
+    }, [priceMin, priceMax])
+
+
+  // useEffect(() => {
+
+  //     (async () => {
+  //       const announcements = await api.get<createAdReturnInterface[]>('/cars');
+
+  //       const filteringAnnouncements = announcements.data.filter((ad) => 
+  //         ad
+  //       )
+
+  //       if (filteringAnnouncements) {
+  //         filterOptions(filteringAnnouncements);
+  //       }
+  //     })();
    
-  }, [filterOptions]);
+  // }, []); 
+
+  const handleKmMin = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setKmMin(Number.parseInt(event.target.value));
+  }
+
+  const handleKmMax = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setKmMax(Number.parseInt(event.target.value));
+  }
+
+  const handlePriceMin = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setPriceMin(Number.parseInt(event.target.value));
+  }
+
+  const handlePriceMax = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setPriceMax(Number.parseInt(event.target.value));
+  }
 
   return (
     <Box display="flex" gap="1.6rem" flexDirection="column">
@@ -30,9 +75,10 @@ const Filter = () => {
         Marca
       </Text>
       <UnorderedList listStyleType="none">
-        {getBrands.map((brand) => {
+        {/* {getBrands.map((brand) => { */}
+        {brandFilter.map((brand: any) => {
           return(
-            <FilterList key={brand} filter={brand}/>
+            <FilterList key={brand} filter={brand} onFilter={() => getCarsByBrand(brand)}/>
           )
         })}
       </UnorderedList>
@@ -43,7 +89,7 @@ const Filter = () => {
       <UnorderedList listStyleType="none">
       {models.map((model) => {
           return(
-            <FilterList key={model} filter={model}/>
+            <FilterList key={model} filter={model} onFilter={() => getCarsByModel(model)}/>
           )
         })}
       </UnorderedList>
@@ -54,7 +100,7 @@ const Filter = () => {
       <UnorderedList listStyleType="none">
       {colors.map((color) => {
           return(
-            <FilterList key={color} filter={color}/>
+            <FilterList key={color} filter={color} onFilter={() => getCarsByColor(color)}/>
           )
       })}
       
@@ -67,7 +113,7 @@ const Filter = () => {
       <UnorderedList listStyleType="none">
       {years.map((year) => {
           return(
-            <FilterList key={year} filter={year}/>
+            <FilterList key={year} filter={year} onFilter={() => getCarsByYear(year)}/>
           )
       })}
       </UnorderedList>
@@ -79,7 +125,7 @@ const Filter = () => {
       <UnorderedList listStyleType="none">
       {fuelTypes.map((fuel) => {
           return(
-            <FilterList key={fuel} filter={fuel}/>
+            <FilterList key={fuel} filter={fuel} onFilter={() => getCarsByFuel(fuel)}/>
           )
       })}
       </UnorderedList>
@@ -99,12 +145,14 @@ const Filter = () => {
           borderRadius="none"
           bg="grey5"
           placeholder="Mínima"
+          onChange={handleKmMin}
         />
         <Input
           width="7.8rem"
           borderRadius="none"
           bg="grey5"
           placeholder="Máxima"
+          onChange={handleKmMax}
         />
       </Box>
 
@@ -123,12 +171,14 @@ const Filter = () => {
           borderRadius="none"
           bg="grey5"
           placeholder="Mínima"
+          onChange={handlePriceMin}
         />
         <Input
           width="7.8rem"
           borderRadius="none"
           bg="grey5"
           placeholder="Máxima"
+          onChange={handlePriceMax}
         />
       </Box>
     </Box>
