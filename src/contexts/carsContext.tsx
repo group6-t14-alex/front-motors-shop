@@ -33,6 +33,12 @@ interface carProviderData {
     brandFilter: any
     setBrandFilter: React.Dispatch<any>
     getCarsByBrand: (brand: string) => Promise<void>
+    getCarsByModel: (model: string) => Promise<void>
+    getCarsByColor: (color: string) => Promise<void>
+    getCarsByFuel: (fuel: string) => Promise<void>
+    getCarsByYear: (year: number) => Promise<void>
+    getCarsByKm: (kmMin: number, kmMax: number) => Promise<void>
+    getCarsByPrice: (priceMin: number, priceMax: number) => Promise<void>
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -91,8 +97,54 @@ export const CarProvider = ({children}: Props) => {
 
     const getCarsByBrand = async (brand: string) => {
         const response = await api.get('/cars');
-        console.log(response.data.filter((marca: { brand: string; }) => marca.brand == brand));
-        setFiltredCars(response.data.filter((marca: { brand: string; }) => marca.brand == brand));
+        const data = response.data.filter((item: { brand: string; }) => item.brand == brand)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByModel = async (model: string) => {
+        const response = await api.get('/cars');
+        const data = response.data.filter((item: { model: string; }) => item.model == model)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByColor = async (color: string) => {
+        const response = await api.get('/cars');
+        const data = response.data.filter((item: { color: string; }) => item.color == color)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByFuel = async (fuel: string) => {
+        const response = await api.get('/cars');
+        const data = response.data.filter((item: { fuel: string; }) => item.fuel == fuel)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByYear = async (year: number) => {
+        const response = await api.get('/cars');
+        const data = response.data.filter((item: { year: number; }) => item.year == year)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByKm = async (kmMin: number, kmMax: number) => {
+        const response = await api.get('/cars');
+        console.log(response.data)
+        const data = response.data.filter((item: { km: number; }) => item.km >= kmMin && item.km <= kmMax)
+        console.log(data);
+        setFiltredCars(data);
+    };
+
+    const getCarsByPrice = async (priceMin: number, priceMax: number) => {
+        const response = await api.get('/cars');
+        console.log(response.data)
+        const data = response.data.filter((item: { price: number; }) => 
+            item.price >= priceMin && item.price <= priceMax)
+        console.log(data);
+        setFiltredCars(data);
     };
 
     const createAd = async (carRequest: CarRequest, onClose: () => void) => {
@@ -178,7 +230,8 @@ export const CarProvider = ({children}: Props) => {
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
         setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars,
-        filtredCars, setFiltredCars, setBrandFilter, brandFilter, getCarsByBrand
+        filtredCars, setFiltredCars, setBrandFilter, brandFilter, getCarsByBrand, getCarsByModel, getCarsByColor,
+        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice
         }}>
             {children}
         </CarContext.Provider>
