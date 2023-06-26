@@ -18,10 +18,10 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ cars }) => {
-  // const { setCars }: any = useCarContext();
+  const { setCars }: any = useCarContext();
   // useEffect(() => {
   //   setCars(cars);
-  // }, [cars, setCars]);
+  // }, []);
   console.log("re-render")
   return (
     <>
@@ -76,6 +76,7 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const response = await api.get<CarDataReturn[]>("/cars");
+  console.log(response)
   return {
     props: { cars: response.data },
   };

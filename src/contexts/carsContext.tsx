@@ -28,6 +28,8 @@ interface carProviderData {
     fuelTypes: string[]
     filterOptions: (ads: createAdReturnInterface[]) => void;
     setUserCars: React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>
+    filtredCars: any
+    setFiltredCars: any
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -41,6 +43,7 @@ export const CarProvider = ({children}: Props) => {
     const [getBrands, setGetBrands] = useState<string[]>([]);
     const [years, setYears] = useState<number[]>([]);
     const [colors, setColors] = useState<string[]>([]);
+    const [filtredCars, setFiltredCars] = useState<any>([]);
     
     const {user} = useAuth()
     const toast = useToast();
@@ -161,7 +164,9 @@ export const CarProvider = ({children}: Props) => {
 
     return (
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
-        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars}}>
+        setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars,
+        filtredCars, setFiltredCars
+        }}>
             {children}
         </CarContext.Provider>
     )
