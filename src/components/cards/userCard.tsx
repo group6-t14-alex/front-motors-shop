@@ -10,6 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import image from "/public/imagem.png";
+import { useUser } from "@/contexts/userContext";
+import { setCookie } from "nookies";
 
 const CardUser = ({
   carName,
@@ -25,7 +27,6 @@ const CardUser = ({
   userId,
 }: any) => {
   const router = useRouter();
-
   const bigDeal = (price: number, fipePrice: number) => {
     if (+price < fipePrice) {
       return (
@@ -45,7 +46,7 @@ const CardUser = ({
       );
     }
   };
-
+  const { setIdUser } = useUser();
   return (
     <Card
       maxW={"312px"}
@@ -124,6 +125,10 @@ const CardUser = ({
           gap={"20px"}
           cursor={"pointer"}
           onClick={() => {
+            setCookie(null, "@userCardId", userId, {
+              maxAge: 60 * 60 * 1,
+              path: "/",
+            });
             router.push(`/${userId}`);
           }}
         >
