@@ -29,7 +29,6 @@ const CardWrapper = () => {
     >
      
      {
-      filtredCars.lenght > 0 ? (
         filtredCars.map((carFiltred: any) => {
           return (
             <CardUser
@@ -46,24 +45,41 @@ const CardWrapper = () => {
             />
           );
         })
-      ) : (
-        cars.map((car: any) => {
-          return (
-            <CardUser
-              key={car.id}
-              userId={car.userId}
-              carName={car.model}
-              price={car.price}
-              fipePrice={car.priceFipe}
-              userName={car.user.name}
-              carImage={car.imageUrl}
-              km={car.km}
-              year={car.year}
-              description={car.description}
-            />
-          );
-        })
-      )
+      // filtredCars.lenght > 0 ? (
+      //   filtredCars.map((carFiltred: any) => {
+      //     return (
+      //       <CardUser
+      //         key={carFiltred.id}
+      //         userId={carFiltred.userId}
+      //         carName={carFiltred.model}
+      //         price={carFiltred.price}
+      //         fipePrice={carFiltred.priceFipe}
+      //         userName={carFiltred.user.name}
+      //         carImage={carFiltred.imageUrl}
+      //         km={carFiltred.km}
+      //         year={carFiltred.year}
+      //         description={carFiltred.description}
+      //       />
+      //     );
+      //   })
+      // ) : (
+      //   cars.map((car: any) => {
+      //     return (
+      //       <CardUser
+      //         key={car.id}
+      //         userId={car.userId}
+      //         carName={car.model}
+      //         price={car.price}
+      //         fipePrice={car.priceFipe}
+      //         userName={car.user.name}
+      //         carImage={car.imageUrl}
+      //         km={car.km}
+      //         year={car.year}
+      //         description={car.description}
+      //       />
+      //     );
+      //   })
+      // )
      };
 
       
