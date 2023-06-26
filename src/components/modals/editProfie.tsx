@@ -137,16 +137,12 @@ const EditProfileButton = ({ userData }: any) => {
                 padding={"0"}
                 gap={"1rem"}
                 display={"flex"}
-                flexDirection={{ desk: "row", cel: "column" }}
-              >
-                <Box
-                  gap={"1rem"}
-                  display={"flex"}
-                  justifyContent={"space-between"}
-                >
-                  <Button onClick={onClose}>Cancelar</Button>
-                  <DeleteProfile userData={userData} />
-                </Box>
+                flexDirection={"row"}
+                flexWrap={{ desk: "nowrap", cel: "wrap" }}
+                justifyContent={'center'}
+              >                
+                <Button onClick={onClose}>Cancelar</Button>
+                <DeleteProfile userData={userData} />               
                 <Button color={"white"} bg={"brand1"} type="submit">
                   Salvar alterações
                 </Button>

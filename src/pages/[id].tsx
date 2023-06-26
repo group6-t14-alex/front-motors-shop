@@ -171,11 +171,13 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
   );
 };
 
+
 // export const getStaticProps: GetStaticProps<AdvertiserPageProps> = async (
 //   ctx
 // ) => {
 //   // const cookies = nookies.get(ctx);
 //   //   api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
+
 
 //   const id = ctx.params!.id;
 
