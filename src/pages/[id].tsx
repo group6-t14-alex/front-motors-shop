@@ -6,7 +6,7 @@ import {
   GetStaticPropsContext,
   NextPage,
 } from "next";
-import { Box, Avatar, Heading, Text } from "@chakra-ui/react";
+import { Box, Avatar, Heading, Text, FormControl, Textarea, Grid, ListItem, UnorderedList, List, Button } from "@chakra-ui/react";
 import { Footer } from "@/components/footer/footer";
 import CardUser from "@/components/cards/userCard";
 import { AuthContext } from "@/contexts/authContext";
@@ -163,6 +163,105 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
                 );
               })}
             </Box>
+
+            <Box display='flex' flexDirection='column' w={{cel:"95%", desk:'50%'}}>
+                        <Box h='845px'  w='100%'  maxWidth='1032px' borderRadius='4px' p='36px 28px' bg='grey10' marginTop='18px' display='flex' flexDirection='column' gap='13px'>
+                            <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1'>Comentários</Heading>
+
+                            <List h='724px' maxH='724px' display='flex' flexDirection='column' alignItems='flex-start' gap='44px' overflowY='auto'>
+
+                                <ListItem w='95%' h='212px' borderRadius='4px' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around' bg='grey10' gap='body3'>
+                                    <Box display='flex' flexDirection='row' alignItems='center'>
+                                        <Box display='flex' flexDirection='row' alignItems='center' w='146px' h='32px' gap='8px'>
+                                            <Avatar size='sm' name='Júlia Lima'/>
+                                            <Heading size='sm' fontFamily='body' fontWeight='500' fontSize='body2' color='grey1'> Júlia Lima </Heading> 
+                                        </Box>
+                        
+                                        <UnorderedList>
+                                            <ListItem fontFamily='body' fontWeight='400' fontSize='body3' color='grey3'>há 3 dias</ListItem>
+                                        </UnorderedList>
+                                    
+                                    </Box>
+
+                                <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey2'  h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                            
+                                </ListItem>
+
+                                <ListItem w='95%' h='212px' borderRadius='4px' bg='grey10' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around' gap='body3'>
+                                    <Box display='flex' flexDirection='row' alignItems='center'>
+                                        <Box display='flex' flexDirection='row' alignItems='center' w='146px' h='32px' gap='8px'>
+                                            <Avatar size='sm' name='Marcos Antônio'/>
+                                            <Heading size='sm' fontFamily='body' fontWeight='500' fontSize='body2' color='grey1'> Marcos Antônio </Heading> 
+                                        </Box>
+                        
+                                        <UnorderedList>
+                                            <ListItem fontFamily='body' fontWeight='400' fontSize='body3' color='grey3'>há 7 dias</ListItem>
+                                        </UnorderedList>
+                                    </Box>
+
+                                    <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey.2' h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                                </ListItem>
+
+                                <ListItem gap='body3'
+                            bg='grey10' w='95%' h='212px' borderRadius='4px' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around'>
+                                    <Box display='flex' flexDirection='row' alignItems='center'>
+                                        <Box display='flex' flexDirection='row' alignItems='center' w='146px' h='32px' gap='8px'>
+                                            <Avatar size='sm' name='Camila Silva'/>
+                                            <Heading size='sm' fontFamily='body' fontWeight='500' fontSize='body2' color='grey1'> Camila Silva </Heading> 
+                                        </Box>
+                        
+                                        <UnorderedList>
+                                            <ListItem fontFamily='body' fontWeight='400' fontSize='body3' color='grey3'>há 1 mês</ListItem>
+                                        </UnorderedList>
+                                    </Box>
+
+                                    <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey2' h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                                </ListItem>
+
+                                <ListItem w='95%' h='212px' borderRadius='4px' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around' bg='grey10' gap='body3'>
+                                    <Box display='flex' flexDirection='row' alignItems='center' h='32px'>
+                                        <Box display='flex' flexDirection='row' alignItems='center' w='146px' gap='8px'>
+                                            <Avatar size='sm' name='Júlia Lima'/>
+                                            <Heading size='sm' fontFamily='body' fontWeight='500' fontSize='body2' color='grey1'> Júlia Lima </Heading> 
+                                        </Box>
+                        
+                                        <UnorderedList>
+                                            <ListItem fontFamily='body' fontWeight='400' fontSize='body3' color='grey3'>há 3 dias</ListItem>
+                                        </UnorderedList>
+                                    
+                                    </Box>
+
+                                    <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey2' h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                            
+                                </ListItem>
+
+                            </List>
+                        </Box>
+
+                        <Box h='414px' w='100%' maxWidth='1032px' borderRadius='4px' bg='grey10' p='36px 26px' marginTop='42px' display='flex' flexDirection='column' gap='24px' marginBottom='45px'>
+                            <Box w='130px' h='32px' display='flex' flexDirection='row' alignItems='center' justifyContent='space-between'>
+                                <Avatar h='32px' w='32px' name='Sammuel Leão'/>
+                                <Text fontSize='body2' fontWeight='500'>Samuel Leão</Text>
+                            </Box>
+
+                            <FormControl h='275px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-between'>
+                                <Textarea bg='grey10' outline='1px solid grey7' borderRadius='4px' h='100px' placeholder='Carro muito confortável, foi uma ótima experiência de compra...'/>
+
+                       
+                                <Button size='sm' bg='brand1' color='white' fontSize='body2' fontWeight='600' fontFamily='body' pos={{ cel: 'relative', desk: "absolute" }} right={{desk: '11px'}} bottom={{desk: '183px'}} _hover={{bg:'brand2'}}>Comentar</Button>
+               
+                        
+                        
+                                <Grid templateColumns='repeat(2, 1fr)'  alignItems='flex-start' justifyItems='start' h='76px' gap='8px'>
+                                    <Button fontSize='body3' fontWeight='500' fontFamily='body' p='0 12px' borderRadius='24px' bg='grey7' color='grey3'>Gostei muito!</Button>
+                                    <Button fontSize='body3' fontWeight='500' fontFamily='body' p='0 12px' borderRadius='24px' bg='grey7' color='grey3'>Incrível</Button>
+                                    <Button fontSize='body3' fontWeight='500' fontFamily='body' p='0 12px' borderRadius='24px' bg='grey7' color='grey3'>Recomendarei para meus amigos</Button>
+                                </Grid>
+                        
+                            </FormControl>
+                        </Box>
+                    </Box>
+
           </Box>
           <Footer />{" "}
         </>
