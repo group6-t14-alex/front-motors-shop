@@ -6,17 +6,17 @@ import {
     ButtonGroup,
     Button
 } from '@chakra-ui/react'
+import EditAd from '../modals/editAd'
+import EditProfileButton from '../modals/editProfie'
+import { useContext, useEffect, useState } from 'react'
+import { AuthContext } from '@/contexts/authContext'
+import { useCarContext } from '@/contexts/carsContext'
 
   
-const ProfileCardUser = ({
-    carName,
-    carImage,
-    description,
-    price,
-    year,
-    km,
-    active
-}: any) => {
+const ProfileCardUser = ({ carName, carImage, description, price, year, km, active }: any) => {
+
+  const { user }: any = useContext(AuthContext);
+  // const { userCars, setUserCars }: any = useCarContext();
 
     const adIsActive = (act: boolean) => {
       if (act === true) {
@@ -152,10 +152,12 @@ const ProfileCardUser = ({
               R$ {price}
             </Text>
           </Box>
-          <ButtonGroup>
-            <Button colorScheme='grey1' variant='outline'>Editar</Button>
+
+          <ButtonGroup>            
+            <EditAd user={user}/>
             <Button colorScheme='grey1' variant='outline'>Ver detalhes</Button>
           </ButtonGroup>
+          
         </Box>
       </ListItem>
     )

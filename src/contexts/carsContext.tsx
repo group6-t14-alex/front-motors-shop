@@ -2,7 +2,7 @@ import { api, apiKenzieKars } from "@/services/api";
 import {useToast} from "@chakra-ui/toast";
 import { parseCookies } from "nookies";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { CarRequest } from "@/schemas/car.schema";
+import { CarDataEditReturn, CarRequest } from "@/schemas/car.schema";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 import { useAuth } from "./authContext";
 
@@ -12,6 +12,7 @@ interface Props {
 
 interface carProviderData {
     createAd: (carRequest: CarRequest, onClose: () => void) => void;
+    editAd: (carRequest: CarDataEditReturn, onClose: () => void) => void;
     getBrandByFipe: (brand: string) => Promise<any>;
     adProfile: createAdReturnInterface[];
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
@@ -147,8 +148,7 @@ export const CarProvider = ({children}: Props) => {
         setFiltredCars(data);
     };
 
-    const createAd = async (carRequest: CarRequest, onClose: () => void) => {
-        
+    const createAd = async (carRequest: CarRequest, onClose: () => void) => {        
         
         try {
             const response = await api.post("/cars", carRequest)
@@ -182,6 +182,33 @@ export const CarProvider = ({children}: Props) => {
                 isClosable: true,
               });
         }
+    };
+
+    const editAd = async (carRequest: CarDataEditReturn, onClose: () => void) => {
+        try {
+            const cookies = parseCookies()
+            console.log(cookies)
+            // const response = await api.get(`/cars/${id}}`, carRequest)
+
+            // if(!response.data){
+            //     throw new Error("Veículo não encontrado.");
+            // }
+
+
+
+            
+        } catch (error) {
+            console.log(error)
+            toast({
+                position: "top-right",
+                title: "Error",
+                description: "Ops! tente novamente",
+                status: "error",
+                duration: 6000,
+                isClosable: true,
+            });
+        }
+
     };
 
     // useEffect(() => {
@@ -231,7 +258,7 @@ export const CarProvider = ({children}: Props) => {
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
         setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars,
         filtredCars, setFiltredCars, setBrandFilter, brandFilter, getCarsByBrand, getCarsByModel, getCarsByColor,
-        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice
+        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice, editAd
         }}>
             {children}
         </CarContext.Provider>
