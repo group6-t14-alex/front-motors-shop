@@ -1,38 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 💻 MOTORSHOP
 
-## Getting Started
+Projeto desenvolvido por alunos da KenzieAcademy como requisito de conclusão do M6. O projeto consiste em um e-commerce de carros onde o usuário pode atuar como vendedor ou comprador.
 
-First, run the development server:
+O grupo foi composto por:
+Douglas Diniz
+Edson Kokado
+Fernanda Bollinger
+Lilian Dias
+Samir Dourado
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+OBS: Esse projeto foi criado com Next.js a partir do comando [`create-next-app`]
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎲 Utilizando projeto
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### ▪️ Baixando projeto e instalando dependências
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Para utilizar o projeto basta fazer o fork do repositório em computador e ao baixar realizar o download das dependências do site com o comando:
+`yarn install`
+ou
+`npm install`
+ou
+`pnpm install`
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### ▪️ Iniciando visualização do projeto
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Ao finalizar o download das dependências, inicie a visualização do projeto em ambiente de desenvolvimento com o comando:
 
-## Learn More
+`yarn dev`
+ou
+`npm run dev`
+ou
+`pnpm dev`
 
-To learn more about Next.js, take a look at the following resources:
+Abra [http://localhost:3000](http://localhost:3000) com seu navegador para ver o resultado.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🗂 Estrutura de pastas
 
-## Deploy on Vercel
+Todas as pastas são comuns de um projeto Next, porém alguns arquivos precisam de atenção especial.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Segue as informações sobre cada um:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    #### 🗂 Pasta styles
+
+            _Nessa pasta você encontrará o arquivo que customiza o estilo principal do site. Toda componetização foi feita através do Chakra UI. Para acrescentar ou modificar o estilo siga a documentação [https://chakra-ui.com/getting-started]_
+
+    #### 🗂 Pasta util
+
+            _Nessa pasta você encontrará 2 arquivos. Um conversor de string para número e um com um componente para proteção de rotas._
+
+    #### 🗂 Pasta service
+
+            _Nessa pasta você encontrará as rotas das apis usadas nesse projeto. Caso queira trabalhar com uma api em sua máquina, você deve modificar o a variável api para apontar para rota que leva a api local._
+
+                exemplo:
+                `export const api = axios.create({
+                baseURL: 'http://localhost:<minha porta>',
+                timeout: 8000
+                })`
