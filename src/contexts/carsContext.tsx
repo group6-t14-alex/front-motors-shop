@@ -2,7 +2,7 @@ import { api, apiKenzieKars } from "@/services/api";
 import {useToast} from "@chakra-ui/toast";
 import { parseCookies } from "nookies";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { CarDataEditReturn, CarRequest } from "@/schemas/car.schema";
+import { CarDataEditReturn, CarRequest, CarRequestEdit } from "@/schemas/car.schema";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 import { useAuth } from "./authContext";
 
@@ -12,7 +12,7 @@ interface Props {
 
 interface carProviderData {
     createAd: (carRequest: CarRequest, onClose: () => void) => void;
-    editAd: (carRequest: CarDataEditReturn, onClose: () => void) => void;
+    editAd: (formData: CarRequestEdit, onClose: () => void) => Promise<void>
     getBrandByFipe: (brand: string) => Promise<any>;
     adProfile: createAdReturnInterface[];
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
@@ -184,19 +184,24 @@ export const CarProvider = ({children}: Props) => {
         }
     };
 
-    const editAd = async (carRequest: CarDataEditReturn, onClose: () => void) => {
+    const editAd = async (formData: CarRequestEdit, onClose: () => void) => {
+        console.log(formData)
         try {
-            const cookies = parseCookies()
-            console.log(cookies)
-            // const response = await api.get(`/cars/${id}}`, carRequest)
+            // const cookies = parseCookies()
+            // console.log(cookies)
+            // const response = await api.patch(`/cars/${id}}`, carRequest)
 
-            // if(!response.data){
-            //     throw new Error("Veículo não encontrado.");
-            // }
-
-
-
-            
+            // setCars((previousCars) => [...previousCars, response.data])
+            // onClose();
+            // toast({
+            //     position: "top-right",
+            //     title: "Sucesso",
+            //     description: "Veículo atualizado!",
+            //     status: "success",
+            //     duration: 6000,
+            //     isClosable: true,
+            // });
+                   
         } catch (error) {
             console.log(error)
             toast({

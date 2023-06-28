@@ -13,9 +13,10 @@ import { AuthContext } from '@/contexts/authContext'
 import { useCarContext } from '@/contexts/carsContext'
 
   
-const ProfileCardUser = ({ carName, carImage, description, price, year, km, active }: any) => {
-
-  const { user }: any = useContext(AuthContext);
+const ProfileCardUser = ({ id, carName, carImage, description, fipePrice, price, year, km, active, brand, fuel, color, userId }: any) => {
+  const carData = {id, carName, carImage, description, fipePrice, price, year, km, active, brand, fuel, color, userId }
+  // console.log(obj)
+  // const { user }: any = useContext(AuthContext);
   // const { userCars, setUserCars }: any = useCarContext();
 
     const adIsActive = (act: boolean) => {
@@ -154,7 +155,7 @@ const ProfileCardUser = ({ carName, carImage, description, price, year, km, acti
           </Box>
 
           <ButtonGroup>            
-            <EditAd user={user}/>
+            <EditAd car={carData}/>
             <Button colorScheme='grey1' variant='outline'>Ver detalhes</Button>
           </ButtonGroup>
           

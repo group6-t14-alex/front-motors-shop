@@ -45,6 +45,8 @@ const Profile: NextPage<any> = ({ cars }) => {
   const { user }: any = useContext(AuthContext);
   const { userCars, setUserCars }: any = useCarContext();
 
+  // console.log(userCars)
+
   useEffect(() => {
 
     const getUserCars = async () => {
@@ -149,6 +151,7 @@ const Profile: NextPage<any> = ({ cars }) => {
             return (
               <ProfileCardUser
               key={car.id}
+              id={car.id}
               carName={car.model}
               carImage={car.imageUrl}
               price={car.price}
@@ -158,6 +161,10 @@ const Profile: NextPage<any> = ({ cars }) => {
               year={car.year}
               km={car.km}
               active={car.isActive}
+              brand={car.brand}
+              fuel={car.fuel}
+              color={car.color}
+              userId={car.userId}
             />
             )
           })}
