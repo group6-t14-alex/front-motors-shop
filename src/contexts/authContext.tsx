@@ -12,6 +12,7 @@ import { useToast } from "@chakra-ui/toast";
 import jwt_decode from "jwt-decode";
 import { UserInterface } from "@/interfaces/user.interface";
 import { setCookie, parseCookies } from "nookies";
+import { useUser } from './userContext'
 
 interface Props {
   children: ReactNode;
@@ -40,6 +41,8 @@ export const AuthProvider = ({ children }: Props) => {
   const [isLogged, setIsLogged] = useState(false);
 
   useEffect(() => {
+
+
     const getLocalToken = async () => {
       try {
         const tokenLocal = parseCookies();
@@ -117,6 +120,7 @@ export const AuthProvider = ({ children }: Props) => {
       });
       router.push("/profile");
       setUser(userData.data);
+      console.log("user list", )
       setIsLogged(true);
     } catch (error) {
       console.log(error);
