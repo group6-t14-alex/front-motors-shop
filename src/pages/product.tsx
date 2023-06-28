@@ -19,10 +19,56 @@ import PhotosCar from '@/components/cards/photosCarCard'
 import { Footer } from '@/components/footer/footer';
 import { HeaderLogged } from '@/components/header/headerLogged';
 import ExpandPhotoModal from '@/components/modals/expandPhoto';
+import CommentsCard from '@/components/cards/commentsCard'
+import { useEffect, useState } from 'react'
+import { parseCookies } from 'nookies'
+import jwt_decode from "jwt-decode";
+import { api } from '@/services/api'
+import { useUser } from '@/contexts/userContext'
+import { useRouter } from 'next/router'
 
 
 const ProductPage = () => {
+    const { idUser, setIdUser, userList, setUserList } = useUser();
+    const [loading, setLoading] = useState(true);
+    
+    const router = useRouter();
+    const id = router.query.id;
 
+    useEffect(() => {
+        const getLocalToken = async () => {
+          try {
+            const tokenLocal = parseCookies();
+            if (!tokenLocal) {
+              return {
+                redirect: {
+                  destination: "/login",
+                  permanent: false,
+                },
+              };
+            }
+            const token: any = jwt_decode(tokenLocal["@MotorsShop"]);
+    
+            api.get(`/user/${+token.sub}`, {
+              headers: {
+                Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`,
+              },
+            })
+            .then((response) => {
+              setUserList(response.data);
+              console.log(response.data)
+            })
+            .then(() => {
+              setLoading(false);
+              console.log("id", id);
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        getLocalToken();
+      }, []);
+    
 
     return (
         <>
@@ -127,7 +173,7 @@ const ProductPage = () => {
                                         </UnorderedList>
                                     </Box>
 
-                                    <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey2' h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                                    any      <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey2' h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
                                 </ListItem>
 
                                 <ListItem w='95%' h='212px' borderRadius='4px' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around' bg='grey10' gap='body3'>
@@ -174,6 +220,7 @@ const ProductPage = () => {
                         </Box>
                     </Box>
 
+                    <CommentsCard carId={id}/>
          
                 </Box>
             </Box>
