@@ -4,6 +4,7 @@ import { theme } from "../styles/theme";
 import { AuthProvider } from "@/contexts/authContext";
 import { CarProvider } from "@/contexts/carsContext";
 import { UserProvider } from "@/contexts/userContext";
+import { CommentProvider } from '@/contexts/commentsContext'
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -11,7 +12,9 @@ function App({ Component, pageProps }: AppProps) {
       <AuthProvider>
         <UserProvider>
           <CarProvider>
-            <Component {...pageProps} />
+            <CommentProvider>
+              <Component {...pageProps} />
+            </CommentProvider>
           </CarProvider>
         </UserProvider>
       </AuthProvider>
