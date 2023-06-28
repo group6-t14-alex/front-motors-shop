@@ -15,7 +15,7 @@ import { useCarContext } from '@/contexts/carsContext'
   
 const ProfileCardUser = ({ id, carName, carImage, description, fipePrice, price, year, km, active, brand, fuel, color, userId }: any) => {
   const carData = {id, carName, carImage, description, fipePrice, price, year, km, active, brand, fuel, color, userId }
-  // console.log(obj)
+  // console.log(carData.fipePrice)
   // const { user }: any = useContext(AuthContext);
   // const { userCars, setUserCars }: any = useCarContext();
 

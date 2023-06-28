@@ -3,7 +3,7 @@ import { z } from "zod";
 export const carSchemaRequest = z.object({
     description: z.string(),
     year: z.string(),
-    priceFipe: z.number(),
+    priceFipe: z.string(),
     km:z.string(),
     price: z.string(),
     model: z.string().nonempty(),
@@ -19,9 +19,8 @@ export const carSchemaReturn = carSchemaRequest.extend({
 })
 
 
-export const carEditSchemaReturn = carSchemaReturn.optional();
+export const carEditSchemaReturn = carSchemaRequest.partial().strip();
 
 export type CarRequest = z.infer<typeof carSchemaRequest>
 export type CarDataReturn = z.infer<typeof carSchemaReturn>;
 export type CarRequestEdit = z.infer<typeof carEditSchemaReturn>;
-export type CarDataEditReturn = z.infer<typeof carEditSchemaReturn>;

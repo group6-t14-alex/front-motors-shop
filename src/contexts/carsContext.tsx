@@ -2,7 +2,7 @@ import { api, apiKenzieKars } from "@/services/api";
 import {useToast} from "@chakra-ui/toast";
 import { parseCookies } from "nookies";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
-import { CarDataEditReturn, CarRequest, CarRequestEdit } from "@/schemas/car.schema";
+import { CarRequest, CarRequestEdit } from "@/schemas/car.schema";
 import { createAdReturnInterface } from "@/interfaces/createAd.interface";
 import { useAuth } from "./authContext";
 
@@ -11,8 +11,8 @@ interface Props {
 }
 
 interface carProviderData {
-    createAd: (carRequest: CarRequest, onClose: () => void) => void;
-    editAd: (formData: CarRequestEdit, onClose: () => void) => Promise<void>
+    createAd: (carRequest: CarRequest, onClose: () => void) => void;    
+    editAd: (formData: CarRequestEdit, id: number, onClose: () => void) => Promise<void>
     getBrandByFipe: (brand: string) => Promise<any>;
     adProfile: createAdReturnInterface[];
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
@@ -148,7 +148,7 @@ export const CarProvider = ({children}: Props) => {
         setFiltredCars(data);
     };
 
-    const createAd = async (carRequest: CarRequest, onClose: () => void) => {        
+    const createAd = async (carRequest: CarRequest, onClose: () => void) => {
         
         try {
             const response = await api.post("/cars", carRequest)
@@ -184,23 +184,42 @@ export const CarProvider = ({children}: Props) => {
         }
     };
 
-    const editAd = async (formData: CarRequestEdit, onClose: () => void) => {
-        console.log(formData)
+    const editAd = async (formData: CarRequestEdit, id: number, onClose: () => void,) => {
+ 
         try {
-            // const cookies = parseCookies()
-            // console.log(cookies)
-            // const response = await api.patch(`/cars/${id}}`, carRequest)
 
-            // setCars((previousCars) => [...previousCars, response.data])
-            // onClose();
-            // toast({
-            //     position: "top-right",
-            //     title: "Sucesso",
-            //     description: "Veículo atualizado!",
-            //     status: "success",
-            //     duration: 6000,
-            //     isClosable: true,
-            // });
+            const response = await api.patch(`/cars/${id}`, formData)
+
+            if (response.data) {
+                                
+                setAdProfile((prevCarData) =>
+                    prevCarData.map((carData) => {
+                        if (+carData.id == id) {
+                            return response.data
+                        }
+                        return carData;
+                    })
+                );
+
+                setUserCars((prevCarData) =>
+                    prevCarData.map((carData) => {
+                        if (+carData.id == id) {
+                            return response.data
+                        }
+                        return carData;
+                })
+            );
+                onClose();
+                
+                toast({
+                    position: "top-right",
+                    title: "Sucesso",
+                    description: "Veículo atualizado!",
+                    status: "success",
+                    duration: 6000,
+                    isClosable: true,
+                });
+            }
                    
         } catch (error) {
             console.log(error)
@@ -214,28 +233,7 @@ export const CarProvider = ({children}: Props) => {
             });
         }
 
-    };
-
-    // useEffect(() => {
-
-
-    //     const getUserCars = async () => {
-    //         try {
-    //             const response = await api.get(`/user/${user!.id}`)                
-
-                
-    //             if(response.data){
-    //                 setUserCars(response.data.car)
-    //             }
-      
-    //         } catch (errors) {
-    //             console.log(errors)
-    //         }
-    //     }
-
-    //     getUserCars()
-
-    // }, [user])
+    };    
 
     const filterOptions = (ads: createAdReturnInterface[]) => {
         const carsBrand = ads.map((model) => model.brand);
@@ -268,13 +266,8 @@ export const CarProvider = ({children}: Props) => {
             {children}
         </CarContext.Provider>
     )
-
-
-
 }
 
 export const useCarContext = () => {
     return useContext(CarContext);
 };
-
-

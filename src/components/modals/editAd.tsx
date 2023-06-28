@@ -1,7 +1,5 @@
 import { useCarContext } from '@/contexts/carsContext'
-import { FipeApi } from '@/interfaces/carApi.interface'
-import { CarRequest, CarRequestEdit, carSchemaRequest } from '@/schemas/car.schema'
-import { fipeCarsData } from '@/schemas/carsFipe/cars.schema'
+import { CarRequestEdit, carEditSchemaReturn, } from '@/schemas/car.schema'
 import {useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -23,101 +21,42 @@ import {
     ModalFooter,
     Stack,
     FormErrorMessage,
-    Select
 } from '@chakra-ui/react'
 
-import { useEffect, useState } from 'react'
-
-
+import { useState } from 'react'
 
 const EditAd = ({ car, }: any) => {
-    const [brand, setBrand] = useState("");
-    const [model, setModel] = useState("");
-    const [models, setModels] = useState<FipeApi[]>([]);
-    const [published, setPublished] = useState("sim");
+
+    const [published, setPublished] = useState("");
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const {createAd, getBrandByFipe, getBrands, adProfile, editAd, userCars} = useCarContext()
-    // console.log(car)
-    // console.log(userCars)
+    const { editAd, } = useCarContext()    
 
     const {
         register,
         handleSubmit,
         setValue,
         formState: { errors },
-    } = useForm<CarRequest>({
-        resolver: zodResolver(carSchemaRequest),
+    } = useForm<CarRequestEdit>({
+        resolver: zodResolver(carEditSchemaReturn),
     })
 
-    const handleBrand= async (event: any) => {
-        const gettingValue= event.target.value.toLowerCase()
-
-        const verifiyng = getBrands.map((marca) => marca === gettingValue)
-
-        if(verifiyng){
-            setBrand(gettingValue)
+    const submitHandler = (formData: CarRequestEdit) => {   
+        
+        if (published == "Sim") {
+            formData.isActive = true;  
+            setPublished("Sim"); 
+        } else if (published == "Não"){
+            formData.isActive = false;
+            setPublished("Não"); 
+        } else {
+            formData.isActive = formData.isActive
         }
-    }
-
-    useEffect(() => {
-        if(brand.length){            
-            const getModelsBrand = async () => {
-                setModels(await getBrandByFipe(brand))
-            }
-
-            getModelsBrand()
-        }
-    }, [brand, getBrandByFipe])
-
-    const handleModel = async (event: any) => {
-        const gettingModelValue= event.target.value.toLowerCase()
-
-        const verifiyngModel = models.map((modelo) => modelo === gettingModelValue)
-
-        if(verifiyngModel){
-            setModel(gettingModelValue)
-        }        
-    }
-
-    useEffect(() => {
-        if (model.length) {
-          const getInfos = async () => {
-
-            const findingModel = models.find((car) => car.name === model);
-            if (findingModel) {
-              const fuelTypes = ["Flex", "Diesel", "Eletrico"];
-              const fuelType = fuelTypes[findingModel.fuel - 1];
-         
-              setValue("year", findingModel.year);
-              setValue("fuel", fuelType);
-              setValue("priceFipe", findingModel.value);
-
-            }
-          };
-          getInfos();
-        }
-
-    }, [model, setValue, models]);
-
-
-    const submitHandler = (formData: CarRequestEdit) => {
-        console.log(formData);
-        editAd(formData,onClose);
-    };
-    
-    // const [optionValue, setOptionValue] = React.useState();
-    // let options: any[] = []
-    // const selectUse = () => {
-
-
-    //     getBrands.map((brd) =>{
-    //         options.push({
-    //             label: brd,
-    //             value: brd,
-    //         })
-    //     })
-    // };
+        
+        formData.priceFipe = car.fipePrice
+        
+        editAd(formData, car.id, onClose);
+    };       
 
     return (
         <>
@@ -145,7 +84,7 @@ const EditAd = ({ car, }: any) => {
                             <Stack display={'flex'} flexDirection={'column'} alignItems={'flex-start'} gap={'24px'} w={'100%'}>
                                 <FormControl 
                                   id="brand" 
-                                  // isInvalid={Boolean(errors.brand)}
+                                  isInvalid={Boolean(errors.brand)}
                                 >
                                     <FormLabel width={'100%'} color={"grey1"} fontSize={"body2"} fontFamily={"body"} fontWeight={'500'}>Marca</FormLabel>
                                     <Input                                    
@@ -165,7 +104,7 @@ const EditAd = ({ car, }: any) => {
 
                                 <FormControl 
                                   id="model" 
-                                //   isInvalid={Boolean(errors.model)}
+                                  isInvalid={Boolean(errors.model)}
                                 >
                                     <FormLabel width={'100%'} color={"grey1"} fontSize={"body2"} fontFamily={"body"} fontWeight={'500'}>Modelo</FormLabel>
                                     <Input 
@@ -186,7 +125,7 @@ const EditAd = ({ car, }: any) => {
                                 <Box width={'100%'} display={'flex'} flexDir={'row'} gap={'10px'}>
                                     <FormControl 
                                         id="year" 
-                                        // isInvalid={Boolean(errors.year)}  
+                                        isInvalid={Boolean(errors.year)}  
                                         display={'flex'} 
                                         flexDir={'column'}
                                     >
@@ -207,7 +146,7 @@ const EditAd = ({ car, }: any) => {
 
                                     <FormControl 
                                         id="fuel" 
-                                        // isInvalid={Boolean(errors.fuel)} 
+                                        isInvalid={Boolean(errors.fuel)} 
                                         display={'flex'} 
                                         flexDir={'column'}
                                     >
@@ -231,7 +170,7 @@ const EditAd = ({ car, }: any) => {
                                 <Box width={'100%'} display={'flex'} flexDir={'row'}  gap={'10px'}>
                                     <FormControl 
                                         id="km" 
-                                        // isInvalid={Boolean(errors.km)}
+                                        isInvalid={Boolean(errors.km)}
                                         display={'flex'} 
                                         flexDir={'column'}
                                     >
@@ -254,7 +193,7 @@ const EditAd = ({ car, }: any) => {
 
                                     <FormControl 
                                         id="color" 
-                                        // isInvalid={Boolean(errors.color)} 
+                                        isInvalid={Boolean(errors.color)} 
                                         display={'flex'} 
                                         flexDir={'column'}
                                     >
@@ -278,7 +217,7 @@ const EditAd = ({ car, }: any) => {
                                 <Box width={'100%'} display={'flex'} flexDir={'row'}  gap={'10px'}>
                                     <FormControl 
                                         id="priceFipe" 
-                                        // isInvalid={Boolean(errors.priceFipe)}
+                                        isInvalid={Boolean(errors.priceFipe)}
                                         width={'50%'} 
                                         display={'flex'} 
                                         flexDir={'column'}
@@ -295,14 +234,14 @@ const EditAd = ({ car, }: any) => {
                                             variant='outline' 
                                             placeholder={'valor tabela fipe'} 
                                             disabled 
-                                            type='number'
-                                        />
+                                            // type='number'
+                                        />                                        
                                         <FormErrorMessage>{errors.priceFipe && errors.priceFipe.message}</FormErrorMessage>
                                     </FormControl>
 
                                     <FormControl 
                                         id="price" 
-                                        // isInvalid={Boolean(errors.price)}
+                                        isInvalid={Boolean(errors.price)}
                                         width={'50%'} 
                                         display={'flex'} 
                                         flexDir={'column'}
@@ -343,60 +282,61 @@ const EditAd = ({ car, }: any) => {
                                 </FormControl>
 
                                 <FormControl 
-                                 id="published" 
-                                //  isInvalid={Boolean(errors.published)}
+                                 id="isActive" 
+                                 isInvalid={Boolean(errors.isActive)}
                                 >
                                     <FormLabel  color={"grey1"} fontSize={"body2"} fontFamily={"body"} fontWeight={'500'} width={'100%'}>Publicado</FormLabel>
                                     
                                     <Stack direction="row" spacing={4}>
-                                    <Button
-                                        bg={published == "sim" ? "brand1" : "white"}
-                                        color={published == "sim" ? "white" : "grey0"}
-                                        border={published == "sim" ? "white" : "grey3"}
-                                        variant={published == "sim" ? "solid" : "outline"}
+                                    <Button                                        
+                                        defaultValue={car.isActive}
+                                        bg={published == "Sim" ? "brand1" : "white"}
+                                        color={published == "Sim" ? "white" : "grey0"}
+                                        borderColor={published == "Sim" ? "solid 1.5px grey4" : "solid 1.5px grey4"}
+                                        variant={published == "Sim" ? "solid" : "outline"}
                                         width={"49%"}
+                                        transition={'0.3s ease-in'}
                                         _hover={
-                                            published == "sim"
+                                            published == "Sim"
                                             ? { bg: "brand1" }
-                                            : { bg: "grey0", color: "grey10" }
+                                            : { bg: "brand1", color: "grey10" }
                                         }
                                         _focus={
-                                            published == "sim"
+                                            published == "Sim"
                                             ? { bg: "brand1" }
                                             : { bg: "brand2", color: "grey10",  }
                                         }
-                                        onClick={() => setPublished("sim")}
+                                        onClick={() => setPublished("Sim")}
                                         >
-                                        sim
+                                        Sim
                                         </Button>
-                                        <Button
-                                        bg={published == "não" ? "brand1" : "white"}
-                                        color={published == "não" ? "white" : "grey0"}
-                                        border={published == "não" ? "white" : "grey3"}
-                                        variant={published == "não" ? "solid" : "outline"}
+                                        <Button                                        
+                                        bg={published == "Não" ? "brand1" : "white"}
+                                        color={published == "Não" ? "white" : "grey0"}
+                                        borderColor={published == "Não" ? "solid 1.5px grey4" : "solid 1.5px grey4"}
+                                        variant={published == "Não" ? "solid" : "outline"}
                                         width={"49%"}
+                                        transition={'0.3s ease-in'}
                                         _hover={
-                                            published == "não"
+                                            published == "Não"
                                             ? { bg: "brand1" }
-                                            : { bg: "grey0", color: "grey10" }
+                                            : { bg: "brand1", color: "grey10" }
                                         }
                                         _focus={
-                                            published == "não"
+                                            published == "Não"
                                             ? { bg: "brand1" }
                                             : { bg: "brand2", color: "grey10" }
                                         }
-                                        onClick={() => setPublished("não")}
+                                        onClick={() => setPublished("Não")}
                                         >
-                                    não
+                                    Não
                                     </Button>
                                 </Stack>
-
-
                                 </FormControl>
 
                                 <FormControl 
                                     id="imageUrl" 
-                                    // isInvalid={Boolean(errors.imageUrl)}
+                                    isInvalid={Boolean(errors.imageUrl)}
                                 >
                                     <FormLabel color={"grey1"} fontSize={"body2"} fontFamily={"body"} fontWeight={'500'} width={'100%'}>Imagem da capa</FormLabel>
                                     <Input
