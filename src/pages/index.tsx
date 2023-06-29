@@ -20,16 +20,14 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ cars }) => {
-  const { setCars, filtredCars, filterOptions, setFiltredCars }: any =
-    useCarContext();
-  // console.log(filtredCars)
-  // console.log(filtredCars.length)
-  // console.log("re-render")
+
+  const { setCars, filtredCars, filterOptions, setFiltredCars }: any = useCarContext();
+
+
   useEffect(() => {
     setCars(cars);
     setFiltredCars(cars);
-    filterOptions(cars);
-    console.log(cars);
+    filterOptions(cars);    
   }, []);
 
   const { isLogged } = useAuth();
@@ -61,14 +59,9 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
         mt={"3.75rem"}
         p={"0.5"}
       >
-        {/* {
-          filtredCars.lenght > 0 ? (
-          <CardWrapper cars={filtredCars} />
-          ) : (
-          <CardWrapper cars={cars} />)
-        } */}
 
         <CardWrapper />
+
         {/* <CardWrapper cars={cars} /> */}
 
         <FilterDesk />

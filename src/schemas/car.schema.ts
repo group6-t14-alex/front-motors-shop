@@ -18,5 +18,9 @@ export const carSchemaReturn = carSchemaRequest.extend({
     id: z.string(),
 })
 
+
+export const carEditSchemaReturn = carSchemaRequest.partial().strip();
+
 export type CarRequest = z.infer<typeof carSchemaRequest>
 export type CarDataReturn = z.infer<typeof carSchemaReturn>;
+export type CarRequestEdit = z.infer<typeof carEditSchemaReturn>;
