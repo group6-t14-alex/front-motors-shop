@@ -24,6 +24,7 @@ import {
 } from '@chakra-ui/react'
 
 import { useState } from 'react'
+import DeleteAd from './deleteAd';
 
 const EditAd = ({ car, }: any) => {
 
@@ -402,7 +403,7 @@ const EditAd = ({ car, }: any) => {
                                 <Button size={'sm'} bg={'brand4'} color={'brand1'} marginBottom={'20px'} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'}>Adicionar campo para imagem da galeria</Button>
 
                                 <ModalFooter marginBottom={'32px'} w={'100%'} justifyContent={{cel:'space-between', desk: 'space-between'}} gap={{desk:'0.5rem'}}>
-                                    <Button onClick={onClose} w={{cel:'48%', desk:'126px'}} size={'md'} bg={'grey6'} color={"grey2"} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'}>Excluir Anúncio</Button>
+                                    <DeleteAd car={car}></DeleteAd>
                                     <Button type='submit' w={{cel:'48%', desk:'193px'}} size={'md'} bg={'brand3'} color={"brand4"} fontSize={"body2"} fontFamily={"body"} fontWeight={'600'} _hover={{bg:'brand1', color:'white'}}>Salvar Alterações</Button>
                                 </ModalFooter>
                             </Stack>

@@ -13,6 +13,8 @@ interface Props {
 interface carProviderData {
     createAd: (carRequest: CarRequest, onClose: () => void) => void;    
     editAd: (formData: CarRequestEdit, id: number, onClose: () => void) => Promise<void>
+    // deleteAd: (id: string) => Promise<void>
+    deleteAd: (id: string, onClose: () => void) => Promise<void>
     getBrandByFipe: (brand: string) => Promise<any>;
     adProfile: createAdReturnInterface[];
     setAdProfile:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
@@ -167,8 +169,8 @@ export const CarProvider = ({children}: Props) => {
                     isClosable: true,
                   });
 
-
                   onClose();
+
             }
 
         } catch (errors) {
@@ -233,7 +235,45 @@ export const CarProvider = ({children}: Props) => {
             });
         }
 
-    };    
+    };
+
+    const deleteAd = async (id: string,  onClose: () => void) => {
+        try {
+            await api.delete(`/cars/${id}`);            
+
+            const prevAdProfile = adProfile.filter((ad) => {
+                return ad.id !== id
+            })
+            setAdProfile(prevAdProfile)
+
+            const prevAdUserCars = userCars.filter((ad) => {
+                return ad.id !== id
+            })
+            setUserCars(prevAdUserCars)            
+
+            onClose()
+
+            toast({
+                position: "top-right",
+                title: "Sucesso",
+                description: "Anúncio deletado!",
+                status: "success",
+                duration: 6000,
+                isClosable: true,
+            });  
+            
+        } catch (error) {
+            console.log(error);
+            toast({
+                position: "top-right",
+                title: "Erro",
+                description: "Ocorreu um erro!",
+                status: "error",
+                duration: 6000,
+                isClosable: true,
+            });
+        }
+    }
 
     const filterOptions = (ads: createAdReturnInterface[]) => {
         const carsBrand = ads.map((model) => model.brand);
@@ -261,7 +301,7 @@ export const CarProvider = ({children}: Props) => {
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
         setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars,
         filtredCars, setFiltredCars, setBrandFilter, brandFilter, getCarsByBrand, getCarsByModel, getCarsByColor,
-        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice, editAd
+        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice, editAd, deleteAd
         }}>
             {children}
         </CarContext.Provider>

@@ -3,7 +3,7 @@ import { z } from "zod";
 export const carSchemaRequest = z.object({
     description: z.string(),
     year: z.string(),
-    priceFipe: z.string(),
+    priceFipe: z.number(),
     km:z.string(),
     price: z.string(),
     model: z.string().nonempty(),
