@@ -9,7 +9,7 @@ Fernanda Bollinger
 Lilian Dias
 Samir Dourado
 
-OBS: Esse projeto foi criado com Next.js a partir do comando [`create-next-app`]
+OBS: Esse projeto foi criado com Next.js(13.4.4) a partir do comando [`create-next-app`]
 
 ## 🎲 Utilizando projeto
 
@@ -33,6 +33,29 @@ ou
 `pnpm dev`
 
 Abra [http://localhost:3000](http://localhost:3000) com seu navegador para ver o resultado.
+
+---
+
+### ▪️ Bibliotecas utilizadas
+
+-Chakra UI -
+chakra-ui/icons(2.0.19)
+chakra-ui/next-js(2.1.4)
+chakra-ui/react(2.7.0)
+chakra-ui/toast(6.1.4)
+chakra-ui-autocomplete(1.4.5)
+-emotion
+emotion/react(11.11.0)
+emotion/styled(11.11.0)
+-hookform/resolvers(3.1.0)
+-axios(1.4.0)
+-framer-motion(10.12.16)
+-jwt-decode(3.1.2)
+-nookies(2.5.2)
+-react-icons(4.9.0)
+-react-toastify(9.1.3)
+-typescript(5.0.4)
+-zod(3.21.4)
 
 ---
 
