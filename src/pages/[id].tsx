@@ -6,7 +6,19 @@ import {
   GetStaticPropsContext,
   NextPage,
 } from "next";
-import { Box, Avatar, Heading, Text, FormControl, Textarea, Grid, ListItem, UnorderedList, List, Button } from "@chakra-ui/react";
+import {
+  Box,
+  Avatar,
+  Heading,
+  Text,
+  FormControl,
+  Textarea,
+  Grid,
+  ListItem,
+  UnorderedList,
+  List,
+  Button,
+} from "@chakra-ui/react";
 import { Footer } from "@/components/footer/footer";
 import CardUser from "@/components/cards/userCard";
 import { AuthContext } from "@/contexts/authContext";
@@ -18,9 +30,9 @@ import nookies, { parseCookies } from "nookies";
 import { useUser } from "@/contexts/userContext";
 import { useRouter } from "next/router";
 import { useCarContext } from "@/contexts/carsContext";
-import CommentsCard from '@/components/cards/commentsCard'
+import CommentsCard from "@/components/cards/commentsCard";
 import jwt_decode from "jwt-decode";
-import { getCookie } from "typescript-cookie"
+// import { getCookie } from "typescript-cookie"
 
 interface AdvertiserPageProps {
   userData: UserInterface;
@@ -30,7 +42,7 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
   const { asPath } = useRouter();
   console.log(asPath);
   const { idUser, setIdUser, userList, setUserList } = useUser();
-  
+
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const id = router.query.id;
@@ -49,17 +61,18 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
         }
         const token: any = jwt_decode(tokenLocal["@MotorsShop"]);
 
-        api.get(`/user/${+token.sub}`, {
-          headers: {
-            Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`,
-          },
-        })
-        .then((response) => {
-          setUserList(response.data);
-        })
-        .then(() => {
-          setLoading(false);
-        });
+        api
+          .get(`/user/${+token.sub}`, {
+            headers: {
+              Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`,
+            },
+          })
+          .then((response) => {
+            setUserList(response.data);
+          })
+          .then(() => {
+            setLoading(false);
+          });
       } catch (error) {
         console.log(error);
       }
@@ -168,7 +181,6 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
                 );
               })}
             </Box>
-
           </Box>
           <Footer />{" "}
         </>
@@ -176,6 +188,5 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
     </>
   );
 };
-
 
 export default AdvertiserDetail;
