@@ -30,59 +30,56 @@ import nookies, { parseCookies } from "nookies";
 import { useUser } from "@/contexts/userContext";
 import { useRouter } from "next/router";
 import { useCarContext } from "@/contexts/carsContext";
-import CommentsCard from "@/components/cards/commentsCard";
-import jwt_decode from "jwt-decode";
-// import { getCookie } from "typescript-cookie"
 
 interface AdvertiserPageProps {
   userData: UserInterface;
 }
 
+
 const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
   const { asPath } = useRouter();
   console.log(asPath);
   const { idUser, setIdUser, userList, setUserList } = useUser();
+  // const { user }: any = useContext(AuthContext);
 
+  // useEffect(() => {
+  //   if (query.id) {
+  //     setIdUser(query.id as string);
+  //     const id = idUser;
+  //   }
+  // // }, [query.id, setIdUser, idUser]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const id = router.query.id;
-
   useEffect(() => {
-    const getLocalToken = async () => {
-      try {
-        const tokenLocal = parseCookies();
-        if (!tokenLocal) {
-          return {
-            redirect: {
-              destination: "/login",
-              permanent: false,
-            },
-          };
-        }
-        const token: any = jwt_decode(tokenLocal["@MotorsShop"]);
+    const cookies = parseCookies();
+    const id: string = cookies["@userCardId"];
+    if (id) {
+      // setIdUser(id as string);
+      console.log(id);
+      api
+        .get<UserInterface>(`/user/${id}`)
 
-        api
-          .get(`/user/${+token.sub}`, {
-            headers: {
-              Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`,
-            },
-          })
-          .then((response) => {
-            setUserList(response.data);
-          })
-          .then(() => {
-            setLoading(false);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getLocalToken();
+        .then((response) => {
+          setUserList(response.data);
+          console.log(response.data);
+        })
+        .then(() => {
+          setLoading(false);
+        });
+    }
+    // setIdUser(asPath.slice(-1));
+    // setLoading(false);
+    // console.log(idUser);
+    // if (userList) {
+    //   setLoading(false);
+    //   console.log(idUser);
+    // }
   }, []);
 
   return (
     <>
-      {loading ? (
+      {loading ? (  
         <h1>carregando</h1>
       ) : (
         <>
@@ -119,7 +116,6 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
                 gap={"16px"}
               >
                 <Avatar size={"xl"} name={userList.name} />
-
                 <Box display={"flex"} flexDirection={"row"} gap={"15px"}>
                   <Heading
                     fontFamily={"heading"}
@@ -151,7 +147,6 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
                 </Text>
               </Box>
             </Box>
-
             <Box
               maxWidth="1032px"
               display="flex"
