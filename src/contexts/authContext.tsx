@@ -1,4 +1,9 @@
-import { UserRequest, LoginData, SendingEmailData, RecoveryPasswordData } from "@/schemas/user.schema";
+import {
+  UserRequest,
+  LoginData,
+  SendingEmailData,
+  RecoveryPasswordData,
+} from "@/schemas/user.schema";
 import { api } from "@/services/api";
 import { useRouter } from "next/router";
 import {
@@ -24,8 +29,8 @@ interface authProviderData {
   setUser: React.Dispatch<React.SetStateAction<UserInterface | null>>;
   logOut: () => Promise<void>;
   isLogged: boolean;
-  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;  
-  sendEmail: (email :SendingEmailData) => void;
+  setIsLogged: React.Dispatch<React.SetStateAction<boolean>>;
+  sendEmail: (email: SendingEmailData) => void;
   newPassword: (password: RecoveryPasswordData, token: string) => void;
 }
 
@@ -137,6 +142,7 @@ export const AuthProvider = ({ children }: Props) => {
 
       setCookie(null, "@MotorsShop", token, { maxAge: 0, path: "/" });
       setUser(null);
+      setIsLogged(false);
       toast({
         position: "top-right",
         title: "Sucesso",
@@ -161,21 +167,20 @@ export const AuthProvider = ({ children }: Props) => {
 
   const sendEmail = (email: SendingEmailData) => {
     try {
-        const getEmail = api.post("/user/resetPassword", email)
+      const getEmail = api.post("/user/resetPassword", email);
 
-        toast({
-          position: "top-right",
-          title: "Sucesso",
-          description: "Email enviado com sucesso!",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        })
-  
-        router.push("/")
-      
+      toast({
+        position: "top-right",
+        title: "Sucesso",
+        description: "Email enviado com sucesso!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+
+      router.push("/");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
         position: "top-right",
         title: "Erro",
@@ -189,8 +194,10 @@ export const AuthProvider = ({ children }: Props) => {
 
   const newPassword = (resetPassword: RecoveryPasswordData, token: string) => {
     try {
-      const getPass = api.patch(`/user/resetPassword/${token}`, {password: resetPassword.password})
-     
+      const getPass = api.patch(`/user/resetPassword/${token}`, {
+        password: resetPassword.password,
+      });
+
       toast({
         position: "top-right",
         title: "Sucesso",
@@ -198,10 +205,10 @@ export const AuthProvider = ({ children }: Props) => {
         status: "success",
         duration: 5000,
         isClosable: true,
-      })
-      router.push("/login")      
+      });
+      router.push("/login");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       toast({
         position: "top-right",
         title: "Erro",
@@ -213,8 +220,23 @@ export const AuthProvider = ({ children }: Props) => {
     }
   };
 
-  return <AuthContext.Provider value={{ registerUser, loginUser, user, setUser,logOut, sendEmail, newPassword, isLogged, setIsLogged }}>{children}</AuthContext.Provider>;
-
+  return (
+    <AuthContext.Provider
+      value={{
+        registerUser,
+        loginUser,
+        user,
+        setUser,
+        logOut,
+        sendEmail,
+        newPassword,
+        isLogged,
+        setIsLogged,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
-   
+
 export const useAuth = () => useContext(AuthContext);
