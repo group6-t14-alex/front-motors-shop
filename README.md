@@ -39,14 +39,16 @@ Abra [http://localhost:3000](http://localhost:3000) com seu navegador para ver o
 ### ▪️ Bibliotecas utilizadas
 
 -Chakra UI -
-chakra-ui/icons(2.0.19)
-chakra-ui/next-js(2.1.4)
-chakra-ui/react(2.7.0)
-chakra-ui/toast(6.1.4)
-chakra-ui-autocomplete(1.4.5)
++chakra-ui/icons(2.0.19)
++chakra-ui/next-js(2.1.4)
++chakra-ui/react(2.7.0)
++chakra-ui/toast(6.1.4)
++chakra-ui-autocomplete(1.4.5)
+
 -emotion
-emotion/react(11.11.0)
-emotion/styled(11.11.0)
++emotion/react(11.11.0)
++emotion/styled(11.11.0)
+
 -hookform/resolvers(3.1.0)
 -axios(1.4.0)
 -framer-motion(10.12.16)
