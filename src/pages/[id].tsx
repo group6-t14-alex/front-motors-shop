@@ -6,7 +6,19 @@ import {
   GetStaticPropsContext,
   NextPage,
 } from "next";
-import { Box, Avatar, Heading, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Avatar,
+  Heading,
+  Text,
+  FormControl,
+  Textarea,
+  Grid,
+  ListItem,
+  UnorderedList,
+  List,
+  Button,
+} from "@chakra-ui/react";
 import { Footer } from "@/components/footer/footer";
 import CardUser from "@/components/cards/userCard";
 import { AuthContext } from "@/contexts/authContext";
@@ -18,6 +30,9 @@ import nookies, { parseCookies } from "nookies";
 import { useUser } from "@/contexts/userContext";
 import { useRouter } from "next/router";
 import { useCarContext } from "@/contexts/carsContext";
+import CommentsCard from "@/components/cards/commentsCard";
+import jwt_decode from "jwt-decode";
+// import { getCookie } from "typescript-cookie"
 
 interface AdvertiserPageProps {
   userData: UserInterface;
@@ -27,41 +42,44 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
   const { asPath } = useRouter();
   console.log(asPath);
   const { idUser, setIdUser, userList, setUserList } = useUser();
-  // const { user }: any = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   if (query.id) {
-  //     setIdUser(query.id as string);
-  //     const id = idUser;
-  //   }
-  // // }, [query.id, setIdUser, idUser]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
   const id = router.query.id;
+
   useEffect(() => {
-    const cookies = parseCookies();
-    const id: string = cookies["@userCardId"];
-    if (id) {
-      // setIdUser(id as string);
-      console.log(id);
-      api
-        .get<UserInterface>(`/user/${id}`)
-        .then((response) => {
-          setUserList(response.data);
-          console.log(response.data);
-        })
-        .then(() => {
-          setLoading(false);
-        });
-    }
-    // setIdUser(asPath.slice(-1));
-    // setLoading(false);
-    // console.log(idUser);
-    // if (userList) {
-    //   setLoading(false);
-    //   console.log(idUser);
-    // }
+    const getLocalToken = async () => {
+      try {
+        const tokenLocal = parseCookies();
+        if (!tokenLocal) {
+          return {
+            redirect: {
+              destination: "/login",
+              permanent: false,
+            },
+          };
+        }
+        const token: any = jwt_decode(tokenLocal["@MotorsShop"]);
+
+        api
+          .get(`/user/${+token.sub}`, {
+            headers: {
+              Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`,
+            },
+          })
+          .then((response) => {
+            setUserList(response.data);
+          })
+          .then(() => {
+            setLoading(false);
+          });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getLocalToken();
   }, []);
+
   return (
     <>
       {loading ? (
@@ -170,50 +188,5 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
     </>
   );
 };
-
-
-// export const getStaticProps: GetStaticProps<AdvertiserPageProps> = async (
-//   ctx
-// ) => {
-//   // const cookies = nookies.get(ctx);
-//   //   api.defaults.headers.common.authorization = `Bearer ${cookies["@MotorsShop"]}`;
-
-
-//   const id = ctx.params!.id;
-
-//   if (!id) {
-//     console.log("id nulo");
-//   }
-
-//   const response = await api.get<UserInterface>(`/user/${id}`, {
-//     // headers: { Authorization: `Bearer ${cookies["@MotorsShop"]}` },
-//   });
-//   console.log(response.data);
-
-//   return { props: { userData: response.data } };
-// };
-
-// export const getStaticPaths = async () => {
-//   return {
-//     paths: [
-//       {
-//         params: { id:  }
-//       }
-//     ],
-//     fallback: "blocking"
-//   };
-// };
-
-// export const getServerSideProps: GetServerSideProps<
-//   AdvertiserPageProps
-// > = async (ctx) => {
-//   const id = ctx.params!.id;
-
-//   const response = await api.get<UserInterface>(`/user/${id}`, {});
-
-//   console.log(response.data);
-
-//   return { props: { userData: response.data } };
-// };
 
 export default AdvertiserDetail;

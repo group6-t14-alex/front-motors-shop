@@ -15,10 +15,13 @@ import {
   useDisclosure,
   Link,
 } from "@chakra-ui/react";
-import NextLink from "next/link"
+import NextLink from "next/link";
+import { useRouter } from "next/router";
 
 export const Header = () => {
   const { isOpen } = useDisclosure();
+  const router = useRouter();
+
   return (
     <>
       <Flex flexDirection={"row"} borderBottom={"2px solid #dee2e6"} id="topo">
@@ -34,7 +37,10 @@ export const Header = () => {
             width={"153px"}
             src={logoMotors.src}
             alt="Logo motors shop"
-            
+            onClick={() => {
+              router.push(`/`);
+            }}
+            cursor={"pointer"}
           />
           <Menu>
             {({ isOpen }) => (
@@ -63,7 +69,8 @@ export const Header = () => {
                   gap={"1.5rem"}
                 >
                   <MenuItemOption
-                    as={NextLink} href='login'
+                    as={NextLink}
+                    href="login"
                     fontFamily={"body"}
                     fontSize={"body1"}
                     fontWeight={"600"}
@@ -75,16 +82,17 @@ export const Header = () => {
                     _before={{ bg: "transparent" }}
                   >
                     Fazer Login
-                  </MenuItemOption>                  
-                  <MenuItemOption 
+                  </MenuItemOption>
+                  <MenuItemOption
                     color={"grey0"}
                     fontFamily={"body"}
                     fontSize={"body1"}
                     fontWeight={"600"}
                     width={"100%"}
-                    as={NextLink} href={"/signup"}
-                    _hover={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
-                    _focus={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
+                    as={NextLink}
+                    href={"/signup"}
+                    _hover={{ bg: "grey0", color: "grey10", fontStyle: "none" }}
+                    _focus={{ bg: "grey0", color: "grey10", fontStyle: "none" }}
                   >
                     Cadastrar
                   </MenuItemOption>
@@ -100,8 +108,9 @@ export const Header = () => {
             height={"100%"}
             alignItems={"center"}
           >
-            <Button 
-              as={NextLink} href='login'
+            <Button
+              as={NextLink}
+              href="login"
               fontFamily={"body"}
               fontSize={"body1"}
               fontWeight={"600"}
@@ -111,14 +120,15 @@ export const Header = () => {
               Fazer Login
             </Button>
             <Button
-              as={NextLink} href='signup'
+              as={NextLink}
+              href="signup"
               color={"grey0"}
               fontFamily={"body"}
               fontSize={"body1"}
               variant={"outline"}
               fontWeight={"600"}
-              _hover={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
-              _focus={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
+              _hover={{ bg: "grey0", color: "grey10", fontStyle: "none" }}
+              _focus={{ bg: "grey0", color: "grey10", fontStyle: "none" }}
             >
               Cadastrar
             </Button>

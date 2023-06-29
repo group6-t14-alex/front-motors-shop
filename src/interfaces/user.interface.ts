@@ -1,6 +1,7 @@
 import { createAdReturnInterface } from "./createAd.interface";
 
 export interface UserInterface {
+    comments: any
     id: number;
     name: string;
     email: string;

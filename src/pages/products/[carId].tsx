@@ -31,13 +31,24 @@ import { useRouter } from 'next/router'
 const ProductPage = () => {
     const { idUser, setIdUser, userList, setUserList } = useUser();
     const [loading, setLoading] = useState(true);
-    
+    // const [carId, setCarId] = useState(0);
     const router = useRouter();
-    const id = router.query.id;
+    const { asPath } = useRouter();
+    
+    const carId = router.query.carId;
+
+    // console.log(typeof carId);
+
+    // console.log("params", carId ? carId : "1");
 
     useEffect(() => {
+        // console.log(asPath);
+        // console.log("router", router.query);
+        // setCarId(+router.query.carId);
+        // console.log("carId", carId);
+        // const carId = ;
         const getLocalToken = async () => {
-          try {
+            try {
             const tokenLocal = parseCookies();
             if (!tokenLocal) {
               return {
@@ -60,7 +71,6 @@ const ProductPage = () => {
             })
             .then(() => {
               setLoading(false);
-              console.log("id", id);
             });
           } catch (error) {
             console.log(error);
@@ -122,7 +132,7 @@ const ProductPage = () => {
                         </Box>
                     </Box>
 
-                    <Box display='flex' flexDirection='column' w={{cel:"95%", desk:'50%'}}>
+                    {/* <Box display='flex' flexDirection='column' w={{cel:"95%", desk:'50%'}}>
                         <Box h='845px'  w='100%'  maxWidth='1032px' borderRadius='4px' p='36px 28px' bg='grey10' marginTop='18px' display='flex' flexDirection='column' gap='13px'>
                             <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1'>Comentários</Heading>
 
@@ -218,10 +228,8 @@ const ProductPage = () => {
                         
                             </FormControl>
                         </Box>
-                    </Box>
-
-                    <CommentsCard carId={id}/>
-         
+                    </Box> */}
+                    <CommentsCard carId={carId}/>
                 </Box>
             </Box>
             <Footer/>
