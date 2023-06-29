@@ -47,6 +47,10 @@ export const HeaderLogged = () => {
             width={"153px"}
             src={logoMotors.src}
             alt="Logo motors shop"
+            onClick={() => {
+              router.push(`/`);
+            }}
+            cursor={"pointer"}
           />
           <Menu>
             {({ isOpen }) => (

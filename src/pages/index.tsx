@@ -12,15 +12,18 @@ import { api } from "@/services/api";
 import { useCarContext } from "@/contexts/carsContext";
 import { useEffect } from "react";
 import { CarDataReturn } from "@/schemas/car.schema";
+import { AuthContext, useAuth } from "@/contexts/authContext";
+import { HeaderLogged } from "@/components/header/headerLogged";
 
 interface HomeProps {
   cars: CarDataReturn;
 }
 
 const Home: NextPage<HomeProps> = ({ cars }) => {
-  const { setCars, filtredCars, filterOptions, setFiltredCars }: any = useCarContext();
-  // console.log(filtredCars) 
-  // console.log(filtredCars.length) 
+  const { setCars, filtredCars, filterOptions, setFiltredCars }: any =
+    useCarContext();
+  // console.log(filtredCars)
+  // console.log(filtredCars.length)
   // console.log("re-render")
   useEffect(() => {
     setCars(cars);
@@ -28,6 +31,8 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
     filterOptions(cars);
     console.log(cars);
   }, []);
+
+  const { isLogged } = useAuth();
 
   return (
     <>
@@ -39,7 +44,8 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
       </Head>
 
       <Box display={"flex"} flexDir={"column"} justifyContent={"center"}>
-        <Header />
+        {isLogged ? <HeaderLogged /> : <Header />}
+
         <Hero />
       </Box>
 
@@ -64,7 +70,6 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
 
         <CardWrapper />
         {/* <CardWrapper cars={cars} /> */}
-        
 
         <FilterDesk />
       </Box>
@@ -91,7 +96,7 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
 
 export const getServerSideProps: GetServerSideProps = async () => {
   const response = await api.get<CarDataReturn[]>("/cars");
-  
+
   return {
     props: { cars: response.data },
   };
