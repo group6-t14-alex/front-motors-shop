@@ -42,17 +42,17 @@ Todas as pastas são comuns de um projeto Next, porém alguns arquivos precisam 
 
 Segue as informações sobre cada um:
 
-     *Pasta styles
+🗂 Pasta styles
 
-            _Nessa pasta você encontrará o arquivo que customiza o estilo principal do site. Toda componetização foi feita através do Chakra UI. Para acrescentar ou modificar o estilo siga a documentação [https://chakra-ui.com/getting-started]_
+        _Nessa pasta você encontrará o arquivo que customiza o estilo principal do site. Toda componetização foi feita através do Chakra UI. Para acrescentar ou modificar o estilo siga a documentação [https://chakra-ui.com/getting-started]_
 
-     *Pasta util
+🗂 Pasta util
 
-            _Nessa pasta você encontrará 2 arquivos. Um conversor de string para número e um com um componente para proteção de rotas._
+       _Nessa pasta você encontrará 2 arquivos. Um conversor de string para número e um com um componente para proteção de rotas._
 
-     *Pasta service
+🗂 Pasta service
 
-            _Nessa pasta você encontrará as rotas das apis usadas nesse projeto. Caso queira trabalhar com uma api em sua máquina, você deve modificar o a variável api para apontar para rota que leva a api local._
+        _Nessa pasta você encontrará as rotas das apis usadas nesse projeto. Caso queira trabalhar com uma api em sua máquina, você deve modificar o a variável api para apontar para rota que leva a api local._
 
                 exemplo:
                 `export const api = axios.create({
