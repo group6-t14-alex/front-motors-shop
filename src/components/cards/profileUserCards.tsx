@@ -11,10 +11,12 @@ import EditProfileButton from '../modals/editProfie'
 import { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '@/contexts/authContext'
 import { useCarContext } from '@/contexts/carsContext'
+import { useRouter } from "next/router";
 
   
 const ProfileCardUser = ({ id, carName, carImage, description, fipePrice, price, year, km, active, brand, fuel, color, userId }: any) => {
   const carData = {id, carName, carImage, description, fipePrice, price, year, km, active, brand, fuel, color, userId }
+  const router = useRouter();
   // console.log(carData.fipePrice)
   // const { user }: any = useContext(AuthContext);
   // const { userCars, setUserCars }: any = useCarContext();
@@ -156,7 +158,11 @@ const ProfileCardUser = ({ id, carName, carImage, description, fipePrice, price,
 
           <ButtonGroup>            
             <EditAd car={carData}/>
-            <Button colorScheme='grey1' variant='outline'>Ver detalhes</Button>
+            <Button colorScheme='grey1' variant='outline'
+              onClick={() => {
+                router.push(`/products/${carData.id}`);
+              }}
+            >Ver detalhes</Button>
           </ButtonGroup>
           
         </Box>
