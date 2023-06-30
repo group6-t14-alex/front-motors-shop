@@ -37,6 +37,8 @@ const CardWrapper = () => {
                 description={carFiltred.description}
               />
             );
+          } else {
+            <></>
           }
         })      
      }

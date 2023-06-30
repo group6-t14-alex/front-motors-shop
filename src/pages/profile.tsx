@@ -52,7 +52,7 @@ const Profile: NextPage<any> = ({ cars }) => {
             
             if(response.data){
                 setUserCars(response.data.car)
-                // setLoading(false)
+                setLoading(false)
             }
   
         } catch (errors) {
