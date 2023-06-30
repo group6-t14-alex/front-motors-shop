@@ -56,11 +56,11 @@ const ProductPage = () => {
             })
             .then((response) => {
               setUserList(response.data);
-              console.log(response.data)
+              
             })
             .then(() => {
               setLoading(false);
-              console.log("id", id);
+              
             });
           } catch (error) {
             console.log(error);

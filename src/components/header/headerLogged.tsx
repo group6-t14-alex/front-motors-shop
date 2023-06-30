@@ -2,30 +2,26 @@ import { AuthContext } from "@/contexts/authContext";
 import logoMotors from "../../assets/logoMotors.png";
 import { CloseIcon, HamburgerIcon } from "@chakra-ui/icons";
 import {
-  Box,
-  Button,
+  Box,  
   Container,
-  Flex,
-  Icon,
+  Flex,  
   IconButton,
   Image,
   Menu,
-  MenuButton,
-  MenuItemOption,
-  MenuList,
-  MenuOptionGroup,
+  MenuButton,  
+  MenuList,  
   Text,
   useDisclosure,
   Avatar,
   MenuItem,
 } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react";
+import { useContext,  } from "react";
 import LogOutButon from "../modals/logOut";
 import { useRouter } from "next/router";
 import EditProfileButton from "../modals/editProfie";
 import EditAddressButton from "../modals/editAddressUser";
 
-// import { Link as LinkDom } from "react-router-dom";
+
 
 export const HeaderLogged = () => {
   const { isOpen } = useDisclosure();
@@ -78,70 +74,20 @@ export const HeaderLogged = () => {
                   flexDirection={"column"}
                   gap={"1.5rem"}
                 >
-                  {/* <MenuItem
-                  fontFamily={"body"}
-                  fontSize={"body1"}
-                  fontWeight={"600"}
-                  color={"grey2"}
-                  height={"3rem"}
-                  isChecked={false}
-                  _hover={{ bg: "transparent" }}
-                  _after={{ bg: "transparent" }}
-                  _before={{ bg: "transparent" }}
-                  >
-                    Editar perfil
-                  </MenuItem> */}
-
-                  <EditProfileButton userData={user} />
-
-                  {/* <MenuItem
-                  fontFamily={"body"}
-                  fontSize={"body1"}
-                  fontWeight={"600"}
-                  color={"grey2"}
-                  height={"3rem"}
-                  isChecked={false}
-                  _hover={{ bg: "transparent" }}
-                  _after={{ bg: "transparent" }}
-                  _before={{ bg: "transparent" }}
-                  >
-                    Editar endereço
-                  </MenuItem> */}
+                  <EditProfileButton userData={user} />                  
 
                   <EditAddressButton userData={user} />
 
                   {user?.type_user == "anunciante" ? (
                     <MenuItem
                       _hover={{ bg: "none" }}
-                      onClick={() => router.push("/profile")}
-                      // fontFamily={"body"}
-                      // fontSize={"body1"}
-                      // fontWeight={"600"}
-                      // color={"grey2"}
-                      // height={"3rem"}
-                      // isChecked={false}
-                      // _hover={{ bg: "transparent" }}
-                      // _after={{ bg: "transparent" }}
-                      // _before={{ bg: "transparent" }}
+                      onClick={() => router.push("/profile")}                      
                     >
                       Meus anúncios
                     </MenuItem>
                   ) : (
                     <></>
-                  )}
-                  {/* <MenuItem
-                  fontFamily={"body"}
-                  fontSize={"body1"}
-                  fontWeight={"600"}
-                  color={"grey2"}
-                  height={"3rem"}
-                  isChecked={false}
-                  _hover={{ bg: "transparent" }}
-                  _after={{ bg: "transparent" }}
-                  _before={{ bg: "transparent" }}
-                  >
-                    Sair
-                  </MenuItem> */}
+                  )}                  
                   <LogOutButon />
                 </MenuList>
               </>

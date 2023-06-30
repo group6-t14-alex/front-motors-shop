@@ -31,25 +31,15 @@ import { useCarContext } from '@/contexts/carsContext'
 
 const ProductPage = () => {
     const { idUser, setIdUser, userList, setUserList } = useUser();
-    const [loading, setLoading] = useState(true);
-    // const [carId, setCarId] = useState(0);
+    const [loading, setLoading] = useState(true);    
     const router = useRouter();
+    
     const { asPath } = useRouter();
-
     const {car, setCar} = useCarContext()
     
-    const carId = router.query.carId;
+    const carId = router.query.carId;    
 
-    // console.log(typeof carId);
-
-    // console.log("params", carId ? carId : "1");
-
-    useEffect(() => {
-        // console.log(asPath);
-        // console.log("router", router.query);
-        // setCarId(+router.query.carId);
-        // console.log("carId", carId);
-        // const carId = ;
+    useEffect(() => {        
         const getLocalToken = async () => {
             try {
             const tokenLocal = parseCookies();
@@ -69,8 +59,7 @@ const ProductPage = () => {
               },
             })
             .then((response) => {
-              setUserList(response.data);
-              console.log(response.data)
+              setUserList(response.data);              
             })
             .then(() => {
                 setLoading(false);
@@ -82,8 +71,7 @@ const ProductPage = () => {
             },
             })
             .then((response) => {
-                setCar(response.data);
-                console.log("car", response.data)
+                setCar(response.data);                
             });
 
         } catch (error) {

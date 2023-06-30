@@ -27,8 +27,7 @@ export const RecoveryEmailForm = () => {
 
     const { sendEmail } = useAuth();
 
-    const onFormSubmit = (formData: SendingEmailData) => {
-        console.log(formData);
+    const onFormSubmit = (formData: SendingEmailData) => {        
         sendEmail(formData);
       };
 

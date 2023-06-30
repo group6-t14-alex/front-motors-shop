@@ -25,11 +25,10 @@ import { AuthContext } from "@/contexts/authContext";
 import { useContext, useEffect, useState } from "react";
 import { UserInterface } from "@/interfaces/user.interface";
 import { api } from "@/services/api";
-import { AuthRoute } from "@/util/authComponent";
-import nookies, { parseCookies } from "nookies";
+import { parseCookies } from "nookies";
 import { useUser } from "@/contexts/userContext";
 import { useRouter } from "next/router";
-import { useCarContext } from "@/contexts/carsContext";
+import { Header } from "@/components/header/header";
 
 interface AdvertiserPageProps {
   userData: UserInterface;
@@ -37,44 +36,28 @@ interface AdvertiserPageProps {
 
 
 const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
-  const { asPath } = useRouter();
-  console.log(asPath);
+  
   const { idUser, setIdUser, userList, setUserList } = useUser();
-  // const { user }: any = useContext(AuthContext);
+  const { isLogged }: any = useContext(AuthContext);
 
-  // useEffect(() => {
-  //   if (query.id) {
-  //     setIdUser(query.id as string);
-  //     const id = idUser;
-  //   }
-  // // }, [query.id, setIdUser, idUser]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const id = router.query.id;
+  
   useEffect(() => {
     const cookies = parseCookies();
     const id: string = cookies["@userCardId"];
-    if (id) {
-      // setIdUser(id as string);
-      console.log(id);
+    if (id) {            
       api
         .get<UserInterface>(`/user/${id}`)
 
         .then((response) => {
-          setUserList(response.data);
-          console.log(response.data);
+          setUserList(response.data);          
         })
         .then(() => {
           setLoading(false);
         });
-    }
-    // setIdUser(asPath.slice(-1));
-    // setLoading(false);
-    // console.log(idUser);
-    // if (userList) {
-    //   setLoading(false);
-    //   console.log(idUser);
-    // }
+    }    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -82,8 +65,10 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
       {loading ? (  
         <h1>carregando</h1>
       ) : (
-        <>
-          <HeaderLogged />
+        <> {
+        isLogged ? <HeaderLogged /> : <Header/> 
+        }
+          
           <Box
             h="100%"
             w="100%"

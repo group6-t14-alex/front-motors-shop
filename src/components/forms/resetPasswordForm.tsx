@@ -38,9 +38,9 @@ export const ResetPasswordForm = ({token}:ResetPasswordProps) => {
     const { newPassword } = useAuth();
 
     const onFormSubmit = (password: RecoveryPasswordData) => {
-        console.log(password);
+        
         if (password.password != password.confirmPassword) {
-            console.log("senhas diferentes");
+            
             toast({
                 position: "top-right",
                 title: "Erro",
@@ -50,7 +50,7 @@ export const ResetPasswordForm = ({token}:ResetPasswordProps) => {
                 isClosable: true,
               });
         }
-        console.log(password, token);
+        
         newPassword(password, token);
       };
 

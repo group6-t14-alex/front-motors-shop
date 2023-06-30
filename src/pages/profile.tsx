@@ -43,9 +43,7 @@ interface ProfileInterface {
 
 const Profile: NextPage<any> = ({ cars }) => {
   const { user }: any = useContext(AuthContext);
-  const { userCars, setUserCars }: any = useCarContext();
-
-  // console.log(userCars)
+  const { userCars, setUserCars }: any = useCarContext();  
 
   useEffect(() => {
 

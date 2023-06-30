@@ -41,8 +41,7 @@ const CommentInputCard = ({carId} : any) => {
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <FormControl h='275px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-between'>
             <Textarea 
-              {...register("comment")} 
-              // value={commentInput}
+              {...register("comment")}              
               isInvalid={Boolean(errors.comment)} bg='grey10' 
               outline='1px solid grey7' borderRadius='4px' h='100px' 
               placeholder='Carro muito confortável, foi uma ótima experiência de compra...'
