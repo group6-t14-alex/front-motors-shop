@@ -27,6 +27,7 @@ import { api } from '@/services/api'
 import { useUser } from '@/contexts/userContext'
 import { useRouter } from 'next/router'
 import { useCarContext } from '@/contexts/carsContext'
+import { useAuth } from '@/contexts/authContext';
 
 
 const ProductPage = () => {
@@ -36,6 +37,7 @@ const ProductPage = () => {
     
     const { asPath } = useRouter();
     const {car, setCar} = useCarContext()
+    const { user } = useAuth();
     
     const carId = router.query.carId;    
 
@@ -79,6 +81,7 @@ const ProductPage = () => {
           }
         };
         getLocalToken();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
     
 
@@ -122,13 +125,13 @@ const ProductPage = () => {
 
                         <Box w='100%' h='398px' borderRadius='4px' p='40px 28pxpx' display='flex' flexDirection='column' alignItems='center' justifyContent='space-evenly' bg='grey10' marginTop='52px'>
                             <Box w='77px' h='77px' display='flex'  alignItems='center' justifyContent='center'>
-                                <Avatar name='Samuel Leão' w='77px' h='77px'/>
+                                <Avatar name={user?.name} w='77px' h='77px'/>
                             </Box>
                             <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1' >
-                            Samuel Leão
+                            {user?.name}
                             </Heading>
                             <Text fontFamily='body' fontWeight='400' fontSize='heading7' color='grey2' w='95%'>
-                            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Et enim reprehenderit quam ad quaerat voluptate aut, distinctio iste numquam.
+                            {user?.description}
                             </Text>
                             <Button size='md' borderRadius='4px' bg='grey0' _hover={{bg:'grey1'}} color='white' fontFamily='body' fontWeight='600' fontSize='body1'>Ver todos os anuncios</Button>
                         </Box>

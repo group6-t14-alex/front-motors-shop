@@ -189,7 +189,7 @@ export default function SignupCard() {
                   </FormControl>
                 </Box>
               </HStack>
-              <FormControl isReadOnly id="address">
+              <FormControl id="address">
                 <FormLabel>Rua</FormLabel>
                 <Input
                   placeholder={"Digitar logradouro"}
