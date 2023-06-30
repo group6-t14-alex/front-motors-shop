@@ -23,6 +23,8 @@ interface carProviderData {
     models:string[];
     cars:createAdReturnInterface[];
     setCars:React.Dispatch<React.SetStateAction<createAdReturnInterface[]>>;
+    car: any;
+    setCar:React.Dispatch<React.SetStateAction<any>>;
     years: number[];
     setYears: React.Dispatch<React.SetStateAction<number[]>>
     colors: string[];
@@ -51,6 +53,7 @@ export const CarProvider = ({children}: Props) => {
     const [userCars, setUserCars] = useState<createAdReturnInterface[]>([]);
     const [models, setModels] = useState<string[]>([]);
     const [cars, setCars] = useState<createAdReturnInterface[]>([]);
+    const [car, setCar] = useState<createAdReturnInterface>();
     const [fuelTypes, setFuelTypes] = useState<string[]>([]);
     const [getBrands, setGetBrands] = useState<string[]>([]);
     const [years, setYears] = useState<number[]>([]);
@@ -301,7 +304,7 @@ export const CarProvider = ({children}: Props) => {
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
         setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars,
         filtredCars, setFiltredCars, setBrandFilter, brandFilter, getCarsByBrand, getCarsByModel, getCarsByColor,
-        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice, editAd, deleteAd
+        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice, editAd, deleteAd, car, setCar
         }}>
             {children}
         </CarContext.Provider>
