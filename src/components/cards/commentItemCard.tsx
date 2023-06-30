@@ -36,7 +36,7 @@ const CommentItemCard = ({name, comment}: any) => {
   }, [comment])
 
   return (
-    <ListItem w='95%' h='212px' borderRadius='4px' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around' bg='grey10' gap='body3'>
+    <ListItem w='95%' maxHeight={'120px'} borderRadius='4px' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around' bg='grey10' gap='body3'>
       <Box display='flex' flexDirection='row' alignItems='center'>
           <Box display='flex' flexDirection='row' alignItems='center' w='146px' h='32px' gap='8px'>
               <Avatar size='sm' name={`${name}`}/>

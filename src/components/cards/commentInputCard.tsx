@@ -7,6 +7,7 @@ import {useForm} from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const CommentInputCard = ({carId} : any) => {
+  const [commentInput, setCommentInput] = useState('');
   const { idUser, setIdUser, userList, setUserList } = useUser();
 
   const {
@@ -27,8 +28,8 @@ const CommentInputCard = ({carId} : any) => {
   const onFormSubmit = (formData: CommentData) => {
     formData.created_at = new Date();
     formData.carId = carId;
-
     createComment(formData);
+    setCommentInput('')
   }
 
   return (
@@ -39,11 +40,17 @@ const CommentInputCard = ({carId} : any) => {
       </Box>
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <FormControl h='275px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-between'>
-            <Textarea {...register("comment")} isInvalid={Boolean(errors.comment)} bg='grey10' outline='1px solid grey7' borderRadius='4px' h='100px' placeholder='Carro muito confortável, foi uma ótima experiência de compra...'/>
+            <Textarea 
+              {...register("comment")} 
+              // value={commentInput}
+              isInvalid={Boolean(errors.comment)} bg='grey10' 
+              outline='1px solid grey7' borderRadius='4px' h='100px' 
+              placeholder='Carro muito confortável, foi uma ótima experiência de compra...'
+            />
 
             <FormErrorMessage>{errors.comment && errors.comment.message}</FormErrorMessage>
 
-            <Button type='submit' size='sm' bg='brand2' color='white' fontSize='body2' fontWeight='600' fontFamily='body' pos={{ cel: 'relative', desk: "absolute" }} right={{desk: '11px'}} bottom={{desk: '183px'}} _hover={{bg:'brand3'}}>Comentar</Button>
+            <Button type='submit' size='sm' bg='brand1' color='white' fontSize='body2' fontWeight='600' fontFamily='body' pos={{ cel: 'relative', desk: "absolute" }} right={{desk: '11px'}} bottom={{desk: '183px'}} _hover={{bg:'brand3'}}>Comentar</Button>
 
             <Grid templateColumns='repeat(2, 1fr)'  alignItems='flex-start' justifyItems='start' h='76px' gap='8px'>
                 <Button fontSize='body3' fontWeight='500' fontFamily='body' p='0 12px' borderRadius='24px' bg='grey7' color='grey3'>Gostei muito!</Button>

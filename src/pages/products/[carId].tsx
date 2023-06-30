@@ -26,6 +26,7 @@ import jwt_decode from "jwt-decode";
 import { api } from '@/services/api'
 import { useUser } from '@/contexts/userContext'
 import { useRouter } from 'next/router'
+import { useCarContext } from '@/contexts/carsContext'
 
 
 const ProductPage = () => {
@@ -34,6 +35,8 @@ const ProductPage = () => {
     // const [carId, setCarId] = useState(0);
     const router = useRouter();
     const { asPath } = useRouter();
+
+    const {car, setCar} = useCarContext()
     
     const carId = router.query.carId;
 
@@ -70,9 +73,20 @@ const ProductPage = () => {
               console.log(response.data)
             })
             .then(() => {
-              setLoading(false);
+                setLoading(false);
             });
-          } catch (error) {
+
+            api.get(`/cars/${carId}`, {
+            headers: {
+                Authorization: `Bearer ${tokenLocal["@MotorsShop"]}`,
+            },
+            })
+            .then((response) => {
+                setCar(response.data);
+                console.log("car", response.data)
+            });
+
+        } catch (error) {
             console.log(error);
           }
         };
@@ -90,24 +104,24 @@ const ProductPage = () => {
                     
                         <Box  w='100%'  maxWidth='1032px' h='326px' borderRadius='4px' display='flex' marginTop='17px' bg='grey10' alignItems='flex-start' flexDirection='column' justifyContent='space-between' p='28px 48px'>
                             <Box padding='16px 0' h='224px' display='flex' flexDirection='column' justifyContent='space-between'>
-                                <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1'>Mercedes Benz A 200 CGI ADVANCE SEDAN mercedes benz A 200</Heading>
+                                <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1'>{car ? car.model : 'Mercedes Benz A 200 CGI ADVANCE SEDAN mercedes benz A 200'}</Heading>
 
                                 <Box gap='32px' w={{ cel: "113px", desk: "100%" }} display='flex' flexDirection={{ cel: "column", desk: "row" }} justifyContent={{ cel: "space-between", desk: "space-between" }} alignItems='flex-start'>
                                     <ButtonGroup h='30px' w='113px' display='flex' flexDirection='row' spacing='10px'>
-                                        <Button size='sm' borderRadius='4px' bg='brand4' color='brand1'>2013</Button>
-                                        <Button size='sm' bg='brand4' color='brand1'>0 km</Button>
+                                        <Button size='sm' borderRadius='4px' bg='brand4' color='brand1'>{car ? car.year : 2013}</Button>
+                                        <Button size='sm' bg='brand4' color='brand1'>{car ? car.km : "0"} km</Button>
                                     </ButtonGroup>
-                                    <Text color='grey1' fontWeight='500' fontSize='body1' fontFamily='heading'>R$ 00.000,00</Text>
+                                    <Text color='grey1' fontWeight='500' fontSize='body1' fontFamily='heading'>R$ {car ? car.price : "00.000,00"}</Text>
                                 </Box>
                             </Box>
                 
-                        <Button size='md' bg='brand1' _hover={{bg:'brand2'}} color='grey10' fontWeight='600' fontSize='14px' fontFamily='body'>Comprar</Button>
+                           <Button size='md' bg='brand1' _hover={{bg:'brand2'}} color='grey10' fontWeight='600' fontSize='14px' fontFamily='body'>Comprar</Button>
                         </Box>
 
                         <Box  w='100%'  maxWidth='1032px' h='320px' borderRadius='4px' p='36px 28px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-around' bg='grey10' marginTop='24px'>
                             <Heading fontFamily='heading' fontWeight='600' fontSize='20px' color='grey1' size='md'>Descrição</Heading>
 
-                            <Text fontFamily='body' fontWeight='400' fontSize='heading7' color='grey2' h='150px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
+                            <Text fontFamily='body' fontWeight='400' fontSize='heading7' color='grey2' h='150px'>{car ? car.description : "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the  standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book."}</Text>
                         </Box>
                     </Box>
 

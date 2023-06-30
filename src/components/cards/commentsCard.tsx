@@ -17,10 +17,10 @@ const CommentsCard = ({carId} : any) => {
 
   return (
     <Box display='flex' flexDirection='column' w={{cel:"95%", desk:'50%'}}>
-    <Box h='845px'  w='100%'  maxWidth='1032px' borderRadius='4px' p='36px 28px' bg='grey10' marginTop='18px' display='flex' flexDirection='column' gap='13px'>
+    <Box minHeight={'400px'} w='100%'  maxWidth='1032px' borderRadius='4px' p='36px 28px' bg='grey10' marginTop='18px' display='flex' flexDirection='column' gap='13px'>
         <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1'>Comentários</Heading>
 
-        <List h='724px' maxH='724px' display='flex' flexDirection='column' alignItems='flex-start' gap='44px' overflowY='auto'>
+        <List minH='450px' maxH='724px' display='flex' flexDirection='column' alignItems='flex-start' gap='44px' overflowY='auto'>
 
           {user && user.comments.map((comment: any) => {
             return (
