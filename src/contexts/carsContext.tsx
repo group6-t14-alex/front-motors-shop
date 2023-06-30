@@ -12,8 +12,7 @@ interface Props {
 
 interface carProviderData {
     createAd: (carRequest: CarRequest, onClose: () => void) => void;    
-    editAd: (formData: CarRequestEdit, id: number, onClose: () => void) => Promise<void>
-    // deleteAd: (id: string) => Promise<void>
+    editAd: (formData: CarRequestEdit, id: number, onClose: () => void) => Promise<void>    
     deleteAd: (id: string, onClose: () => void) => Promise<void>
     getBrandByFipe: (brand: string) => Promise<any>;
     adProfile: createAdReturnInterface[];
@@ -103,53 +102,44 @@ export const CarProvider = ({children}: Props) => {
 
     const getCarsByBrand = async (brand: string) => {
         const response = await api.get('/cars');
-        const data = response.data.filter((item: { brand: string; }) => item.brand == brand)
-        console.log(data);
+        const data = response.data.filter((item: { brand: string; }) => item.brand == brand)        
         setFiltredCars(data);
     };
 
     const getCarsByModel = async (model: string) => {
         const response = await api.get('/cars');
         const data = response.data.filter((item: { model: string; }) => item.model == model)
-        console.log(data);
         setFiltredCars(data);
     };
 
     const getCarsByColor = async (color: string) => {
         const response = await api.get('/cars');
-        const data = response.data.filter((item: { color: string; }) => item.color == color)
-        console.log(data);
+        const data = response.data.filter((item: { color: string; }) => item.color == color)        
         setFiltredCars(data);
     };
 
     const getCarsByFuel = async (fuel: string) => {
         const response = await api.get('/cars');
         const data = response.data.filter((item: { fuel: string; }) => item.fuel == fuel)
-        console.log(data);
         setFiltredCars(data);
     };
 
     const getCarsByYear = async (year: number) => {
         const response = await api.get('/cars');
         const data = response.data.filter((item: { year: number; }) => item.year == year)
-        console.log(data);
         setFiltredCars(data);
     };
 
     const getCarsByKm = async (kmMin: number, kmMax: number) => {
-        const response = await api.get('/cars');
-        console.log(response.data)
+        const response = await api.get('/cars');        
         const data = response.data.filter((item: { km: number; }) => item.km >= kmMin && item.km <= kmMax)
-        console.log(data);
         setFiltredCars(data);
     };
 
     const getCarsByPrice = async (priceMin: number, priceMax: number) => {
-        const response = await api.get('/cars');
-        console.log(response.data)
+        const response = await api.get('/cars');       
         const data = response.data.filter((item: { price: number; }) => 
-            item.price >= priceMin && item.price <= priceMax)
-        console.log(data);
+            item.price >= priceMin && item.price <= priceMax)        
         setFiltredCars(data);
     };
 
@@ -283,9 +273,8 @@ export const CarProvider = ({children}: Props) => {
         const carsModels = ads.map((model) => model.model);
         const carsColors = ads.map((elem) => elem.color);
         const carsFuel = ads.map((elem) => elem.fuel);
-        const carsYears = ads.map((elem) => elem.year);
-    
-        //remover info repetida
+        const carsYears = ads.map((elem) => elem.year);    
+        
         const modelsSetBrand = new Set(carsBrand);
         const modelsSetModel = new Set(carsModels);
         const modelsSetAnos = new Set(carsYears);

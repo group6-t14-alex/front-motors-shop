@@ -8,11 +8,10 @@ import { useEffect } from 'react'
 import { api } from '@/services/api'
 
 const CommentsCard = ({carId} : any) => {
-  const { comments } = useCommentContext();
+  
   const { user } = useAuth();
 
-  useEffect(() => {
-    // console.log(user);
+  useEffect(() => {    
   }, [user])
 
   return (

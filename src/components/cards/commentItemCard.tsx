@@ -30,9 +30,7 @@ const CommentItemCard = ({name, comment}: any) => {
   const [runningTime, setRunningTime] = useState(calculateRunningTime(comment.created_at))
 
   useEffect(() => {
-    setRunningTime(calculateRunningTime(comment.created_at));
-    // console.log(comment);
-    // console.log("Calculate time", calculateRunningTime(comment.created_at));
+    setRunningTime(calculateRunningTime(comment.created_at));    
   }, [comment])
 
   return (

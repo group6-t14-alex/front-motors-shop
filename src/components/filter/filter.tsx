@@ -36,23 +36,6 @@ const Filter = () => {
       getUserCarsPrice();
     }, [priceMin, priceMax])
 
-
-  // useEffect(() => {
-
-  //     (async () => {
-  //       const announcements = await api.get<createAdReturnInterface[]>('/cars');
-
-  //       const filteringAnnouncements = announcements.data.filter((ad) => 
-  //         ad
-  //       )
-
-  //       if (filteringAnnouncements) {
-  //         filterOptions(filteringAnnouncements);
-  //       }
-  //     })();
-   
-  // }, []); 
-
   const handleKmMin = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
     setKmMin(Number.parseInt(event.target.value));
   }

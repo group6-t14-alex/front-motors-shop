@@ -26,6 +26,5 @@ export interface createAdReturnInterface {
   description: string;
   userId: UserInterface;
   imageUrl: string;
-  isActive: boolean;
-  // listComment: Array<>;
+  isActive: boolean;  
 }

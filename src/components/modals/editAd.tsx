@@ -234,8 +234,7 @@ const EditAd = ({ car, }: any) => {
                                             fontWeight={'400'} 
                                             variant='outline' 
                                             placeholder={'valor tabela fipe'} 
-                                            disabled 
-                                            // type='number'
+                                            disabled                                             
                                         />                                        
                                         <FormErrorMessage>{errors.priceFipe && errors.priceFipe.message}</FormErrorMessage>
                                     </FormControl>

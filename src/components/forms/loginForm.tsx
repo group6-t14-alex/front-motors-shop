@@ -102,8 +102,7 @@ const LoginForm: NextPage = () => {
                 </FormErrorMessage>          
             </FormControl>
 
-            <Link as={NextLink} href='resetPassword' 
-            // Criar página para recuperar senha
+            <Link as={NextLink} href='resetPassword'             
               fontFamily={"inter"}
               fontWeight={"500"}
               fontSize={"body2"}

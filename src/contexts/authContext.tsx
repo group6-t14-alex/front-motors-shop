@@ -125,7 +125,7 @@ export const AuthProvider = ({ children }: Props) => {
       });
       router.push("/profile");
       setUser(userData.data);
-      console.log("user list", )
+      
       setIsLogged(true);
     } catch (error) {
       console.log(error);

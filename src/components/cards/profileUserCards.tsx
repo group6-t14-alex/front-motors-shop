@@ -16,10 +16,7 @@ import { useRouter } from "next/router";
   
 const ProfileCardUser = ({ id, carName, carImage, description, fipePrice, price, year, km, active, brand, fuel, color, userId }: any) => {
   const carData = {id, carName, carImage, description, fipePrice, price, year, km, active, brand, fuel, color, userId }
-  const router = useRouter();
-  // console.log(carData.fipePrice)
-  // const { user }: any = useContext(AuthContext);
-  // const { userCars, setUserCars }: any = useCarContext();
+  const router = useRouter();  
 
     const adIsActive = (act: boolean) => {
       if (act === true) {
