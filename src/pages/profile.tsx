@@ -144,29 +144,33 @@ const Profile: NextPage<any> = ({ cars }) => {
           overflowX={{cel: 'auto'}} p={'50px 0'} gap={{cel: '12px'}}
         >
 
-        <List w={'90%'} display={'grid'} gridTemplateColumns={{cel: 'repeat()',desk:'repeat(2, 1fr)', pc:'repeat(3, 1fr)', full:'repeat(4, 1fr)'}} gap={'16px'}>
-          {userCars.map((car: any) => {
-            return (
-              <ProfileCardUser
-              key={car.id}
-              id={car.id}
-              carName={car.model}
-              carImage={car.imageUrl}
-              price={car.price}
-              fipePrice={car.priceFipe}
-              userName={user?.name}
-              description={car.description}
-              year={car.year}
-              km={car.km}
-              active={car.isActive}
-              brand={car.brand}
-              fuel={car.fuel}
-              color={car.color}
-              userId={car.userId}
-            />
-            )
-          })}
-        </List>
+          {
+          userCars.length > 0 ? 
+          <List w={'90%'} display={'grid'} gridTemplateColumns={{cel: 'repeat()',desk:'repeat(2, 1fr)', pc:'repeat(3, 1fr)', full:'repeat(4, 1fr)'}} gap={'16px'}>
+           { userCars.map((car: any) => {
+              return (
+                <ProfileCardUser
+                key={car.id}
+                id={car.id}
+                carName={car.model}
+                carImage={car.imageUrl}
+                price={car.price}
+                fipePrice={car.priceFipe}
+                userName={user?.name}
+                description={car.description}
+                year={car.year}
+                km={car.km}
+                active={car.isActive}
+                brand={car.brand}
+                fuel={car.fuel}
+                color={car.color}
+                userId={car.userId}/>
+              )})}
+            </List>
+            : <List w={'90%'} display={'flex'} alignItems={'flex-start'} justifyContent={'center'}>
+                <Heading size={'lg'}>Nenhum veículo anunciado !</Heading>
+              </List>
+          }
             
         </Box>
     </Box>

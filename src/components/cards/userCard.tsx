@@ -104,8 +104,9 @@ const CardUser = ({
           minH={"50px"}
           maxH={"50px"}
           overflow={"hidden"}
-          text-overflow={"ellipsis"}
+          textOverflow={"ellipsis"}
           mb={"1rem"}
+          whiteSpace={'nowrap'}
         >
           {description}
         </Text>
