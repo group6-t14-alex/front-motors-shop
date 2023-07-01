@@ -2,13 +2,10 @@
 import { Footer } from "@/components/footer/footer";
 import { HeaderLogged } from "@/components/header/headerLogged";
 import CreateAd from "@/components/modals/createAd";
-import {Avatar, Box, Heading, Grid, Text, List, Button, Link,} from "@chakra-ui/react"
+import {Avatar, Box, Heading, Text, List, Spinner, } from "@chakra-ui/react"
 import { useContext, useEffect, useState } from 'react'
 import { NextPage, GetServerSideProps } from "next";
-import nookies, { parseCookies } from "nookies";
-import { useToast } from "@chakra-ui/toast";
-import { UserInterface } from "@/interfaces/user.interface";
-import CardUser from "@/components/cards/userCard";
+import { parseCookies } from "nookies";
 import { AuthContext } from '@/contexts/authContext'
 import { useCarContext } from '@/contexts/carsContext'
 import { api } from '@/services/api'
@@ -45,6 +42,8 @@ const Profile: NextPage<any> = ({ cars }) => {
   const { user }: any = useContext(AuthContext);
   const { userCars, setUserCars }: any = useCarContext();  
 
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
 
     const getUserCars = async () => {
@@ -53,6 +52,7 @@ const Profile: NextPage<any> = ({ cars }) => {
             
             if(response.data){
                 setUserCars(response.data.car)
+                setLoading(false)
             }
   
         } catch (errors) {
@@ -63,6 +63,7 @@ const Profile: NextPage<any> = ({ cars }) => {
     getUserCars()
 
 }, [user, setUserCars])
+
 
   return (
       <>
@@ -148,27 +149,45 @@ const Profile: NextPage<any> = ({ cars }) => {
           userCars.length > 0 ? 
           <List w={'90%'} display={'grid'} gridTemplateColumns={{cel: 'repeat()',desk:'repeat(2, 1fr)', pc:'repeat(3, 1fr)', full:'repeat(4, 1fr)'}} gap={'16px'}>
            { userCars.map((car: any) => {
+            
               return (
                 <ProfileCardUser
-                key={car.id}
-                id={car.id}
-                carName={car.model}
-                carImage={car.imageUrl}
-                price={car.price}
-                fipePrice={car.priceFipe}
-                userName={user?.name}
-                description={car.description}
-                year={car.year}
-                km={car.km}
-                active={car.isActive}
-                brand={car.brand}
-                fuel={car.fuel}
-                color={car.color}
-                userId={car.userId}/>
+                  key={car.id}
+                  id={car.id}
+                  carName={car.model}
+                  carImage={car.imageUrl}
+                  price={car.price}
+                  fipePrice={car.priceFipe}
+                  userName={user?.name}
+                  description={car.description}
+                  year={car.year}
+                  km={car.km}
+                  active={car.isActive}
+                  brand={car.brand}
+                  fuel={car.fuel}
+                  color={car.color}
+                  userId={car.userId}/>
               )})}
             </List>
             : <List w={'90%'} display={'flex'} alignItems={'flex-start'} justifyContent={'center'}>
-                <Heading size={'lg'}>Nenhum veículo anunciado !</Heading>
+                {loading ? (
+                  <Box 
+                    height={'100%'}          
+                    display={'flex'}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+                  >
+                    <Spinner
+                      thickness='4px'
+                      speed='0.65s'
+                      emptyColor='grey3'
+                      color='brand1'
+                      size='xl'                   
+                    />
+                  </Box>
+                ) : (
+                  <Heading size={'lg'}>Nenhum veículo anunciado !</Heading>
+                )}
               </List>
           }
             

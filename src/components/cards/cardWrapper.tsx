@@ -22,20 +22,24 @@ const CardWrapper = () => {
      
      {
         filtredCars.map((carFiltred: any) => {
-          return (
-            <CardUser
-              key={carFiltred.id}
-              userId={carFiltred.userId}
-              carName={carFiltred.model}
-              price={carFiltred.price}
-              fipePrice={carFiltred.priceFipe}
-              userName={carFiltred.user.name}
-              carImage={carFiltred.imageUrl}
-              km={carFiltred.km}
-              year={carFiltred.year}
-              description={carFiltred.description}
-            />
-          );
+          if (carFiltred.isActive === true) {
+            return (
+              <CardUser
+                key={carFiltred.id}
+                userId={carFiltred.userId}
+                carName={carFiltred.model}
+                price={carFiltred.price}
+                fipePrice={carFiltred.priceFipe}
+                userName={carFiltred.user.name}
+                carImage={carFiltred.imageUrl}
+                km={carFiltred.km}
+                year={carFiltred.year}
+                description={carFiltred.description}
+              />
+            );
+          } else {
+            <></>
+          }
         })      
      }
     </Box>

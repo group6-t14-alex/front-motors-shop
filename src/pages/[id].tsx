@@ -10,14 +10,8 @@ import {
   Box,
   Avatar,
   Heading,
-  Text,
-  FormControl,
-  Textarea,
-  Grid,
-  ListItem,
-  UnorderedList,
-  List,
-  Button,
+  Text,  
+  Spinner,
 } from "@chakra-ui/react";
 import { Footer } from "@/components/footer/footer";
 import CardUser from "@/components/cards/userCard";
@@ -27,7 +21,6 @@ import { UserInterface } from "@/interfaces/user.interface";
 import { api } from "@/services/api";
 import { parseCookies } from "nookies";
 import { useUser } from "@/contexts/userContext";
-import { useRouter } from "next/router";
 import { Header } from "@/components/header/header";
 
 interface AdvertiserPageProps {
@@ -41,7 +34,7 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
   const { isLogged }: any = useContext(AuthContext);
 
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  
   
   useEffect(() => {
     const cookies = parseCookies();
@@ -63,7 +56,20 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
   return (
     <>
       {loading ? (  
-        <h1>carregando</h1>
+        <Box 
+          height={'100vh'}          
+          display={'flex'}
+          justifyContent={'center'}
+          alignItems={'center'}
+        >
+          <Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='grey3'
+            color='brand1'
+            size='xl'                   
+      />
+        </Box>
       ) : (
         <> {
         isLogged ? <HeaderLogged /> : <Header/> 
@@ -145,20 +151,24 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
               gap={{ cel: "12px" }}
             >
               {userList.car.map((car: any) => {
-                return (
-                  <CardUser
-                    key={car.id}
-                    carName={car.model}
-                    carImage={car.imageUrl}
-                    price={car.price}
-                    fipePrice={car.priceFipe}
-                    userName={userList.name}
-                    description={car.description}
-                    year={car.year}
-                    km={car.km}
-                    userId={idUser}
-                  />
-                );
+            
+                if (car.isActive === true) {
+                  return (
+                    <CardUser
+                      key={car.id}
+                      carName={car.model}
+                      carImage={car.imageUrl}
+                      price={car.price}
+                      fipePrice={car.priceFipe}
+                      userName={userList.name}
+                      description={car.description}
+                      year={car.year}
+                      km={car.km}
+                      userId={idUser}
+                    />
+                  );                  
+                } 
+                
               })}
             </Box>
           </Box>

@@ -14,7 +14,7 @@ const Filter = () => {
   const { 
     getBrands, colors, filterOptions, years, fuelTypes, models, filtredCars, 
     setFiltredCars, brandFilter, getCarsByBrand, getCarsByModel, getCarsByColor, 
-    getCarsByFuel, getCarsByKm, getCarsByYear, getCarsByPrice, getAllCars
+    getCarsByFuel, getCarsByKm, getCarsByYear, getCarsByPrice, getAllAvailableCars
   } = useCarContext()
   
 
@@ -58,7 +58,7 @@ const Filter = () => {
   }
 
   const resetFilters = () => {    
-    getAllCars()
+    getAllAvailableCars()
   }
 
   return (
