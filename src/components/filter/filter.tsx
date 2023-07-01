@@ -1,4 +1,4 @@
-import { UnorderedList, Input, Box, Text } from "@chakra-ui/react";
+import { UnorderedList, Input, Box, Text, Button } from "@chakra-ui/react";
 import FilterList from "./filterList/filtersList";
 import { useCarContext } from "@/contexts/carsContext";
 import { useEffect, useState } from "react";
@@ -9,11 +9,14 @@ const Filter = () => {
   const [kmMin, setKmMin] = useState(0);
   const [kmMax, setKmMax] = useState(0);
   const [priceMin, setPriceMin] = useState(0);
-  const [priceMax, setPriceMax] = useState(0);
+  const [priceMax, setPriceMax] = useState(0);  
 
-  const {getBrands, colors, filterOptions, years, fuelTypes, models, filtredCars, 
-    setFiltredCars, brandFilter, getCarsByBrand, getCarsByModel,
-    getCarsByColor, getCarsByFuel, getCarsByKm, getCarsByYear, getCarsByPrice } = useCarContext()
+  const { 
+    getBrands, colors, filterOptions, years, fuelTypes, models, filtredCars, 
+    setFiltredCars, brandFilter, getCarsByBrand, getCarsByModel, getCarsByColor, 
+    getCarsByFuel, getCarsByKm, getCarsByYear, getCarsByPrice, getAllCars
+  } = useCarContext()
+  
 
 
     useEffect(() => {
@@ -24,6 +27,7 @@ const Filter = () => {
       }
 
       getUserCarsKm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [kmMin, kmMax])
 
     useEffect(() => {
@@ -34,6 +38,7 @@ const Filter = () => {
       }
 
       getUserCarsPrice();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [priceMin, priceMax])
 
   const handleKmMin = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
@@ -52,13 +57,16 @@ const Filter = () => {
     setPriceMax(Number.parseInt(event.target.value));
   }
 
+  const resetFilters = () => {    
+    getAllCars()
+  }
+
   return (
     <Box display="flex" gap="1.6rem" flexDirection="column">
       <Text fontSize="heading4" fontWeight="bold" color="black">
         Marca
       </Text>
-      <UnorderedList listStyleType="none">
-        {/* {getBrands.map((brand) => { */}
+      <UnorderedList listStyleType="none">        
         {brandFilter.map((brand: any) => {
           return(
             <FilterList key={brand} filter={brand} onFilter={() => getCarsByBrand(brand)}/>
@@ -164,6 +172,25 @@ const Filter = () => {
           onChange={handlePriceMax}
         />
       </Box>
+      <Button
+        onClick={() => resetFilters()}
+        border={"solid 1.5px #adb5bd"}
+        borderRadius={"4px"}            
+        p={"12px 28px"}
+        width={"100%"}                
+        textAlign={"center"}
+        textDecoration={"none"}
+        fontWeight={"600"}
+        fontSize={"heading7"}
+        fontFamily={"body"}
+        fontStyle={"normal"}
+        bgColor={"white"}
+        transition={"0.3s ease-in"}
+        _hover={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
+        _focus={{ bg: "grey0", color: "grey10", fontStyle: "none"}}
+      >
+        Limpar Filtros
+      </Button>
     </Box>
   );
 };

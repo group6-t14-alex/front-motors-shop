@@ -43,6 +43,7 @@ interface carProviderData {
     getCarsByYear: (year: number) => Promise<void>
     getCarsByKm: (kmMin: number, kmMax: number) => Promise<void>
     getCarsByPrice: (priceMin: number, priceMax: number) => Promise<void>
+    getAllCars: () => Promise<void>
 }
 
 const CarContext = createContext<carProviderData>({} as carProviderData);
@@ -98,6 +99,11 @@ export const CarProvider = ({children}: Props) => {
         });
         
         return result;
+    };
+
+    const getAllCars = async () => {
+        const response = await api.get('/cars');
+        setFiltredCars(response.data);
     };
 
     const getCarsByBrand = async (brand: string) => {
@@ -293,7 +299,7 @@ export const CarProvider = ({children}: Props) => {
         <CarContext.Provider value={{createAd, adProfile, setAdProfile, getBrandByFipe, getBrands, userCars,cars,
         setCars, models, years, colors, filterOptions, setYears, setColors, setFuelTypes, fuelTypes, setUserCars,
         filtredCars, setFiltredCars, setBrandFilter, brandFilter, getCarsByBrand, getCarsByModel, getCarsByColor,
-        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice, editAd, deleteAd, car, setCar
+        getCarsByFuel, getCarsByYear, getCarsByKm, getCarsByPrice, editAd, deleteAd, car, setCar, getAllCars,
         }}>
             {children}
         </CarContext.Provider>

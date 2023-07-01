@@ -28,6 +28,7 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
     setCars(cars);
     setFiltredCars(cars);
     filterOptions(cars);    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const { isLogged } = useAuth();
@@ -61,8 +62,6 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
       >
 
         <CardWrapper />
-
-        {/* <CardWrapper cars={cars} /> */}
 
         <FilterDesk />
       </Box>
