@@ -204,10 +204,31 @@ const ProductPage = () => {
                             </Box>
 
                             <FormControl h='275px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-between'>
-                                <Textarea bg='grey10' outline='1px solid grey7' borderRadius='4px' h='100px' placeholder='Carro muito confortável, foi uma ótima experiência de compra...'/>
+                                <Textarea 
+                                    bg='grey10' 
+                                    outline='1px solid grey7' 
+                                    borderRadius='4px' 
+                                    h='100px' 
+                                    resize={'none'}
+                                    placeholder='Carro muito confortável, foi uma ótima experiência de compra...'
+                                />
 
                        
-                                <Button size='sm' bg='brand1' color='white' fontSize='body2' fontWeight='600' fontFamily='body' pos={{ cel: 'relative', desk: "absolute" }} right={{desk: '11px'}} bottom={{desk: '183px'}} _hover={{bg:'brand2'}}>Comentar</Button>
+                                <Button 
+                                    size='sm' 
+                                    bg='brand1' 
+                                    color='white' 
+                                    fontSize='body2' 
+                                    fontWeight='600' 
+                                    fontFamily='body' 
+                                    pos={{ cel: 'relative', desk: "absolute" }} 
+                                    right={{desk: '11px'}} 
+                                    bottom={{desk: '183px'}} 
+                                    _hover={{bg:'brand2'}}
+                                    zIndex={'1'}
+                                >
+                                    Comentar
+                                </Button>
                
                         
                         

@@ -26,7 +26,7 @@ export const CommentProvider = ({children}: Props) => {
   useEffect(() => {
     const getUserComments = async () => {
       try {
-          const response = await api.get(`/user/${user!.id}`)                
+          const response = await api.get(`/user/${user?.id}`)                
           if(response.data){              
               setUser(response.data)
           }
