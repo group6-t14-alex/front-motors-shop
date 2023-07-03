@@ -30,7 +30,7 @@ import { useRouter } from 'next/router'
 
 const ProductPage = () => {
     const { idUser, setIdUser, userList, setUserList } = useUser();
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);    
     
     const router = useRouter();
     const id = router.query.id;
@@ -69,6 +69,12 @@ const ProductPage = () => {
         getLocalToken();
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
+
+    //   const handleWhatsApp = (userPhone: number, carModel: string) => {
+    //     const urlMessage = `Olá, vi o seu anúncio do ${carModel} no site Motors Shop! Ainda está disponível ?`;
+    //     const urlWhatsApp = `https://wa.me/55${userPhone}/?text=${urlMessage}`;
+    //     return urlWhatsApp;
+    //   };
     
 
     return (
@@ -209,7 +215,7 @@ const ProductPage = () => {
                                     outline='1px solid grey7' 
                                     borderRadius='4px' 
                                     h='100px' 
-                                    resize={'none'}
+                                    resize={'none'}                                    
                                     placeholder='Carro muito confortável, foi uma ótima experiência de compra...'
                                 />
 
