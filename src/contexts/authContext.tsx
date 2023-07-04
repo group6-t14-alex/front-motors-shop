@@ -43,15 +43,15 @@ export const AuthProvider = ({ children }: Props) => {
   const router = useRouter();
   const toast = useToast();
   const [user, setUser] = useState<UserInterface | null>(null);
-  const [isLogged, setIsLogged] = useState(false);
+  const [isLogged, setIsLogged] = useState(false);  
 
   useEffect(() => {
-
 
     const getLocalToken = async () => {
       try {
         const tokenLocal = parseCookies();
-        if (!tokenLocal) {
+        if (!tokenLocal["@MotorsShop"]) {
+          setIsLogged(false)
           return {
             redirect: {
               destination: "/login",
@@ -111,7 +111,7 @@ export const AuthProvider = ({ children }: Props) => {
         },
       });
       setCookie(null, "@MotorsShop", response.data.token, {
-        maxAge: 60 * 60 * 1,
+        maxAge: 60 * 60 * 24,
         path: "/",
       });
       api.defaults.headers.common.authorization = `Bearer ${response.data.token}`;
@@ -124,8 +124,7 @@ export const AuthProvider = ({ children }: Props) => {
         isClosable: true,
       });
       router.push("/profile");
-      setUser(userData.data);
-      
+      setUser(userData.data);      
       setIsLogged(true);
     } catch (error) {
       console.log(error);

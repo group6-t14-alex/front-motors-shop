@@ -31,7 +31,7 @@ interface AdvertiserPageProps {
 const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
   
   const { idUser, setIdUser, userList, setUserList } = useUser();
-  const { isLogged }: any = useContext(AuthContext);
+  const { isLogged }: any = useContext(AuthContext);  
 
   const [loading, setLoading] = useState(true);
   

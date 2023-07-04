@@ -12,14 +12,24 @@ import CommentItemCard from "./commentItemCard";
 import { useUser } from "@/contexts/userContext";
 import { useAuth } from "@/contexts/authContext";
 import { useCommentContext } from "@/contexts/commentsContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { api } from "@/services/api";
 import { EditAndDeleteComentsButton } from "../modals/editAndDeleteComents";
 
 const CommentsCard = ({ carId }: any) => {
   const { user } = useAuth();
+  const [carComments, setCarComments] = useState<any>([]);
 
-  useEffect(() => {}, [user]);
+  // useEffect(() => {}, [user]);
+  
+  useEffect(() => {
+    const searchCar: any = async () => {    
+      const response = await api.get(`/cars/${carId}`)
+      setCarComments(response.data.comments)
+    }
+    searchCar()
+  
+  }, []);  
 
   return (
     <Box display="flex" flexDirection="column" w={{ cel: "95%", desk: "50%" }}>
@@ -53,13 +63,16 @@ const CommentsCard = ({ carId }: any) => {
           gap="44px"
           overflowY="auto"
         >
-          {user?.comments.lenght > 0 ? (
-            user?.comments.map((comment: any) => {
+          
+          {carComments ? (
+            carComments?.map((comment: any) => {
+              // {console.log(comment)}
               return (
                 <CommentItemCard
                   key={comment.id}
-                  name={user!.name}
-                  comment={comment}
+                  name={user?.name}
+                  comment={comment.comment}
+                  user={user}
                 />
               );
             })
