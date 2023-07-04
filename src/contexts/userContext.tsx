@@ -18,6 +18,7 @@ interface userProviderData {
     onClose: () => void
   ) => Promise<void>;
   deleteUser: (id: number) => Promise<void>;
+
   updateUserInfos: (
     data: userSchemaRequestUpdateData,
     id: number,
