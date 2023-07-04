@@ -50,7 +50,7 @@ const Profile: NextPage<any> = ({ cars }) => {
         try {
             const response = await api.get(`/user/${user?.id}`)                
             
-            if(response.data){
+            if(response.data){                
                 setUserCars(response.data.car)
                 setLoading(false)
             }
@@ -62,7 +62,8 @@ const Profile: NextPage<any> = ({ cars }) => {
 
     getUserCars()
 
-}, [user, setUserCars])
+
+}, [user, setUserCars]);
 
 
   return (

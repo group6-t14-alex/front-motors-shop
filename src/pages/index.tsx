@@ -23,8 +23,9 @@ const Home: NextPage<HomeProps> = ({ cars }) => {
 
   const { setCars, filtredCars, filterOptions, setFiltredCars }: any = useCarContext();
 
-
+  
   useEffect(() => {
+    
     setCars(cars);
     setFiltredCars(cars);
     filterOptions(cars);    

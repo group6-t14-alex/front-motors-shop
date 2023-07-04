@@ -5,14 +5,9 @@ import {
     Box,
     Button,
     ButtonGroup,
-    Heading,
-    Grid,
+    Heading,    
     Avatar,
-    ListItem,
-    List,
-    UnorderedList,
-    Textarea,
-    FormControl
+    Link,    
 } from '@chakra-ui/react'
 
 import PhotosCar from '@/components/cards/photosCarCard'
@@ -38,6 +33,7 @@ const ProductPage = () => {
     const { asPath } = useRouter();
     const {car, setCar} = useCarContext()
     const { user } = useAuth();
+    // console.log(user?.phone, car.model)
     
     const carId = router.query.carId;    
 
@@ -83,7 +79,13 @@ const ProductPage = () => {
         getLocalToken();
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
-    
+
+      const handleWhatsApp = (userName: string | undefined, userPhone: string | undefined, carModel: string) => {        
+        const urlMessage = `Olá, ${userName} vi o seu anúncio do veículo ${carModel} no site Motors Shop! Ainda está disponível ?`;
+        const urlWhatsApp = `https://wa.me/55${userPhone}/?text=${urlMessage}`;
+        window.open(urlWhatsApp, '_blank');
+      };
+      
 
     return (
         <>
@@ -105,8 +107,8 @@ const ProductPage = () => {
                                     <Text color='grey1' fontWeight='500' fontSize='body1' fontFamily='heading'>R$ {car ? car.price : "00.000,00"}</Text>
                                 </Box>
                             </Box>
-                
-                           <Button size='md' bg='brand1' _hover={{bg:'brand2'}} color='grey10' fontWeight='600' fontSize='14px' fontFamily='body'>Comprar</Button>
+                                           
+                           <Button as={Link} onClick={() => handleWhatsApp(user?.name, user?.phone, car.model)} size='md' bg='brand1' _hover={{bg:'brand2'}} color='grey10' fontWeight='600' fontSize='14px' fontFamily='body'>Comprar</Button>
                         </Box>
 
                         <Box  w='100%'  maxWidth='1032px' h='320px' borderRadius='4px' p='36px 28px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-around' bg='grey10' marginTop='24px'>
@@ -137,103 +139,6 @@ const ProductPage = () => {
                         </Box>
                     </Box>
 
-                    {/* <Box display='flex' flexDirection='column' w={{cel:"95%", desk:'50%'}}>
-                        <Box h='845px'  w='100%'  maxWidth='1032px' borderRadius='4px' p='36px 28px' bg='grey10' marginTop='18px' display='flex' flexDirection='column' gap='13px'>
-                            <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1'>Comentários</Heading>
-
-                            <List h='724px' maxH='724px' display='flex' flexDirection='column' alignItems='flex-start' gap='44px' overflowY='auto'>
-
-                                <ListItem w='95%' h='212px' borderRadius='4px' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around' bg='grey10' gap='body3'>
-                                    <Box display='flex' flexDirection='row' alignItems='center'>
-                                        <Box display='flex' flexDirection='row' alignItems='center' w='146px' h='32px' gap='8px'>
-                                            <Avatar size='sm' name='Júlia Lima'/>
-                                            <Heading size='sm' fontFamily='body' fontWeight='500' fontSize='body2' color='grey1'> Júlia Lima </Heading> 
-                                        </Box>
-                        
-                                        <UnorderedList>
-                                            <ListItem fontFamily='body' fontWeight='400' fontSize='body3' color='grey3'>há 3 dias</ListItem>
-                                        </UnorderedList>
-                                    
-                                    </Box>
-
-                                <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey2'  h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
-                            
-                                </ListItem>
-
-                                <ListItem w='95%' h='212px' borderRadius='4px' bg='grey10' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around' gap='body3'>
-                                    <Box display='flex' flexDirection='row' alignItems='center'>
-                                        <Box display='flex' flexDirection='row' alignItems='center' w='146px' h='32px' gap='8px'>
-                                            <Avatar size='sm' name='Marcos Antônio'/>
-                                            <Heading size='sm' fontFamily='body' fontWeight='500' fontSize='body2' color='grey1'> Marcos Antônio </Heading> 
-                                        </Box>
-                        
-                                        <UnorderedList>
-                                            <ListItem fontFamily='body' fontWeight='400' fontSize='body3' color='grey3'>há 7 dias</ListItem>
-                                        </UnorderedList>
-                                    </Box>
-
-                                    <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey.2' h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
-                                </ListItem>
-
-                                <ListItem gap='body3'
-                            bg='grey10' w='95%' h='212px' borderRadius='4px' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around'>
-                                    <Box display='flex' flexDirection='row' alignItems='center'>
-                                        <Box display='flex' flexDirection='row' alignItems='center' w='146px' h='32px' gap='8px'>
-                                            <Avatar size='sm' name='Camila Silva'/>
-                                            <Heading size='sm' fontFamily='body' fontWeight='500' fontSize='body2' color='grey1'> Camila Silva </Heading> 
-                                        </Box>
-                        
-                                        <UnorderedList>
-                                            <ListItem fontFamily='body' fontWeight='400' fontSize='body3' color='grey3'>há 1 mês</ListItem>
-                                        </UnorderedList>
-                                    </Box>
-
-                                    any      <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey2' h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
-                                </ListItem>
-
-                                <ListItem w='95%' h='212px' borderRadius='4px' display='flex' alignItems='flex-start' flexDirection='column' justifyContent='space-around' bg='grey10' gap='body3'>
-                                    <Box display='flex' flexDirection='row' alignItems='center' h='32px'>
-                                        <Box display='flex' flexDirection='row' alignItems='center' w='146px' gap='8px'>
-                                            <Avatar size='sm' name='Júlia Lima'/>
-                                            <Heading size='sm' fontFamily='body' fontWeight='500' fontSize='body2' color='grey1'> Júlia Lima </Heading> 
-                                        </Box>
-                        
-                                        <UnorderedList>
-                                            <ListItem fontFamily='body' fontWeight='400' fontSize='body3' color='grey3'>há 3 dias</ListItem>
-                                        </UnorderedList>
-                                    
-                                    </Box>
-
-                                    <Text fontFamily='body' fontWeight='400' fontSize='body2' color='grey2' h='168px'>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</Text>
-                            
-                                </ListItem>
-
-                            </List>
-                        </Box>
-
-                        <Box h='414px' w='100%' maxWidth='1032px' borderRadius='4px' bg='grey10' p='36px 26px' marginTop='42px' display='flex' flexDirection='column' gap='24px' marginBottom='45px'>
-                            <Box w='130px' h='32px' display='flex' flexDirection='row' alignItems='center' justifyContent='space-between'>
-                                <Avatar h='32px' w='32px' name='Sammuel Leão'/>
-                                <Text fontSize='body2' fontWeight='500'>Samuel Leão</Text>
-                            </Box>
-
-                            <FormControl h='275px' display='flex' flexDirection='column' alignItems='flex-start' justifyContent='space-between'>
-                                <Textarea bg='grey10' outline='1px solid grey7' borderRadius='4px' h='100px' placeholder='Carro muito confortável, foi uma ótima experiência de compra...'/>
-
-                       
-                                <Button size='sm' bg='brand1' color='white' fontSize='body2' fontWeight='600' fontFamily='body' pos={{ cel: 'relative', desk: "absolute" }} right={{desk: '11px'}} bottom={{desk: '183px'}} _hover={{bg:'brand2'}}>Comentar</Button>
-               
-                        
-                        
-                                <Grid templateColumns='repeat(2, 1fr)'  alignItems='flex-start' justifyItems='start' h='76px' gap='8px'>
-                                    <Button fontSize='body3' fontWeight='500' fontFamily='body' p='0 12px' borderRadius='24px' bg='grey7' color='grey3'>Gostei muito!</Button>
-                                    <Button fontSize='body3' fontWeight='500' fontFamily='body' p='0 12px' borderRadius='24px' bg='grey7' color='grey3'>Incrível</Button>
-                                    <Button fontSize='body3' fontWeight='500' fontFamily='body' p='0 12px' borderRadius='24px' bg='grey7' color='grey3'>Recomendarei para meus amigos</Button>
-                                </Grid>
-                        
-                            </FormControl>
-                        </Box>
-                    </Box> */}
                     <CommentsCard carId={carId}/>
                 </Box>
             </Box>
