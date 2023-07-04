@@ -90,7 +90,7 @@ const ProductPage = () => {
     return (
         <>
             <HeaderLogged />
-            <Box h='100%' w='100%' display='flex' alignItems='center' flexDirection='column' bgGradient={{cel: 'linear(to-b, brand1 0%, brand1 13.5%,brand4 13.5%, brand4 100%)', desk:'linear(to-b, brand1 0%, brand1 25%,brand4 25%, brand4 100%)'}}>
+            <Box h='100%' w='100%' minW={'320px'} display='flex' alignItems='center' flexDirection='column' bgGradient={{cel: 'linear(to-b, brand1 0%, brand1 13.5%,brand4 13.5%, brand4 100%)', desk:'linear(to-b, brand1 0%, brand1 25%,brand4 25%, brand4 100%)'}}>
                 <Box w='95%' display={{ cel: "flex", desk: "grid" }} alignItems='center' flexDirection='column'>
                     <Box display='flex' flexDirection='column' w={{cel:"95%", desk:'50%'}}>
                         <ExpandPhotoModal />
@@ -125,17 +125,28 @@ const ProductPage = () => {
                             <PhotosCar /> 
                         </Box>
 
-                        <Box w='100%' h='398px' borderRadius='4px' p='40px 28pxpx' display='flex' flexDirection='column' alignItems='center' justifyContent='space-evenly' bg='grey10' marginTop='52px'>
+                        <Box 
+                            w='100%' 
+                            h={ {cel: '24.875rem', desk: '26.625rem'}} 
+                            borderRadius='4px' 
+                            p='40px 28px' 
+                            display='flex' 
+                            flexDirection='column' 
+                            alignItems='center' 
+                            justifyContent='space-between' 
+                            bg='grey10'                             
+                            marginTop={{cel: '3.25rem', desk:'2.125rem'}}
+                        >
                             <Box w='77px' h='77px' display='flex'  alignItems='center' justifyContent='center'>
-                                <Avatar name={user?.name} w='77px' h='77px'/>
+                                <Avatar name={user?.name} w={{ cel: '4.8125rem', desk: '6.5rem' }} h={{ cel: '4.8125rem', desk: '6.5rem' }}/>
                             </Box>
-                            <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1' >
-                            {user?.name}
+                            <Heading fontFamily='heading' fontWeight='600' fontSize='heading6' color='grey1' h={'1.5625rem'}>
+                                {user?.name}
                             </Heading>
-                            <Text fontFamily='body' fontWeight='400' fontSize='heading7' color='grey2' w='95%'>
-                            {user?.description}
+                            <Text fontFamily='body' fontWeight='400' fontSize='heading7' color='grey2' w='95%' minH={'80px'} maxH={'80px'}  overflow={'hidden'} noOfLines={3} >
+                                {user?.description}
                             </Text>
-                            <Button size='md' borderRadius='4px' bg='grey0' _hover={{bg:'grey1'}} color='white' fontFamily='body' fontWeight='600' fontSize='body1'>Ver todos os anuncios</Button>
+                            <Button size='md' minH={'48px'} borderRadius='4px' bg='grey0' _hover={{bg:'grey1'}} color='white' fontFamily='body' fontWeight='600' fontSize='body1'>Ver todos os anuncios</Button>
                         </Box>
                     </Box>
 

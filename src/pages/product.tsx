@@ -69,14 +69,7 @@ const ProductPage = () => {
         getLocalToken();
       // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
-
-    //   const handleWhatsApp = (userPhone: number, carModel: string) => {
-    //     const urlMessage = `Olá, vi o seu anúncio do ${carModel} no site Motors Shop! Ainda está disponível ?`;
-    //     const urlWhatsApp = `https://wa.me/55${userPhone}/?text=${urlMessage}`;
-    //     return urlWhatsApp;
-    //   };
     
-
     return (
         <>
             <HeaderLogged />
