@@ -33,7 +33,7 @@ const calculateRunningTime = (date: Date) => {
   }
 };
 
-const CommentItemCard = ({ name, comment, user }: any) => {
+const CommentItemCard = ({ key, name, comment, user }: any) => {
   const [runningTime, setRunningTime] = useState(
     calculateRunningTime(comment.created_at)
   );
@@ -53,6 +53,7 @@ const CommentItemCard = ({ name, comment, user }: any) => {
       justifyContent="space-around"
       bg="grey10"
       gap="body3"
+      key={key}
     >
       <Box display="flex" flexDirection="row" alignItems="center">
         <Box
@@ -91,7 +92,7 @@ const CommentItemCard = ({ name, comment, user }: any) => {
         fontSize="body2"
         color="grey2"
         h="168px"
-      >{`${comment.comment}`}</Text>
+      >{`${comment}`}</Text>
     </ListItem>
   );
 };

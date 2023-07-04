@@ -4,6 +4,8 @@ import { useCarContext } from "@/contexts/carsContext";
 
 const CardWrapper = () => {
   const { cars, setCars, filtredCars, filterOptions }: any = useCarContext();
+
+  
   
   return (
     <Box
