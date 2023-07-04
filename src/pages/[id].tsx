@@ -133,6 +133,11 @@ const AdvertiserDetail: NextPage<AdvertiserPageProps> = () => {
                   fontFamily={"body"}
                   fontWeight={"400"}
                   fontSize={"body1"}
+                  w={'100%'}
+                  h={'5.625rem'}
+                  minH={'1.25rem'}
+                  maxH={'5.625rem'}
+                  overflow={'hidden'}                  
                 >
                   {userList.description}
                 </Text>
