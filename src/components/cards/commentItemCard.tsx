@@ -7,6 +7,8 @@ import {
   UnorderedList,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { EditAndDeleteComentsButton } from "../modals/editAndDeleteComents";
+import { parseCookies } from "nookies";
 
 const calculateRunningTime = (date: Date) => {
   const now: Date = new Date();
@@ -33,7 +35,14 @@ const calculateRunningTime = (date: Date) => {
   }
 };
 
-const CommentItemCard = ({ key, name, comment, user }: any) => {
+const CommentItemCard = ({
+  key,
+  name,
+  comment,
+  userId,
+  id,
+  userIdComment,
+}: any) => {
   const [runningTime, setRunningTime] = useState(
     calculateRunningTime(comment.created_at)
   );
@@ -43,58 +52,74 @@ const CommentItemCard = ({ key, name, comment, user }: any) => {
   }, [comment]);
 
   return (
-    <ListItem
-      w="95%"
-      maxHeight={"120px"}
-      borderRadius="4px"
-      display="flex"
-      alignItems="flex-start"
-      flexDirection="column"
-      justifyContent="space-around"
-      bg="grey10"
-      gap="body3"
-      key={key}
-    >
-      <Box display="flex" flexDirection="row" alignItems="center">
+    <>
+      <ListItem
+        border={"1px solid black"}
+        w="95%"
+        maxHeight={"120px"}
+        borderRadius="4px"
+        display="flex"
+        alignItems="flex-start"
+        flexDirection="column"
+        justifyContent="space-around"
+        bg="grey10"
+        gap="body3"
+        key={key}
+      >
         <Box
+          border={"1px solid red"}
           display="flex"
           flexDirection="row"
           alignItems="center"
-          w="146px"
-          h="32px"
-          gap="8px"
+          justifyContent={"space-between"}
+          width={"100%"}
         >
-          <Avatar size="sm" name={`${name}`} />
-          <Heading
-            size="sm"
-            fontFamily="body"
-            fontWeight="500"
-            fontSize="body2"
-            color="grey1"
+          <Box
+            display="flex"
+            flexDirection="row"
+            alignItems="center"
+            w="146px"
+            h="32px"
+            gap="8px"
           >
-            {" "}
-            {`${name}`}{" "}
-          </Heading>
-        </Box>
+            <Avatar size="sm" name={`${name}`} />
+            <Heading
+              size="sm"
+              fontFamily="body"
+              fontWeight="500"
+              fontSize="body2"
+              color="grey1"
+            >
+              {" "}
+              {`${name}`}{" "}
+            </Heading>
+          </Box>
 
-        <UnorderedList>
-          <ListItem
-            fontFamily="body"
-            fontWeight="400"
-            fontSize="body3"
-            color="grey3"
-          >{`há ${runningTime}`}</ListItem>
-        </UnorderedList>
-      </Box>
-      <Text
-        fontFamily="body"
-        fontWeight="400"
-        fontSize="body2"
-        color="grey2"
-        h="168px"
-      >{`${comment}`}</Text>
-    </ListItem>
+          <UnorderedList>
+            <ListItem
+              fontFamily="body"
+              fontWeight="400"
+              fontSize="body3"
+              color="grey3"
+            >{`há ${runningTime}`}</ListItem>
+          </UnorderedList>
+          {userId !== userIdComment ? null : (
+            <EditAndDeleteComentsButton id={id} comment={comment} />
+          )}
+        </Box>
+        <Text
+          fontFamily="body"
+          fontWeight="400"
+          fontSize="body2"
+          color="grey2"
+          h="168px"
+        >{`${comment}`}</Text>
+      </ListItem>
+    </>
   );
 };
 
 export default CommentItemCard;
+function jwt_decode(arg0: string): any {
+  throw new Error("Function not implemented.");
+}
