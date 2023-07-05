@@ -38,14 +38,14 @@ const CommentContext = createContext<commentProviderData>(
 
 export const CommentProvider = ({ children }: Props) => {
   const [comments, setComments] = useState<CommentDataReturn[]>([]);
+  // console.log(comments)
   const toast = useToast();
   const { user, setUser } = useAuth();
 
   useEffect(() => {
     const getUserComments = async () => {
       try {
-        const response = await api.get(`/user/${user?.id}`);
-        // console.log(response.data)
+        const response = await api.get(`/user/${user?.id}`);        
         if (response.data) {
           setUser(response.data);
         }
@@ -66,7 +66,11 @@ export const CommentProvider = ({ children }: Props) => {
     api
       .post(`/comments/${commentData.carId}`, commentData)
       .then((response) => {
-        setComments(response.data);
+        // setComments(response.data);
+        if (response.data) {
+          setComments((prevComments) => [...prevComments, response.data]);
+          // console.log(precComents)
+        }
         toast({
           position: "top-right",
           title: "Sucesso",
