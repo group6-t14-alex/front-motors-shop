@@ -12,7 +12,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-export const DeleteComment = ({ comment }: any) => {
+export const DeleteComment = ({ id }: any) => {
   const OverlayOne = () => (
     <ModalOverlay
       bg="blackAlpha.300"
@@ -53,7 +53,7 @@ export const DeleteComment = ({ comment }: any) => {
                 bg="alert2"
                 _hover={{ bg: "alert1", color: "white" }}
                 transition={"0.5s"}
-                onClick={() => deleteComment(comment.id, onClose)}
+                onClick={() => deleteComment(id, onClose)}
               >
                 Excluir
               </Button>

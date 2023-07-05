@@ -21,7 +21,7 @@ import { useForm } from "react-hook-form";
 import { DeleteComment } from "./deleteComment";
 import { useCommentContext } from "@/contexts/commentsContext";
 
-export const EditAndDeleteComentsButton = ({ comment }: any) => {
+export const EditAndDeleteComentsButton = ({ comment, id }: any) => {
   const {
     register,
     handleSubmit,
@@ -34,12 +34,12 @@ export const EditAndDeleteComentsButton = ({ comment }: any) => {
   const { updateComment } = useCommentContext();
 
   const submitHandler = (data: ComentDataUpdate) => {
-    updateComment(data, comment.id, onClose);
+    updateComment(data, id, onClose);
   };
 
   return (
     <>
-      <Button onClick={onOpen}>
+      <Button bg={"none"} onClick={onOpen}>
         <EditIcon />
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -52,6 +52,7 @@ export const EditAndDeleteComentsButton = ({ comment }: any) => {
             <form onSubmit={handleSubmit(submitHandler)}>
               <FormControl mt={"1rem"}>
                 <Textarea
+                  defaultValue={comment}
                   {...register("comment")}
                   isInvalid={Boolean(errors.comment)}
                   bg="grey10"
@@ -72,7 +73,7 @@ export const EditAndDeleteComentsButton = ({ comment }: any) => {
               >
                 <Button onClick={onClose}>Cancelar</Button>
 
-                <DeleteComment comment={comment} />
+                <DeleteComment id={id} />
                 <Button color={"white"} bg={"brand1"} type="submit">
                   Salvar alterações
                 </Button>

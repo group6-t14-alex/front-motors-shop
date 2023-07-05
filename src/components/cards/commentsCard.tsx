@@ -20,17 +20,16 @@ const CommentsCard = ({ carId }: any) => {
   const { user } = useAuth();
   // const { comments } = useCommentContext();
   const [carComments, setCarComments] = useState<any>([]);
-  
+
   // useEffect(() => {}, [user]);
-  
+
   useEffect(() => {
-    const searchCar: any = async () => {    
-      const response = await api.get(`/cars/${carId}`)
-      setCarComments(response.data.comments)
-    }
-    searchCar()
-  
-  }, [carComments]);  
+    const searchCar: any = async () => {
+      const response = await api.get(`/cars/${carId}`);
+      setCarComments(response.data.comments);
+    };
+    searchCar();
+  }, [carComments]);
 
   return (
     <Box display="flex" flexDirection="column" w={{ cel: "95%", desk: "50%" }}>
@@ -64,7 +63,6 @@ const CommentsCard = ({ carId }: any) => {
           gap="44px"
           overflowY="auto"
         >
-          
           {carComments.length > 0 ? (
             carComments?.map((comment: any) => {
               // {console.log(comment)}
@@ -73,7 +71,9 @@ const CommentsCard = ({ carId }: any) => {
                   key={comment.id}
                   name={user?.name}
                   comment={comment.comment}
-                  user={user}
+                  userId={user?.id}
+                  id={comment.id}
+                  userIdComment={comment.userId}
                 />
               );
             })
