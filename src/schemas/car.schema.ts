@@ -13,6 +13,7 @@ export const carSchemaRequest = z.object({
     color:z.string(),
     isActive: z.boolean().default(true)
 })
+//galery: z.string
 
 export const carSchemaReturn = carSchemaRequest.extend({
     id: z.string(),

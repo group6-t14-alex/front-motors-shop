@@ -18,8 +18,9 @@ import { EditAndDeleteComentsButton } from "../modals/editAndDeleteComents";
 
 const CommentsCard = ({ carId }: any) => {
   const { user } = useAuth();
+  // const { comments } = useCommentContext();
   const [carComments, setCarComments] = useState<any>([]);
-
+  
   // useEffect(() => {}, [user]);
   
   useEffect(() => {
@@ -29,7 +30,7 @@ const CommentsCard = ({ carId }: any) => {
     }
     searchCar()
   
-  }, []);  
+  }, [carComments]);  
 
   return (
     <Box display="flex" flexDirection="column" w={{ cel: "95%", desk: "50%" }}>
@@ -64,7 +65,7 @@ const CommentsCard = ({ carId }: any) => {
           overflowY="auto"
         >
           
-          {carComments ? (
+          {carComments.length > 0 ? (
             carComments?.map((comment: any) => {
               // {console.log(comment)}
               return (
