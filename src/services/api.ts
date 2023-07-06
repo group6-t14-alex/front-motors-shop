@@ -6,7 +6,7 @@ export const apiKenzieKars = axios.create({
 });
 
 export const api = axios.create({
-  baseURL: "http://localhost:3001/",
+  baseURL: "https://motors-shop-5gx0.onrender.com",
   timeout: 8000,
 });
 
