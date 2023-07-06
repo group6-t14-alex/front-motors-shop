@@ -64,8 +64,7 @@ const CommentsCard = ({ carId }: any) => {
           overflowY="auto"
         >
           {carComments.length > 0 ? (
-            carComments?.map((comment: any) => {
-              // {console.log(comment)}
+            carComments?.map((comment: any) => {              
               return (
                 <CommentItemCard
                   key={comment.id}
