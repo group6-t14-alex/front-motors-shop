@@ -54,7 +54,8 @@ const CommentItemCard = ({
   return (
     <>
       <ListItem
-        border={"1px solid black"}
+        // border={"1px solid black"}
+        shadow={'5px 5px 18px -3px rgba(0,0,0,0.26)'}
         w="95%"
         maxHeight={"120px"}
         borderRadius="4px"
@@ -66,8 +67,7 @@ const CommentItemCard = ({
         gap="body3"
         key={key}
       >
-        <Box
-          border={"1px solid red"}
+        <Box          
           display="flex"
           flexDirection="row"
           alignItems="center"
@@ -112,7 +112,8 @@ const CommentItemCard = ({
           fontWeight="400"
           fontSize="body2"
           color="grey2"
-          h="168px"
+          // h="168px"
+          p={'10px 0'}
         >{`${comment}`}</Text>
       </ListItem>
     </>
